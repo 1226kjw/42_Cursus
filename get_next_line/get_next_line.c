@@ -6,45 +6,33 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 21:28:28 by jinukim           #+#    #+#             */
-/*   Updated: 2020/10/16 18:37:36 by jinukim          ###   ########.fr       */
+/*   Updated: 2020/10/17 03:56:46 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	*ft_calloc(size_t count, size_t size)
-{
-	void			*p;
-	size_t			n;
-
-	p = malloc(count * size);
-	if (!p)
-		return (p);
-	n = 0;
-	while (n < size * count)
-		((unsigned char*)p)[n++] = 0;
-	return (p);
-}
-
 int		get_next_line(int fd, char **line)
 {
-	static t_buf	buf[OPEN_MAX];
+	static char	*remain[OPEN_MAX];
+	char		*buf;
+	int			i;
 
-	if (!line || fd >= OPEN_MAX || fd < 0 || BUFFER_SIZE < 1)
+	if (fd < 0 || fd >= OPEN_MAX || !line || BUFFER_SIZE < 1)
 		return (-1);
-	*line = (char*)ft_calloc(1, sizeof(char));
-	if (!buf[fd].buf)
-		if (!(buf[fd].buf = (char*)malloc((BUFFER_SIZE + 1) * sizeof(char))))
-			return (-1);
-	while (buf[fd].n || (buf[fd].n += read(fd, buf[fd].buf, BUFFER_SIZE)) > 0)
-		if (digest(fd, buf, line))
-			return (1);
-	if (buf[fd].n < 0)
+	if (!(*line = ft_dup("")))
+		return (-1);
+	if ((i = ft_remainder(fd, remain, line)) != 0)
+		return (i);
+	if (!(buf = (char*)malloc((BUFFER_SIZE + 1) * sizeof(char))))
+		return (freeall(0, line));
+	while (!remain[fd] && (i = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
-		free(*line);
-		*line = 0;
+		buf[i] = 0;
+		if (buf[(i = ft_join(line, buf))] == '\n')
+			if (!(remain[fd] = ft_dup(buf + i + 1)))
+				return (freeall(buf, line));
 	}
-	free(buf[fd].buf);
-	buf[fd].buf = 0;
-	return (buf[fd].n);
+	freeall(buf, i == -1 ? line : 0);
+	return (remain[fd] ? 1 : i);
 }

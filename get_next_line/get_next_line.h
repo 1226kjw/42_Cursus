@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/09 22:17:14 by jinukim           #+#    #+#             */
-/*   Updated: 2020/10/16 17:15:19 by jinukim          ###   ########.fr       */
+/*   Updated: 2020/10/17 03:56:18 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,10 @@
 # include <unistd.h>
 # include <limits.h>
 
-typedef struct	s_buf
-{
-	char	*buf;
-	int		out;
-	int		n;
-}				t_buf;
-void			*ft_calloc(size_t count, size_t size);
-int				get_next_line(int fd, char **line);
-size_t			ft_gnllen(const char *s);
-char			*ft_gnljoin(char *s1, char *s2);
-int				digest(int fd, t_buf *buf, char **line);
-
+int			get_next_line(int fd, char **line);
+size_t		ft_len(const char *s);
+char		*ft_dup(const char *s);
+int			ft_join(char **s, char *s2);
+int			ft_remainder(int fd, char *remain[], char **line);
+int			freeall(char *buf, char **line);
 #endif
