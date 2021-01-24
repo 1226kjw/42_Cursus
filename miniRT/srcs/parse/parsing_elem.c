@@ -6,7 +6,7 @@
 /*   By: jinukim <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/22 18:16:01 by jinukim           #+#    #+#             */
-/*   Updated: 2021/01/22 22:21:12 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/01/24 18:56:39 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int		parsing_r(char *line, t_scene *sd)
 		return (-6);
 	while (line[i] && ft_isspace(line[i]))
 		i++;
-	if (line[i] != 0)
-		return (-5);
+//	if (line[i] != 0)
+//		return (-5);
 	return (0);
 }
 

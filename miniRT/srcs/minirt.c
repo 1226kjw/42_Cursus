@@ -6,7 +6,7 @@
 /*   By: jinukim <marvin.42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 19:09:13 by jinukim           #+#    #+#             */
-/*   Updated: 2021/01/22 21:44:09 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/01/24 18:47:55 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int		main(int argc, char **argv)
 	img.mlx = mlx_init();
 	img.mlx_win = mlx_new_window(img.mlx, sd.x, sd.y, "miniRT");
 	img.img = mlx_new_image(img.mlx, sd.x, sd.y);
-	mlx_put_image_to_window(img.mlx, img.mlx_win, img.img, 0, 0);
+	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.bytes_per_line, &img.endian);
+	make_image(&img, &sd);
+//	mlx_put_image_to_window(img.mlx, img.mlx_win, img.img, 0, 0);
 	mlx_loop(img.mlx);
 }

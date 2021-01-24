@@ -6,7 +6,7 @@
 /*   By: jinukim <marvin.42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 18:47:13 by jinukim           #+#    #+#             */
-/*   Updated: 2021/01/22 22:20:43 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/01/24 18:38:28 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,5 @@
 # include "intersect.h"
 
 void			print_err_exit(int n);
-
+int				make_image(t_data *data, t_scene *sd);
 #endif
