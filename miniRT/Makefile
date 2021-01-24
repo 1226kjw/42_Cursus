@@ -16,6 +16,8 @@ SRCS = $(addprefix $(SRCS_DIR),\
 		utils/get_next_line.c\
 		utils/get_next_line_utils.c\
 		utils/utils0.c\
+		\
+		image/image.c\
 		)
 SRCS_DIR = ./srcs/
 

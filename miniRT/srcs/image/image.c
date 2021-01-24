@@ -18,12 +18,12 @@ int		make_img(t_data *data, t_scene *sd)
 	j = -1;
 	while (++j < sd->y)
 	{
-		i = -1
+		i = -1;
 		while (++i < sd->x)
 		{
 			k = r;
 			k.dir = vec_add(vec_add(r.dir, vec_mul(xvec, (double)i / sd->x)), vec_mul(yvec, (double)j / sd->y));
-			if (intersect(r, sd->sphere[0]) > 0)
+			if (inter_sp(k, sd->sphere[0]) > 0)
 				mlx_pixel_put(data->mlx, data->mlx_win, i, j, 0x00ff0000);
 			else
 				mlx_pixel_put(data->mlx, data->mlx_win, i, j, 0x00000000);
