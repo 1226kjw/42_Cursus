@@ -58,5 +58,8 @@ int		main(int argc, char **argv)
 		print_err_exit(i);
 	close(fd);
 	img.mlx = mlx_init();
-	(void)img;
+	img.mlx_win = mlx_new_window(img.mlx, sd.x, sd.y, "miniRT");
+	img.img = mlx_new_image(img.mlx, sd.x, sd.y);
+	mlx_put_image_to_window(img.mlx, img.mlx_win, img.img, 0, 0);
+	mlx_loop(img.mlx);
 }
