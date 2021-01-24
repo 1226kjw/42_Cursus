@@ -12,19 +12,19 @@
 
 #ifndef VECTOR_H
 # define VECTOR_H
+
 # include <math.h>
+# include "minirt.h"
 
-typedef struct	s_vec
-{
-	double		x;
-	double		y;
-	double		z;
-}				t_vec;
 
+t_vec			vec_init(double a, double b, double c);
 t_vec			vec_add(t_vec a, t_vec b);
 t_vec			vec_sub(t_vec a, t_vec b);
 t_vec			vec_mul(t_vec a, double b);
+t_vec			vec_unit(t_vec a);
+t_vec			vec_normal(t_vec a);
 double			vec_inner(t_vec a, t_vec b);
+t_vec			vec_cross(t_vec a, t_vec b);
 double			vec_dis(t_vec a, t_vec b);
 double			vec_abs(t_vec a);
 

@@ -15,7 +15,9 @@
 
 # include "minirt.h"
 
-int		parsing(int fd);
-int		
+int		parsing(int fd, t_scene *sd);
+int		parsing_r(char *line, t_scene *sd);
+int		parsing_c(char *line, t_scene *sd);
+int		parsing_sp(char *line, t_scene *sd);
 
 #endif

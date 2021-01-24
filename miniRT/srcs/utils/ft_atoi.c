@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minirt.h"
 
 static unsigned int	trim(char *str, unsigned int i)
 {

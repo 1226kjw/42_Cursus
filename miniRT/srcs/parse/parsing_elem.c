@@ -41,11 +41,14 @@ int		parsing_c(char *line, t_scene *sd)
 	int		i;
 
 	i = 1;
+	i = i + 1;
+	if (line[0] == 0)
+		return (0);
 	if (sd->ncam == MAXCAM)
 		return (-7);
-	sd->cam[ncam].pos = vec_init(0,0,1);
-	sd->cam[ncam].v = vec_init(0,0,-1);
-	sd->cam[ncam].fov = 60;
-	ncam++;
+	sd->cam[sd->ncam].pos = vec_init(0,0,1);
+	sd->cam[sd->ncam].v = vec_init(0,0,-1);
+	sd->cam[sd->ncam].fov = 60;
+	sd->ncam++;
 	return (0);
 }

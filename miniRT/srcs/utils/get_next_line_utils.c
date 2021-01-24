@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "minirt.h"
 
 size_t	ft_len(const char *s)
 {

@@ -1,9 +1,22 @@
 NAME = a.out
 
 SRCS = $(addprefix $(SRCS_DIR),\
-	   minirt.c\
-	   parsing.c\
-	   )
+		minirt.c\
+		parse/parsing.c\
+		parse/parsing_elem.c\
+		parse/parsing_obj.c\
+		\
+		intersect/intersect.c\
+		intersect/inter_sp.c\
+		\
+		vector/vecutils1.c\
+		vector/vecutils2.c\
+		\
+		utils/ft_atoi.c\
+		utils/get_next_line.c\
+		utils/get_next_line_utils.c\
+		utils/utils0.c\
+		)
 SRCS_DIR = ./srcs/
 
 HDR_DIR = ./includes/

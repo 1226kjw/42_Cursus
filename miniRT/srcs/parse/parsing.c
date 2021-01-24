@@ -46,7 +46,7 @@ int		parsing(int fd, t_scene *sd)
 	char	*line;
 	int		ret;
 
-	while ((ret = get_next_line(&line)) > 0)
+	while ((ret = get_next_line(fd, &line)) > 0)
 		if ((ret = line_parsing(line, sd)) < 0)
 			return (ret);
 	if (ret == -1 || (ret = line_parsing(line, sd)) < 0)

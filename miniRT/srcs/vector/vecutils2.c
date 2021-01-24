@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "vec3.h"
+#include "minirt.h"
 
-double	vec_init(double a, double b, double c)
+t_vec	vec_init(double a, double b, double c)
 {
 	t_vec	n;
 

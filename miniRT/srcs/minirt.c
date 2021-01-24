@@ -33,13 +33,13 @@ void	print_err_exit(int n)
 	exit(n);
 }
 
-int		scene_init(t_scene *sd)
+void	scene_init(t_scene *sd)
 {
 	sd->x = 0;
 	sd->y = 0;
-	ncam = 0;
-	nlight = 0;
-	nsphere = 0;
+	sd->ncam = 0;
+	sd->nlight = 0;
+	sd->nsphere = 0;
 }
 
 int		main(int argc, char **argv)
@@ -47,15 +47,16 @@ int		main(int argc, char **argv)
 	int			fd;
 	int			i;
 	t_data		img;
-	t_scene		*sd;
+	t_scene		sd;
 
-	scene_init(sd);
+	scene_init(&sd);
 	if (argc < 2 || argc > 3)
 		print_err_exit(-2);
 	if ((fd = open(argv[1], O_RDONLY)) <= 0)
 		print_err_exit(0);
-	if ((i = parsing(fd, sd)))
+	if ((i = parsing(fd, &sd)))
 		print_err_exit(i);
 	close(fd);
 	img.mlx = mlx_init();
+	(void)img;
 }
