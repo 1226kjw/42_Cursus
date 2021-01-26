@@ -6,7 +6,7 @@
 /*   By: jinukim <marvin.42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 19:09:13 by jinukim           #+#    #+#             */
-/*   Updated: 2021/01/24 18:47:55 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/01/25 20:03:14 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,13 @@ void	scene_init(t_scene *sd)
 	sd->nsphere = 0;
 }
 
+int		key_handle(int keycode)
+{
+	if (keycode == 53)
+		exit(0);
+	return (0);
+}
+
 int		main(int argc, char **argv)
 {
 	int			fd;
@@ -62,6 +69,7 @@ int		main(int argc, char **argv)
 	img.img = mlx_new_image(img.mlx, sd.x, sd.y);
 	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.bytes_per_line, &img.endian);
 	make_image(&img, &sd);
-//	mlx_put_image_to_window(img.mlx, img.mlx_win, img.img, 0, 0);
+	mlx_put_image_to_window(img.mlx, img.mlx_win, img.img, 0, 0);
+	mlx_hook(img.mlx_win, KEY_PRESS, 0, key_handle, 0);
 	mlx_loop(img.mlx);
 }

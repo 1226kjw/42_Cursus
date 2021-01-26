@@ -6,7 +6,7 @@
 /*   By: jinukim <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 21:41:03 by jinukim           #+#    #+#             */
-/*   Updated: 2021/01/22 18:12:01 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/01/25 16:05:10 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,17 @@ int		line_parsing(char *line, t_scene *sd)
 //	else if (buf[0] == 't' && buf[1] == 'r')
 //		return (parsing_ty(buf, sd));
 	return (-3);
+}
+
+int		next_num(char *buf, int i)
+{
+	if (buf[i] == '-' || buf[i] == '+')
+		i++;
+	while (buf[i] && (ft_isdigit(buf[i]) || buf[i] == '.'))
+		i++;
+	while (buf[i] && (ft_isspace(buf[i]) || buf[i] == ','))
+		i++;
+	return (i);
 }
 
 int		parsing(int fd, t_scene *sd)

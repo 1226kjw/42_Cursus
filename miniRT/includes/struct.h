@@ -28,7 +28,7 @@ typedef struct	s_data
 typedef struct	s_cam
 {
 	t_vec		pos;
-	t_vec		v;
+	t_vec		dir;
 	int			fov;
 }				t_cam;
 

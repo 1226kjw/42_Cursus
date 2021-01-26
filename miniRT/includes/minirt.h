@@ -6,7 +6,7 @@
 /*   By: jinukim <marvin.42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 18:47:13 by jinukim           #+#    #+#             */
-/*   Updated: 2021/01/24 18:38:28 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/01/25 19:49:21 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,12 @@
 # ifndef MAXSPHERE
 #  define MAXSPHERE 64
 # endif
+# ifndef C_BG
+#  define C_BG 0x00ffffff
+# endif
 
+# define KEY_PRESS 2
+# define KEY_RELEASE 3
 
 # include <stdlib.h>
 # include <fcntl.h>
