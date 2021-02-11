@@ -16,15 +16,15 @@ int		line_parsing(char *line, t_scene *sn)
 		return (parsing_c(buf, sn));
 	else if (buf[0] == 'l' && ft_isspace(buf[1]))
 		return (parsing_l(buf, sn));
-	else if (!ft_strncmp("sp", buf, 2) && ft_isspace(buf[2]))
+	else if (buf[0] == 's' && buf[1] == 'p' && ft_isspace(buf[2]))
 		return (parsing_sp(buf, sn));
-	else if (!ft_strncmp("pl", buf, 2) && ft_isspace(buf[2]))
+	else if (buf[0] == 'p' && buf[1] == 'l' && ft_isspace(buf[2]))
 		return (parsing_pl(buf, sn));
-	else if (!ft_strncmp("sq", buf, 2) && ft_isspace(buf[2]))
+	else if (buf[0] == 's' && buf[1] == 'q' && ft_isspace(buf[2]))
 		return (parsing_sq(buf, sn));
-	else if (!ft_strncmp("cy", buf, 2) && ft_isspace(buf[2]))
+	else if (buf[0] == 'c' && buf[1] == 'y' && ft_isspace(buf[2]))
 		return (parsing_cy(buf, sn));
-	else if (!ft_strncmp("tr", buf, 2) && ft_isspace(buf[2]))
+	else if (buf[0] == 't' && buf[1] == 'r' && ft_isspace(buf[2]))
 		return (parsing_tr(buf, sn));
 	return (-1);
 }
