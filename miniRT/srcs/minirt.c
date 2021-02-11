@@ -1,75 +1,52 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minirt.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jinukim <marvin.42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/21 19:09:13 by jinukim           #+#    #+#             */
-/*   Updated: 2021/01/25 20:03:14 by jinukim          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "minirt.h"
 
-void	print_err_exit(int n)
+void	errmsg(t_scene *sn, char *str)
 {
-	if (n == 0)
-		printf("Error: %s\n", strerror(errno));
-	else if (n == -1)
-		printf("Error: gnl errors.\n");
-	else if (n == -2)
-		printf("Error: # of args.\n");
-	else if (n == -3)
-		printf("Error: Unknown type exists in .rt file.\n");
-	else if (n == -4)
-		printf("Error: Dup type.\n");
-	else if (n == -5)
-		printf("Error: Too much elements.\n");
-	else if (n == -6)
-		printf("Error: Invalid elements.\n");
-	else if (n == -7)
-		printf("Error: Limit excess.\n");
-	exit(n);
+	if (sn)
+	{
+		ft_lstclear(&sn->cams, free);
+		ft_lstclear(&sn->lights, free);
+		ft_lstclear(&sn->objs, free);
+		free(sn->a_light);
+	}
+	printf("Error : %s\n", str);
+	exit(1);
 }
 
-void	scene_init(t_scene *sd)
+void	scene_init(t_scene *sn)
 {
-	sd->x = 0;
-	sd->y = 0;
-	sd->ncam = 0;
-	sd->nlight = 0;
-	sd->nsphere = 0;
+	ft_memset(sn, 0x00, sizeof(t_scene));
 }
 
-int		key_handle(int keycode)
+void	my_mlx_init(t_data *mlx, t_scene *sn)
 {
-	if (keycode == 53)
-		exit(0);
-	return (0);
+	mlx->mlx = mlx_init();
+	mlx->win = mlx_new_window(mlx->mlx, g_x, g_y, "miniRT");
+	if (!sn->cams)
+		errmsg(sn, "no cam");
+	sn->basecam = sn->cams;
 }
 
 int		main(int argc, char **argv)
 {
-	int			fd;
-	int			i;
-	t_data		img;
-	t_scene		sd;
+	t_arg	*args;
+	int		fd;
+	t_data	mlx;
+	t_scene	sn;
 
-	scene_init(&sd);
-	if (argc < 2 || argc > 3)
-		print_err_exit(-2);
+	if (argc < 2 || argc > 3 || (argc == 3 && ft_strcmp(argv[2], "--save")))
+		errmsg(0, "# of args or wrong option");
 	if ((fd = open(argv[1], O_RDONLY)) <= 0)
-		print_err_exit(0);
-	if ((i = parsing(fd, &sd)))
-		print_err_exit(i);
-	close(fd);
-	img.mlx = mlx_init();
-	img.mlx_win = mlx_new_window(img.mlx, sd.x, sd.y, "miniRT");
-	img.img = mlx_new_image(img.mlx, sd.x, sd.y);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.bytes_per_line, &img.endian);
-	make_image(&img, &sd);
-	mlx_put_image_to_window(img.mlx, img.mlx_win, img.img, 0, 0);
-	mlx_hook(img.mlx_win, KEY_PRESS, 0, key_handle, 0);
-	mlx_loop(img.mlx);
+		errmsg(0, "cannot open file");
+	scene_init(&sn);
+	if (parsing(fd, &sn))
+		errmsg(&sn, "parsing error");
+	my_mlx_init(&mlx, &sn);
+	args = (t_arg*)ft_calloc(g_y, sizeof(t_arg));
+	make_img(&mlx, &sn, args);
+	mlx_put_image_to_window(mlx.mlx, mlx.win,
+			((t_cam*)(sn.basecam->obj))->img, 0, 0);
+	mlx_hook(mlx.win, KEY_PRESS, 0, key_handle, 0);
+	mlx_loop(mlx.mlx);
+	return (0);
 }

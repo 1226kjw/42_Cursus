@@ -1,46 +1,55 @@
+CC = gcc
+FLAGS = -Wall -Wextra #-Werror
+
 NAME = a.out
+
+SRCS_DIR = ./srcs/
+HDR_DIR = ./includes/
 
 SRCS = $(addprefix $(SRCS_DIR),\
 		minirt.c\
-		parse/parsing.c\
-		parse/parsing_elem.c\
-		parse/parsing_obj.c\
-		\
-		intersect/intersect.c\
-		intersect/inter_sp.c\
-		\
-		vector/vecutils1.c\
-		vector/vecutils2.c\
-		\
-		utils/ft_atoi.c\
+		key.c\
+		parsing.c\
+		parsing_elem.c\
+		element.c\
+		sphere.c\
+		plane.c\
+		square.c\
+		cylinder.c\
+		triangle.c\
+		intersect.c\
+		images.c\
+		multithreading.c\
+		vector.c\
+		utils/utils.c\
 		utils/get_next_line.c\
 		utils/get_next_line_utils.c\
-		utils/utils0.c\
-		\
-		image/image.c\
 		)
-SRCS_DIR = ./srcs/
-
-HDR_DIR = ./includes/
-
-CC = gcc
-FLAGS = -Wall -Wextra -Werror
 
 MLXL = libmlx.a libmlx.dylib
-
 MMS = ./minilibx_mms/
 OPENGL = ./minilibx_opengl/
-
-
+LIBFT = libft.a
 
 all: $(NAME)
-	
-$(NAME): $(SRCS) $(MLXL)
-	$(CC) -o $@ $(SRCS) $(FLAGS) -I $(HDR_DIR) -L . -l mlx
 
-$(MLXL) :
+$(NAME): $(SRCS) $(MLXL) $(LIBFT)
+		   $(CC) -o $@ $(SRCS) $(FLAGS) -I $(HDR_DIR) -L . -l mlx -l ft
+
+$(MLXL):
 	make all -C $(MMS)
 	make all -C $(OPENGL)
-	cp $(MMS)libmlx.dylib ./
+	cp $(MMX)libmlx.dylib ./
 	cp $(OPENGL)libmlx.a ./
 
+$(LIBFT):
+	make all -C ./libft
+	cp ./libft/libft.h $(HDR_DIR)
+	cp ./libft/libft.a ./
+
+clean:
+	make clean -C ./libft
+	rm -rf $(MLXL) $(LIBFT)
+
+fclean: clean
+	rm -rf $(NAME)

@@ -1,50 +1,38 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   minirt.h                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jinukim <marvin.42.fr>                     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/21 18:47:13 by jinukim           #+#    #+#             */
-/*   Updated: 2021/01/25 19:49:21 by jinukim          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #ifndef MINIRT_H
 # define MINIRT_H
 
-# ifndef MAXCAM
-#  define MAXCAM 32
-# endif
-# ifndef MAXLIGHT
-#  define MAXLIGHT 64
-# endif
-# ifndef MAXSPHERE
-#  define MAXSPHERE 64
-# endif
-# ifndef C_BG
-#  define C_BG 0x00ffffff
-# endif
-
-# define KEY_PRESS 2
-# define KEY_RELEASE 3
-
-# include <stdlib.h>
-# include <fcntl.h>
-# include <errno.h>
 # include <stdio.h>
 # include <string.h>
+# include <stdlib.h>
 # include <math.h>
+# include <fcntl.h>
 # include <unistd.h>
+# include <pthread.h>
 
-# include "../minilibx_mms/mlx.h"
+# define SP 0
+# define PL 1
+# define SQ 2
+# define CY 3
+# define TR 4
+# define CU 5
+# define PY 6
+
+# define BG_COLOR 0x000000
+# define KEY_PRESS 2
+
+# include "libft.h"
+# include "get_next_line.h"
+# include "vector.h"
 # include "struct.h"
 # include "utils.h"
-# include "vector.h"
 # include "parsing.h"
-# include "get_next_line.h"
-# include "intersect.h"
+# include "element.h"
+# include "object.h"
+# include "images.h"
 
-void			print_err_exit(int n);
-int				make_image(t_data *data, t_scene *sd);
+int		g_x;
+int		g_y;
+void	errmsg(t_scene *sn, char *str);
+int		key_handle(int keycode);
+
 #endif

@@ -1,12 +1,12 @@
 #ifndef UTILS_H
 # define UTILS_H
 
-#include "minirt.h"
+# include "minirt.h"
 
-int		ft_isdigit(int c);
-int		ft_atoi(char *str);
-double	ft_atolf(char *str);
-char	*ft_strcpy(char *dst, char *src);
-int		ft_isspace(char c);
+double	next_atof(char *str, int *i);
+int		next_atoi(char *str, int *i);
+t_v3	ft_atov(char *str, int *i);
+int		ft_atoc(char *str, int *i);
+int		color_combine(int a, int b);
 
 #endif
