@@ -16,9 +16,10 @@
 # define CU 5
 # define PY 6
 
-# define BG_COLOR 0x000000
+# define BG_COLOR 0xffffff
 # define KEY_PRESS 2
 
+# include "mlx.h"
 # include "libft.h"
 # include "get_next_line.h"
 # include "vector.h"

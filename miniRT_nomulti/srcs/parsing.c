@@ -1,9 +1,10 @@
 #include "minirt.h"
-
+int i=0;
 int		line_parsing(char *line, t_scene *sn)
 {
 	char	buf[512];
 
+	printf("%dth : %s\n", i++, line);
 	ft_strcpy(buf, line);
 	free(line);
 	if (buf[0] == 0)

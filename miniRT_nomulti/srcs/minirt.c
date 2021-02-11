@@ -20,11 +20,22 @@ void	scene_init(t_scene *sn)
 
 void	my_mlx_init(t_data *mlx, t_scene *sn)
 {
+	t_list	*caml;
+	t_cam	*cam;
+
 	mlx->mlx = mlx_init();
 	mlx->win = mlx_new_window(mlx->mlx, g_x, g_y, "miniRT");
 	if (!sn->cams)
 		errmsg(sn, "no cam");
 	sn->basecam = sn->cams;
+	caml = sn->basecam;
+	while (caml)
+	{
+		cam = (t_cam*)caml->obj;
+		cam->img = mlx_new_image(mlx->mlx, g_x, g_y);
+		cam->addr = mlx_get_data_addr(cam->img, &cam->bpp, &cam->lsize, &cam->endian);
+		caml = caml->next;
+	}
 }
 
 int		main(int argc, char **argv)
@@ -41,6 +52,7 @@ int		main(int argc, char **argv)
 	scene_init(&sn);
 	if (parsing(fd, &sn))
 		errmsg(&sn, "parsing error");
+	printf("parsing complete!\n");
 	my_mlx_init(&mlx, &sn);
 	args = (t_arg*)ft_calloc(g_y, sizeof(t_arg));
 	make_img(&mlx, &sn, args);

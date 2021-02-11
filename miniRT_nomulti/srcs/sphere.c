@@ -16,9 +16,10 @@ int		parsing_sp(char *buf, t_scene *sn)
 {
 	int		i;
 	t_list	*no;
+	t_sp	*ns;
 
 	i = 2;
-	no = ft_lstnew(new_sp(ft_atov(buf, &i),
+	no = ft_lstnew(ns = new_sp(ft_atov(buf, &i),
 				next_atof(buf, &i), ft_atoc(buf, &i)));
 	no->type = SP;
 	ft_lstadd_back(&sn->objs, no);
@@ -33,11 +34,11 @@ double	i_sp(t_ray ray, void *obj)
 	double	b;
 	double	c;
 	double	disc;
-
+	t_sp ns=*(t_sp*)obj;
+	t_v3	oc = vsub(ray.o, ns.o);
 	a = vinner(ray.d, ray.d);
-	b = vinner(ray.d, vsub(ray.o, ((t_sp*)obj)->o));
-	c = vinner(((t_sp*)obj)->o, ((t_sp*)obj)->o) -
-		((t_sp*)obj)->r * ((t_sp*)obj)->r;
+	b = vinner(ray.d, oc);
+	c = vinner(oc, oc) - ns.r * ns.r;
 	disc = b * b - a * c;
 	if (disc <= 0)
 		return (-1.0);

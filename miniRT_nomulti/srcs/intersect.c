@@ -10,12 +10,13 @@ t_hit	closest(t_ray ray, t_list *objs)
 	double	tmp;
 
 	hit.t = -1;
+	hit.type = -1;
 	hit.color = BG_COLOR;
 	cur = objs;
 	while (cur)
 	{
 		tmp = g_inter[cur->type](ray, cur->obj);
-		if (tmp >= 0 && tmp < hit.t)
+		if (tmp >= 0 && (tmp < hit.t || hit.t == -1.0))
 		{
 			hit.t = tmp;
 			hit.p = vadd(ray.o, vmul(ray.d, tmp));
