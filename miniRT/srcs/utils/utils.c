@@ -4,10 +4,10 @@ double		next_atof(char *str, int *i)
 {
 	int		j;
 
-	while (str[*i] && !ft_isdigit(str[*i]))
+	while (str[*i] && !ft_isdigit(str[*i]) && str[*i] != '-')
 		++*i;
 	j = *i;
-	while (str[*i] && ft_isdigit(str[*i]))
+	while (str[*i] && (ft_isdigit(str[*i]) || str[*i] == '-'))
 		++*i;
 	if (str[*i] == '.')
 		++*i;
@@ -20,10 +20,10 @@ int			next_atoi(char *str, int *i)
 {
 	int		j;
 
-	while (str[*i] && !ft_isdigit(str[*i]))
+	while (str[*i] && !ft_isdigit(str[*i]) && str[*i] != '-')
 		++*i;
 	j = *i;
-	while (str[*i] && ft_isdigit(str[*i]))
+	while (str[*i] && (ft_isdigit(str[*i]) || str[*i] == '-'))
 		++*i;
 	return (ft_atoi(str + j));
 }
