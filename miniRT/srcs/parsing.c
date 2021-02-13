@@ -1,22 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/13 23:58:03 by jinukim           #+#    #+#             */
+/*   Updated: 2021/02/14 00:18:57 by jinukim          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
-int i=0;
+
 int		line_parsing(char *line, t_scene *sn)
 {
 	char	buf[512];
 
-	printf("%dth : %s\n", i++, line);
+	printf("%s\n", line);
 	ft_strcpy(buf, line);
 	free(line);
 	if (buf[0] == 0)
 		return (0);
-	else if (buf[0] == 'R' && ft_isspace(buf[1]))
-		return (parsing_r(buf, sn));
-	else if (buf[0] == 'A' && ft_isspace(buf[1]))
-		return (parsing_a(buf, sn));
-	else if (buf[0] == 'c' && ft_isspace(buf[1]))
-		return (parsing_c(buf, sn));
-	else if (buf[0] == 'l' && ft_isspace(buf[1]))
-		return (parsing_l(buf, sn));
+	else if ((buf[0] == 'R' || buf[0] == 'A') && ft_isspace(buf[1]))
+		return (buf[0] == 'R' ? parsing_r(buf, sn) : parsing_a(buf, sn));
+	else if ((buf[0] == 'c' || buf[0] == 'l') && ft_isspace(buf[1]))
+		return (buf[0] == 'c' ? parsing_c(buf, sn) : parsing_l(buf, sn));
 	else if (buf[0] == 's' && buf[1] == 'p' && ft_isspace(buf[2]))
 		return (parsing_sp(buf, sn));
 	else if (buf[0] == 'p' && buf[1] == 'l' && ft_isspace(buf[2]))

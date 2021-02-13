@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vector.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/14 00:30:38 by jinukim           #+#    #+#             */
+/*   Updated: 2021/02/14 00:30:54 by jinukim          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef VECTOR_H
 # define VECTOR_H
 
@@ -25,6 +37,6 @@ double			vabs(t_v3 a);
 t_v3			vcross(t_v3 a, t_v3 b);
 t_v3			vunit(t_v3 a);
 t_v3			vnorm(t_v3 a);
-int				viseq(t_v3, t_v3 b);
+int				viseq(t_v3 a, t_v3 b);
 
 #endif

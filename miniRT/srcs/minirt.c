@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minirt.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/13 23:57:52 by jinukim           #+#    #+#             */
+/*   Updated: 2021/02/14 00:15:07 by jinukim          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 void	errmsg(t_scene *sn, char *str)
@@ -33,7 +45,8 @@ void	my_mlx_init(t_data *mlx, t_scene *sn)
 	{
 		cam = (t_cam*)caml->obj;
 		cam->img = mlx_new_image(mlx->mlx, g_x, g_y);
-		cam->addr = mlx_get_data_addr(cam->img, &cam->bpp, &cam->lsize, &cam->endian);
+		cam->addr = mlx_get_data_addr(cam->img,
+				&cam->bpp, &cam->lsize, &cam->endian);
 		caml = caml->next;
 	}
 }

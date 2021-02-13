@@ -1,4 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   multithreading.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/13 23:57:59 by jinukim           #+#    #+#             */
+/*   Updated: 2021/02/14 00:36:11 by jinukim          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
+
+char	*g_type[] = {"empty", "sphere", "plane", "square", "cylinder",
+	"triangle", "cube", "pyramid"};
 
 void	args_set(t_data *mlx, t_scene *sn, t_cam *cam, t_arg *args)
 {
@@ -30,15 +45,12 @@ void	*make_line_thread(void *p)
 	i[0] = 0;
 	hit.type = -1;
 	delta = vmul(args->cam->hor, 1.0 / (double)g_x);
-	ray.d = vadd(ray.d, vadd(vmul(delta, 0.5), vmul(args->cam->ver, 1.0 / g_y * 2)));
+	ray.d = vadd(ray.d, vadd(vmul(delta, 0.5),
+				vmul(args->cam->ver, 1.0 / g_y * 2)));
 	while (i[0] < g_x)
 	{
-		hit = closest(ray, args->sn->objs);
-		printf("%d %d  :  %d\n",i[0],i[1],hit.type);
-/*		if (hit.t >= 0.0)
-			add_light(hit);
-		if (hit.t >= 0.0)
-			add_spec(hit);*/
+		hit = calc_pixel(ray, args);
+		printf("%d %d:%s, %06x\n", i[0], i[1], g_type[hit.type + 1], hit.color);
 		my_pixel_put(args->cam, i[0], i[1], hit.color);
 		i[0]++;
 		ray.d = vadd(ray.d, delta);
@@ -55,9 +67,9 @@ void	multithreading(t_arg *args)
 	threads = (pthread_t*)ft_calloc(g_y, sizeof(pthread_t));
 	while (++i < g_y)
 		if (pthread_create(&threads[i], NULL, make_line_thread, &args[i]))
-			errmsg("pthread create error");
+			errmsg(0, "pthread create error");
 	i = -1;
 	while (++i < g_y)
 		if (pthread_join(threads[i], 0))
-			errmsg("pthread join error");
+			errmsg(0, "pthread join error");
 }

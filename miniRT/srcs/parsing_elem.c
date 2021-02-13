@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_elem.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/13 23:58:08 by jinukim           #+#    #+#             */
+/*   Updated: 2021/02/14 00:06:24 by jinukim          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 extern int	g_x;
@@ -64,7 +76,7 @@ int			parsing_l(char *buf, t_scene *sn)
 
 	i = 1;
 	o = ft_atov(buf, &i);
-	inten = next_atoi(buf, &i);
+	inten = next_atof(buf, &i);
 	color = ft_atoc(buf, &i);
 	if (inten < 0.0 || inten > 1.0)
 		errmsg(sn, "valid intensity : [0, 1]");

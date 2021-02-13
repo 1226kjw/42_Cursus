@@ -17,10 +17,11 @@ SRCS = $(addprefix $(SRCS_DIR),\
 		square.c\
 		cylinder.c\
 		triangle.c\
-		intersect.c\
+		hub.c\
 		images.c\
 		multithreading.c\
-		vector.c\
+		vector0.c\
+		vector1.c\
 		utils/utils.c\
 		utils/get_next_line.c\
 		utils/get_next_line_utils.c\

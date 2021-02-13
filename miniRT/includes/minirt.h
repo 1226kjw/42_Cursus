@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minirt.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/14 00:31:35 by jinukim           #+#    #+#             */
+/*   Updated: 2021/02/14 00:31:39 by jinukim          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINIRT_H
 # define MINIRT_H
 
@@ -17,7 +29,7 @@
 # define CU 5
 # define PY 6
 
-# define BG_COLOR 0xffffff
+# define BG_COLOR 0x000000
 # define KEY_PRESS 2
 
 # include "mlx.h"

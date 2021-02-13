@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   triangle.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/13 23:58:31 by jinukim           #+#    #+#             */
+/*   Updated: 2021/02/13 23:58:32 by jinukim          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 t_tr	*new_tr(t_v3 a, t_v3 b, t_v3 c, int color)
@@ -40,7 +52,7 @@ int		issplit(t_v3 a, t_v3 b, t_v3 p, t_v3 q)
 
 	u = vcross(vsub(b, a), vsub(p, a));
 	v = vcross(vsub(b, a), vsub(q, a));
-	if (vinner(u, v) < 0)
+	if (vinner(u, v) <= 0)
 		return (1);
 	return (0);
 }
