@@ -7,21 +7,24 @@ SRCS_DIR = ./srcs/
 HDR_DIR = ./includes/
 
 SRCS = $(addprefix $(SRCS_DIR),\
-		minirt.c\
-		key.c\
-		parsing.c\
-		parsing_elem.c\
-		element.c\
-		sphere.c\
-		plane.c\
-		square.c\
+		color.c\
 		cylinder.c\
-		triangle.c\
+		element.c\
 		hub.c\
 		images.c\
+		key.c\
+		minirt.c\
 		multithreading.c\
+		parsing.c\
+		parsing_elem.c\
+		plane.c\
+		shading.c\
+		sphere.c\
+		square.c\
+		triangle.c\
 		vector0.c\
 		vector1.c\
+		vector2.c\
 		utils/utils.c\
 		utils/get_next_line.c\
 		utils/get_next_line_utils.c\

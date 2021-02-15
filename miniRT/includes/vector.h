@@ -38,5 +38,6 @@ t_v3			vcross(t_v3 a, t_v3 b);
 t_v3			vunit(t_v3 a);
 t_v3			vnorm(t_v3 a);
 int				viseq(t_v3 a, t_v3 b);
+double			vcos(t_v3 a, t_v3 b);
 
 #endif

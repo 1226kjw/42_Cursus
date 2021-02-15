@@ -37,6 +37,7 @@
 # include "get_next_line.h"
 # include "vector.h"
 # include "struct.h"
+# include "color.h"
 # include "utils.h"
 # include "parsing.h"
 # include "element.h"
