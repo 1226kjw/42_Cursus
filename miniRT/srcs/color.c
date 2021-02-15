@@ -36,7 +36,7 @@ int		cadd(int a, int b)
 	int		c[3];
 
 	c[0] = cred(a) + cred(b);
-	c[1] = cgreen(a) + cgreed(b);
+	c[1] = cgreen(a) + cgreen(b);
 	c[2] = cblue(a) + cblue(b);
 	return (cset(c[0], c[1], c[2]));
 }
