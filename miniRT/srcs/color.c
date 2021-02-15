@@ -49,6 +49,7 @@ int		cmul(int a, double i)
 	c[0] = (int)(cred(a) * i);
 	c[1] = (int)(cgreen(a) * i);
 	c[2] = (int)(cblue(a) * i);
+	printf("%%%%%%cmul end\n");
 	return (cset(c[0], c[1], c[2]));
 }
 
