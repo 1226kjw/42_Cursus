@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:58:08 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/14 00:06:24 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/15 23:22:10 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ int			parsing_a(char *buf, t_scene *sn)
 	am->o = vset(0, 0, 0);
 	am->inten = next_atof(buf, &i);
 	am->color = ft_atoc(buf, &i);
+	sn->a_light = am;
 	if (buf[i])
 		errmsg(sn, "unexpected character(21)");
 	return (0);

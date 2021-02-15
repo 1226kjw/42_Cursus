@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:42 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/14 00:33:49 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/15 23:24:12 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,12 @@ t_hit	calc_pixel(t_ray ray, t_arg *args)
 	hit = closest(ray, args->sn->objs);
 	if (hit.t >= 0)
 	{
-		printf("start\n");
+		hit.acol = 0;
 		hit.n = normal[hit.type](hit);
-		printf("a\n");
 		hit.acol = cmul(args->sn->a_light->color, args->sn->a_light->inten);
-		printf("b\n");
 		hit.dcol = calc_diffuse(ray, hit, args->sn);
-		printf("c\n");
 		hit.scol = calc_specular(ray, hit, args->sn);
-		printf("d\n");
 		hit.fcol = ccom(cadd(cadd(hit.acol, hit.dcol), hit.scol), hit.ocol);
-		printf("e\n");
 	}
 	else
 		hit.fcol = hit.ocol;

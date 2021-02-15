@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:31:35 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/14 00:31:39 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/16 00:20:00 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include <unistd.h>
 # include <pthread.h>
 
+# define EPSILON 0.0001
 # define SP 0
 # define PL 1
 # define SQ 2
@@ -36,8 +37,8 @@
 # include "libft.h"
 # include "get_next_line.h"
 # include "vector.h"
-# include "struct.h"
 # include "color.h"
+# include "struct.h"
 # include "utils.h"
 # include "parsing.h"
 # include "element.h"
