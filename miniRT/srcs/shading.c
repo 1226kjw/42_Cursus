@@ -11,7 +11,7 @@ int		calc_diffuse(t_ray ray, t_hit hit, t_scene *sn)
 	cur = sn->lights;
 	while (cur)
 	{
-		lp = vsub(((t_light*)cur->obj)->p, hit.p);
+		lp = vsub(((t_light*)cur->obj)->o, hit.p);
 		inten = vcos(hit.n, lp);
 		if (inten < 0)
 			inten = 0;
