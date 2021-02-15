@@ -109,8 +109,12 @@ typedef struct	s_hit
 	t_v3	p;
 	int		type;
 	void	*obj;
-	int		color;
 	t_v3	n;
+	int		ocol;
+	int		acol;
+	int		dcol;
+	int		scol;
+	int		fcol;
 }				t_hit;
 
 #endif

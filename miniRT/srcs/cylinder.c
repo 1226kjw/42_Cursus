@@ -38,6 +38,7 @@ int		parsing_cy(char *buf, t_scene *sn)
 	ft_lstadd_back(&sn->objs, no);
 	if (viseq(((t_cy*)no->obj)->d, vset(0.0, 0.0, 0.0)))
 		errmsg(sn, "normal vector cannot be null vector");
+	((t_cy*)no->obj)->d = vunit(((t_cy*)no->obj)->d);
 	if (((t_cy*)no->obj)->r < 0 || ((t_cy*)no->obj)->r < 0)
 		errmsg(sn, "valid height/radius : [0, inf)");
 	return (0);
@@ -87,4 +88,14 @@ double	i_cy(t_ray r, void *obj)
 int		c_cy(void *obj)
 {
 	return (((t_cy*)obj)->color);
+}
+
+t_v3	n_cy(t_hit hit)
+{
+	t_cy	cy;
+	t_v3	cq;
+
+	cy = *(t_cy*)hit.obj;
+	cq = vmul(cy.d, vinner(vsub(hit.p, cy.o), cy.d));
+	return (vunit(vsub(hit.p, vadd(cy.o, cq))));
 }

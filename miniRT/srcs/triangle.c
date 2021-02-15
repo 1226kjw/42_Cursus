@@ -81,3 +81,11 @@ int		c_tr(void *obj)
 {
 	return (((t_tr*)obj)->color);
 }
+
+t_v3	n_tr(t_hit hit)
+{
+	t_tr	tr;
+
+	tr = *(t_tr*)hit.obj;
+	return (vunit(vcross(vsub(tr.b, tr.a), vsub(tr.c, tr.b))));
+}

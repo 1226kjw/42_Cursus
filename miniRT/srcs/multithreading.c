@@ -50,8 +50,8 @@ void	*make_line_thread(void *p)
 	while (i[0] < g_x)
 	{
 		hit = calc_pixel(ray, args);
-		printf("%d %d:%s, %06x\n", i[0], i[1], g_type[hit.type + 1], hit.color);
-		my_pixel_put(args->cam, i[0], i[1], hit.color);
+		printf("%d %d:%s, %06x\n", i[0], i[1], g_type[hit.type + 1], hit.fcol);
+		my_pixel_put(args->cam, i[0], i[1], hit.fcol);
 		i[0]++;
 		ray.d = vadd(ray.d, delta);
 	}

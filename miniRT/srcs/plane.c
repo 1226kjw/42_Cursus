@@ -60,3 +60,8 @@ int		c_pl(void *obj)
 {
 	return (((t_pl*)obj)->color);
 }
+
+t_v3	n_pl(t_hit hit)
+{
+	return (vunit(((t_pl*)hit.obj)->n));
+}

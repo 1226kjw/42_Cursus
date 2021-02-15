@@ -69,3 +69,8 @@ int		c_sp(void *obj)
 {
 	return (((t_sp*)obj)->color);
 }
+
+t_v3	n_sp(t_hit hit)
+{
+	return (vunit(vsub(hit.p, ((t_sp*)hit.obj)->o)));
+}

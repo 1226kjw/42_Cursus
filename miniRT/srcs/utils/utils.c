@@ -78,27 +78,3 @@ int			ft_atoc(char *str, int *i)
 	col |= (c[0] << 16);
 	return (col);
 }
-
-int			color_combine(int a, int b)
-{
-	int		c[3];
-	int		color;
-
-	color = 0;
-	c[0] = (a >> 16) | 0xff;
-	c[0] += (b >> 16) | 0xff;
-	if (c[0] > 255)
-		c[0] = 255;
-	c[1] = (a >> 8) | 0xff;
-	c[1] += (b >> 8) | 0xff;
-	if (c[1] > 255)
-		c[1] = 255;
-	c[2] = a | 0xff;
-	c[2] += b | 0xff;
-	if (c[2] > 255)
-		c[2] = 255;
-	color |= (c[0] << 16);
-	color |= (c[1] << 8);
-	color |= c[2];
-	return (color);
-}

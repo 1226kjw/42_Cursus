@@ -71,3 +71,8 @@ int		c_sq(void *obj)
 {
 	return (((t_sq*)obj)->color);
 }
+
+t_v3	n_sq(t_hit hit)
+{
+	return (vunit(((t_sq*)hit.obj)->n));
+}

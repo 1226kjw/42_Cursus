@@ -25,5 +25,10 @@ int		c_pl(void *obj);
 int		c_sq(void *obj);
 int		c_cy(void *obj);
 int		c_tr(void *obj);
+t_v3	n_sp(t_hit hit);
+t_v3	n_pl(t_hit hit);
+t_v3	n_sq(t_hit hit);
+t_v3	n_cy(t_hit hit);
+t_v3	n_tr(t_hit hit);
 
 #endif
