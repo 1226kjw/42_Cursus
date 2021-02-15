@@ -21,6 +21,7 @@ t_hit	calc_pixel(t_ray ray, t_arg *args)
 	hit = closest(ray, args->sn->objs);
 	if (hit.t >= 0)
 	{
+		printf("here");
 		hit.n = normal[hit.type](hit);
 		hit.acol = cmul(args->sn->a_light->color, args->sn->a_light->inten);
 		hit.dcol = calc_diffuse(ray, hit, args->sn);
