@@ -19,7 +19,7 @@ t_cy	*new_cy(t_v3 o, t_v3 d, double r, double h)
 	if (!(ret = (t_cy*)ft_calloc(1, sizeof(t_cy))))
 		errmsg(0, "error:malloc\n");
 	ret->o = o;
-	ret->d = d;
+	ret->d = vunit(d);
 	ret->r = r;
 	ret->h = h;
 	return (ret);
@@ -46,25 +46,27 @@ int		parsing_cy(char *buf, t_scene *sn)
 
 double	i_cy(t_ray r, void *obj)
 {
-	t_cy	cy;
-	double	c[3];
+	t_cy	c;
+	double	a[3];
 	double	disc;
 	double	root[2];
 	t_v3	w;
 
-	cy = *(t_cy*)obj;
-	w = vsub(r.o, cy.o);
-	c[0] = vinner(r.d, r.d) - pow(vinner(r.d, vunit(cy.d)), 2);
-	c[1] = vinner(r.d, w) - vinner(r.d, vunit(cy.d)) * vinner(w, vunit(cy.d));
-	c[2] = vinner(w, w) - pow(vinnr(w, vunit(cy.d)), 2) - cy.r * cy.r;
-	disc = c[1] * c[1] - c[0] * c[2];
+	c = *(t_cy*)obj;
+	w = vsub(r.o, c.o);
+	a[0] = vinner(r.d, r.d) - pow(vinner(r.d, vunit(c.d)), 2);
+	a[1] = vinner(r.d, w) - vinner(r.d, vunit(c.d)) * vinner(w, vunit(c.d));
+	a[2] = vinner(w, w) - pow(vinner(w, vunit(c.d)), 2) - c.r * c.r;
+	disc = a[1] * a[1] - a[0] * a[2];
 	if (disc <= 0)
 		return (-1.0);
-	root[0] = (-c[1] - sqrt(disc)) / c[0];
-	root[1] = (-c[1] + sqrt(disc)) / c[0];
-	if (root[0])
+	root[0] = (-a[1] - sqrt(disc)) / a[0];
+	root[1] = (-a[1] + sqrt(disc)) / a[0];
+	a[0] = vinner(vsub(vadd(r.o, vmul(r.d, root[0])), c.o), vmul(c.d, c.h));
+	a[1] = vinner(vsub(vadd(r.o, vmul(r.d, root[1])), c.o), vmul(c.d, c.h));
+	if (root[0] >= 0 && a[0] >= 0 && a[0] <= c.h)
 		return (root[0]);
-	else if (root[1])
+	else if (root[1]  >= 0 && a[1] >= 0 && a[1] <= c.h)
 		return (root[1]);
 	else
 		return (-1.0);
