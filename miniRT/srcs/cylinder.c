@@ -44,7 +44,6 @@ int		parsing_cy(char *buf, t_scene *sn)
 	return (0);
 }
 
-/*
 void	cy_quad(t_ray r, t_cy cy, t_v3 *coe)
 {
 	t_v3	u;
@@ -58,21 +57,19 @@ void	cy_quad(t_ray r, t_cy cy, t_v3 *coe)
 	coe->y = 2 * (vinner(u, v) - vinner(u, h) * vinner(v, h));
 	coe->z = vinner(v, v) - vinner(v, h) * vinner(v, h) - cy.r * cy.r;
 }
-*/
 
 double	i_cy(t_ray r, void *obj)
 {
 	t_cy	cy;
-	double	a;
-	double	b;
-	double	c;
+	double	c[3];
 	double	disc;
+	t_v3	w;
 
 	cy = *(t_cy*)obj;
-	a = 1.0 - vinner(vunit(r.d), cy.d) * vinner(vunit(r.d), cy.d);
-	b = vinner(vunit(r.d), vsub(r.o, cy.o)) - vinner(vunit(r.d), cy.d) *
-			vinner(vsub(r.o, cy.o), cy.o);
-	c = vinner(vsub(r.o, cy.o), vsub(r.o, cy.o));
+	w = vsub(r.o, cy.o);
+	a = vinner(r.d, r.d) - pow(vinner(r.d, vunit(cy.d)), 2);
+	b = vinner(r.d, w) - vinner(r.d, vunit(cy.d)) * vinner(w, vunit(cy.d));
+	c = vinner(w, w) - pow(vinnr(w, vunit(cy.d)), 2) - cy.r * cy.r;
 	disc = b * b - a * c;
 	if (disc <= 0)
 		return (-1.0);
