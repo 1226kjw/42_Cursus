@@ -60,8 +60,8 @@ double	i_cy(t_ray r, void *obj)
 	disc = c[1] * c[1] - c[0] * c[2];
 	if (disc <= 0)
 		return (-1.0);
-	root[0] = (-b - sqrt(disc)) / a;
-	root[1] = (-b + sqrt(disc)) / a;
+	root[0] = (-c[1] - sqrt(disc)) / c[0];
+	root[1] = (-c[1] + sqrt(disc)) / c[0];
 	if (root[0])
 		return (root[0]);
 	else if (root[1])
