@@ -1,6 +1,6 @@
 #include "minirt.h"
 
-int		calc_diffuse(t_ray ray, t_hit hit, t_scene *sn)
+int		calc_diffuse(t_hit hit, t_scene *sn)
 {
 	t_list	*cur;
 	int		color;

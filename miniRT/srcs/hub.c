@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:42 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/16 03:22:12 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/16 15:53:17 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ t_hit	calc_pixel(t_ray ray, t_arg *args)
 		hit.acol = 0;
 		hit.n = normal[hit.type](hit);
 		hit.acol = cmul(args->sn->a_light->color, args->sn->a_light->inten);
-		hit.dcol = calc_diffuse(ray, hit, args->sn);
+		hit.dcol = calc_diffuse(hit, args->sn);
 		hit.scol = calc_specular(ray, hit, args->sn);
 		hit.fcol = cadd(ccom(cadd(hit.acol, hit.dcol), hit.ocol), hit.scol);
 	}
