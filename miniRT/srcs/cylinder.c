@@ -44,40 +44,28 @@ int		parsing_cy(char *buf, t_scene *sn)
 	return (0);
 }
 
-void	cy_quad(t_ray r, t_cy cy, t_v3 *coe)
-{
-	t_v3	u;
-	t_v3	v;
-	t_v3	h;
-
-	u = vunit(r.d);
-	v = vsub(r.o, cy.o);
-	h = cy.d;
-	coe->x = 1 - vinner(u, h) * vinner(u, h);
-	coe->y = 2 * (vinner(u, v) - vinner(u, h) * vinner(v, h));
-	coe->z = vinner(v, v) - vinner(v, h) * vinner(v, h) - cy.r * cy.r;
-}
-
 double	i_cy(t_ray r, void *obj)
 {
 	t_cy	cy;
 	double	c[3];
 	double	disc;
+	double	root[2];
 	t_v3	w;
 
 	cy = *(t_cy*)obj;
 	w = vsub(r.o, cy.o);
-	a = vinner(r.d, r.d) - pow(vinner(r.d, vunit(cy.d)), 2);
-	b = vinner(r.d, w) - vinner(r.d, vunit(cy.d)) * vinner(w, vunit(cy.d));
-	c = vinner(w, w) - pow(vinnr(w, vunit(cy.d)), 2) - cy.r * cy.r;
-	disc = b * b - a * c;
+	c[0] = vinner(r.d, r.d) - pow(vinner(r.d, vunit(cy.d)), 2);
+	c[1] = vinner(r.d, w) - vinner(r.d, vunit(cy.d)) * vinner(w, vunit(cy.d));
+	c[2] = vinner(w, w) - pow(vinnr(w, vunit(cy.d)), 2) - cy.r * cy.r;
+	disc = c[1] * c[1] - c[0] * c[2];
 	if (disc <= 0)
 		return (-1.0);
-	disc = sqrt(disc);
-	if ((-b - disc) / a >= 0)
-		return ((-b - disc) / a);
-	else if ((-b + disc) / a >= 0)
-		return ((-b + disc) / a);
+	root[0] = (-b - sqrt(disc)) / a;
+	root[1] = (-b + sqrt(disc)) / a;
+	if (root[0])
+		return (root[0]);
+	else if (root[1])
+		return (root[1]);
 	else
 		return (-1.0);
 }
