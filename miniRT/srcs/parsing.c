@@ -19,7 +19,7 @@ int		line_parsing(char *line, t_scene *sn)
 	printf("%s\n", line);
 	ft_strcpy(buf, line);
 	free(line);
-	if (buf[0] == 0)
+	if (buf[0] == 0 || buf[0] == '#')
 		return (0);
 	else if ((buf[0] == 'R' || buf[0] == 'A') && ft_isspace(buf[1]))
 		return (buf[0] == 'R' ? parsing_r(buf, sn) : parsing_a(buf, sn));
@@ -35,8 +35,6 @@ int		line_parsing(char *line, t_scene *sn)
 		return (parsing_cy(buf, sn));
 	else if (buf[0] == 't' && buf[1] == 'r' && ft_isspace(buf[2]))
 		return (parsing_tr(buf, sn));
-	else if (buf[0] == '#')
-		return (0);
 	return (-1);
 }
 
