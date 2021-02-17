@@ -35,6 +35,9 @@
 # define KEY_PRESS 2
 # define DESTROYNOT 17
 
+# define LEFT 123
+# define RIGHT 124
+
 # include "mlx.h"
 # include "libft.h"
 # include "get_next_line.h"

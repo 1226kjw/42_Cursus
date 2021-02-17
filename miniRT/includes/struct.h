@@ -63,12 +63,6 @@ typedef struct	s_tr
 	int		color;
 }				t_tr;
 
-typedef struct	s_data
-{
-	void	*mlx;
-	void	*win;
-}				t_data;
-
 typedef struct	s_cam
 {
 	t_v3	o;
@@ -94,6 +88,13 @@ typedef struct	s_scene
 	t_list	*lights;
 	t_list	*objs;
 }				t_scene;
+
+typedef struct	s_data
+{
+	void	*mlx;
+	void	*win;
+	t_scene	*sn;
+}				t_data;
 
 typedef struct	s_arg
 {

@@ -20,5 +20,6 @@ t_list	*ft_lstnew(void *content)
 		return (0);
 	newnode->obj = content;
 	newnode->next = 0;
+	newnode->bef = 0;
 	return (newnode);
 }

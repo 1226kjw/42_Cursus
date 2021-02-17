@@ -50,6 +50,7 @@ void	my_mlx_init(t_data *mlx, t_scene *sn)
 				&cam->bpp, &cam->lsize, &cam->endian);
 		caml = caml->next;
 	}
+	mlx->sn = sn;
 }
 
 int		main(int argc, char **argv)
