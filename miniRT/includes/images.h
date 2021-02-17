@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:29:37 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/17 21:35:11 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/17 23:05:41 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ t_hit	calc_pixel(t_ray ray, t_arg *args);
 t_hit	closest(t_ray ray, t_list *objs);
 int		calc_diffuse(t_hit hit, t_light *cur);
 int		calc_specular(t_ray ray, t_hit hit, t_light *cur);
+void	p_light(t_hit *hit, t_scene *sn);
 
 #endif

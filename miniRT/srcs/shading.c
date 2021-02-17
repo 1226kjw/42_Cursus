@@ -1,72 +1,28 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   shading.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/18 00:49:36 by jinukim           #+#    #+#             */
+/*   Updated: 2021/02/18 00:50:22 by jinukim          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
-
-/*int		calc_diffuse(t_hit hit, t_scene *sn)
-{
-	t_list	*cur;
-	int		color;
-	double	inten;
-	t_ray	lray;
-	double	t;
-
-	color = 0;
-	cur = sn->lights;
-	lray.o = hit.p;
-	while (cur)
-	{
-		inten = 0;
-		lray.d = vunit(vsub(((t_light*)cur->obj)->o, lray.o));
-		lray.o = vadd(lray.o, vmul(lray.d, EPSILON));
-		t = closest(lray, sn->objs).t;
-		if (t > vabs(vsub(((t_light*)cur->obj)->o, hit.p)) || t <= 0)
-			inten = vcos(hit.n, vsub(((t_light*)cur->obj)->o, hit.p));
-		if (inten < 0)
-			inten = 0;
-		color = cadd(color, cmul(((t_light*)cur->obj)->color,
-					((t_light*)cur->obj)->inten * inten));
-		cur = cur->next;
-	}
-	return (color);
-}*/
 
 int		calc_diffuse(t_hit hit, t_light *cur)
 {
 	int		color;
 	double	inten;
 
-	inten =  vcos(hit.n, vsub(cur->o, hit.p));
+	inten = vcos(hit.n, vunit(vsub(cur->o, hit.p)));
 	if (inten < 0)
 		inten = 0;
 	color = cmul(cur->color, cur->inten * inten);
 	return (color);
 }
-
-/*int		calc_specular(t_ray ray, t_hit hit, t_scene *sn)
-{
-	t_list	*cur;
-	int		color;
-	double	i[2];
-	t_ray	lray;
-	t_v3	lp;
-
-	color = 0;
-	cur = sn->lights;
-	lray.o = hit.p;
-	while (cur)
-	{
-		i[0] = 0;
-		lp = vunit(vsub(((t_light*)cur->obj)->o, hit.p));
-		lray.d = vunit(vsub(((t_light*)cur->obj)->o, lray.o));
-		lray.o = vadd(lray.o, vmul(lray.d, EPSILON));
-		i[1] = closest(lray, sn->objs).t;
-		if (i[1] > vabs(vsub(((t_light*)cur->obj)->o, hit.p)) || i[1] <= 0)
-			i[0] = vinner(vunit(ray.d), vadd(lp, vmul(hit.n, -2 * vinner(lp, hit.n))));
-		i[0] = i[0] < 0 ? 0 : pow(i[0], 32);
-		color = cadd(color, cmul(((t_light*)cur->obj)->color,
-					((t_light*)cur->obj)->inten * i[0]));
-		cur = cur->next;
-	}
-	return (color);
-}*/
 
 int		calc_specular(t_ray ray, t_hit hit, t_light *cur)
 {
@@ -80,4 +36,30 @@ int		calc_specular(t_ray ray, t_hit hit, t_light *cur)
 	inten = inten < 0 ? 0 : pow(inten, 32);
 	color = cmul(cur->color, cur->inten * inten);
 	return (color);
+}
+
+void	p_light(t_hit *hit, t_scene *sn)
+{
+	t_list	*cur;
+	double	t;
+	double	inten;
+	t_ray	lray;
+	t_light	*p;
+
+	cur = sn->p_lights;
+	while (cur)
+	{
+		inten = 0;
+		p = (t_light*)cur->obj;
+		lray.d = vunit(vmul(p->o, -1));
+		lray.o = vadd(hit->p, vmul(lray.d, EPSILON));
+		t = closest(lray, sn->objs).t;
+		if (t <= 0)
+			inten = vcos(hit->n, lray.d);
+		if (inten < 0)
+			inten = 0;
+		hit->dcol = cadd(hit->dcol, cmul(((t_light*)cur->obj)->color,
+					((t_light*)cur->obj)->inten * inten));
+		cur = cur->next;
+	}
 }

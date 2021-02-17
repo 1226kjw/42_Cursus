@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:52 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/17 16:29:22 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/17 22:50:15 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	errmsg(t_scene *sn, char *str)
 	{
 		ft_lstclear(&sn->cams, free);
 		ft_lstclear(&sn->lights, free);
+		ft_lstclear(&sn->p_lights, free);
 		ft_lstclear(&sn->objs, free);
 		free(sn->a_light);
 	}

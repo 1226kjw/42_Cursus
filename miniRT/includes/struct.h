@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:30:21 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/14 00:30:25 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/17 23:41:28 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,40 @@ typedef struct	s_tr
 	int		color;
 }				t_tr;
 
+typedef struct	s_cu
+{
+	t_v3	o;
+	t_v3	n;
+	double	d;
+	int		color;
+}				t_cu;
+
+typedef struct	s_py
+{
+	t_v3	o;
+	t_v3	n;
+	double	d;
+	double	h;
+	int		color;
+}				t_py;
+
+typedef struct	s_co
+{
+	t_v3	o;
+	t_v3	n;
+	double	r;
+	double	h;
+	int		color;
+}				t_co;
+
+typedef struct	s_ci
+{
+	t_v3	o;
+	t_v3	n;
+	double	r;
+	int		color;
+}				t_ci;
+
 typedef struct	s_cam
 {
 	t_v3	o;
@@ -86,6 +120,7 @@ typedef struct	s_scene
 	t_list	*cams;
 	t_list	*basecam;
 	t_list	*lights;
+	t_list	*p_lights;
 	t_list	*objs;
 }				t_scene;
 

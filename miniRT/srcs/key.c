@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:03:27 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/17 18:49:21 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 00:45:21 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ void	cam_bef(t_data *mlx, t_scene *sn)
 	else
 		sn->basecam = ft_lstlast(sn->cams);
 	mlx_clear_window(mlx->mlx, mlx->win);
-	mlx_put_image_to_window(mlx->mlx, mlx->win, ((t_cam*)sn->basecam->obj)->img, 0, 0);
+	mlx_put_image_to_window(mlx->mlx, mlx->win,
+			((t_cam*)sn->basecam->obj)->img, 0, 0);
 }
 
 void	cam_next(t_data *mlx, t_scene *sn)
@@ -29,7 +30,8 @@ void	cam_next(t_data *mlx, t_scene *sn)
 	else
 		sn->basecam = sn->cams;
 	mlx_clear_window(mlx->mlx, mlx->win);
-	mlx_put_image_to_window(mlx->mlx, mlx->win, ((t_cam*)sn->basecam->obj)->img, 0, 0);
+	mlx_put_image_to_window(mlx->mlx, mlx->win,
+			((t_cam*)sn->basecam->obj)->img, 0, 0);
 }
 
 int		close_program(t_data *mlx)

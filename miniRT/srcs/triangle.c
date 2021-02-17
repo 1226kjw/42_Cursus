@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:58:31 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/17 16:16:23 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 00:52:11 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,7 @@ t_tr	*new_tr(t_v3 a, t_v3 b, t_v3 c, int color)
 	ret->color = color;
 	return (ret);
 }
-int		temp(char *str, int *i)
-{
-	next_atof(str, i);
-	next_atof(str, i);
-	next_atof(str, i);
-	next_atof(str, i);
-	return (1);
-}
+
 int		parsing_tr(char *buf, t_scene *sn)
 {
 	int		i;
@@ -40,8 +33,8 @@ int		parsing_tr(char *buf, t_scene *sn)
 
 	i = 2;
 	tr = new_tr(ft_atov(buf, &i), ft_atov(buf, &i),
-			ft_atov(buf, &i), temp(buf, &i) * ft_atoc(buf, &i));
-	no = ft_lstnew((void*)tr);
+			ft_atov(buf, &i), ft_atoc(buf, &i));
+	no = ft_lstnew(TR, (void*)tr);
 	no->type = TR;
 	ft_lstadd_back(&sn->objs, no);
 	if (viseq(tr->a, tr->b) || viseq(tr->b, tr->c) || viseq(tr->c, tr->a))
@@ -49,18 +42,6 @@ int		parsing_tr(char *buf, t_scene *sn)
 	if (vinner(vsub(tr->a, tr->b), vsub(tr->c, tr->b)) ==
 			fabs(vabs(vsub(tr->a, tr->b)) * vabs(vsub(tr->c, tr->b))))
 		errmsg(sn, "3 points in line cannot make triangle");
-	return (0);
-}
-
-int		issplit(t_v3 a, t_v3 b, t_v3 p, t_v3 q)
-{
-	t_v3	u;
-	t_v3	v;
-
-	u = vcross(vsub(b, a), vsub(p, a));
-	v = vcross(vsub(b, a), vsub(q, a));
-	if (vinner(u, v) <= 0)
-		return (1);
 	return (0);
 }
 

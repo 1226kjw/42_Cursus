@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:58:22 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/17 17:35:00 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/17 23:54:06 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,8 @@ int		parsing_sp(char *buf, t_scene *sn)
 	t_list	*no;
 
 	i = 2;
-	no = ft_lstnew(new_sp(ft_atov(buf, &i),
+	no = ft_lstnew(SP, new_sp(ft_atov(buf, &i),
 				next_atof(buf, &i), ft_atoc(buf, &i)));
-	no->type = SP;
 	ft_lstadd_back(&sn->objs, no);
 	if (((t_sp*)no->obj)->r < 0)
 		errmsg(sn, "valid radius : [0, inf)");

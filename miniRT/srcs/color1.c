@@ -1,36 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_lstmap.c                                        :+:      :+:    :+:   */
+/*   color1.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/10/01 22:16:29 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 00:04:42 by jinukim          ###   ########.fr       */
+/*   Created: 2021/02/18 01:00:36 by jinukim           #+#    #+#             */
+/*   Updated: 2021/02/18 01:00:38 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minirt.h"
 
-t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
+int		cmul(int a, double i)
 {
-	t_list	*newlst;
-	t_list	*newcur;
+	int		c[3];
 
-	if (!lst)
+	if (i <= 0.0)
 		return (0);
-	newlst = ft_lstnew(0, f(lst->obj));
-	newcur = newlst;
-	lst = lst->next;
-	while (lst)
-	{
-		if (!(newcur->next = ft_lstnew(0, f(lst->obj))))
-		{
-			ft_lstclear(&newlst, del);
-			return (0);
-		}
-		newcur = newcur->next;
-		lst = lst->next;
-	}
-	return (newlst);
+	c[0] = (int)(cred(a) * i);
+	c[1] = (int)(cgreen(a) * i);
+	c[2] = (int)(cblue(a) * i);
+	return (cset(c[0], c[1], c[2]));
+}
+
+int		ccom(int a, int b)
+{
+	int		c[3];
+
+	c[0] = cred(a) * cred(b) / 255;
+	c[1] = cgreen(a) * cgreen(b) / 255;
+	c[2] = cblue(a) * cblue(b) / 255;
+	return (cset(c[0], c[1], c[2]));
 }

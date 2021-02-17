@@ -1,8 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   color.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/18 00:41:23 by jinukim           #+#    #+#             */
+/*   Updated: 2021/02/18 00:53:26 by jinukim          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef COLOR_H
 # define COLOR_H
 
 # include "minirt.h"
 
+int		color_combine(int a, int b);
 int		cred(int a);
 int		cgreen(int a);
 int		cblue(int a);

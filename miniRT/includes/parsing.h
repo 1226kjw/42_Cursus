@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:31:00 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/14 00:31:13 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 00:03:41 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@ int		parsing_r(char *buf, t_scene *sd);
 int		parsing_a(char *buf, t_scene *sd);
 int		parsing_c(char *buf, t_scene *sd);
 int		parsing_l(char *buf, t_scene *sd);
+int		parsing_p(char *buf, t_scene *sd);
 int		parsing_sp(char *buf, t_scene *sd);
 int		parsing_pl(char *buf, t_scene *sd);
 int		parsing_sq(char *buf, t_scene *sd);
 int		parsing_cy(char *buf, t_scene *sd);
 int		parsing_tr(char *buf, t_scene *sd);
+int		parsing_cu(char *buf, t_scene *sd);
 
 #endif

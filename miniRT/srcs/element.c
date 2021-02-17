@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:36 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/14 00:05:48 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/17 22:50:39 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ t_cam	*newcam(t_v3 o, t_v3 d, int fov)
 {
 	t_cam	*nc;
 
-	nc = (t_cam*)ft_calloc(1, sizeof(t_cam));
+	if (!(nc = (t_cam*)ft_calloc(1, sizeof(t_cam))))
+		errmsg(0, "malloc");
 	nc->o = o;
 	nc->d = d;
 	nc->fov = fov;
@@ -32,7 +33,8 @@ t_light	*newlight(t_v3 o, double inten, int color)
 {
 	t_light	*nl;
 
-	nl = (t_light*)ft_calloc(1, sizeof(t_light));
+	if (!(nl = (t_light*)ft_calloc(1, sizeof(t_light))))
+		errmsg(0, "malloc");
 	nl->o = o;
 	nl->inten = inten;
 	nl->color = color;

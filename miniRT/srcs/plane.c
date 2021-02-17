@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:58:17 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/13 23:58:18 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/17 23:54:18 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,8 @@ int		parsing_pl(char *buf, t_scene *sn)
 	t_list	*no;
 
 	i = 2;
-	no = ft_lstnew(new_pl(ft_atov(buf, &i),
+	no = ft_lstnew(PL, new_pl(ft_atov(buf, &i),
 				ft_atov(buf, &i), ft_atoc(buf, &i)));
-	no->type = PL;
 	ft_lstadd_back(&sn->objs, no);
 	if (vabs(((t_pl*)no->obj)->n) == 0.0)
 		errmsg(sn, "normal vector cannot be null vector");

@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:59 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/16 13:53:01 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 00:51:35 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,11 @@ void	*make_line_thread(void *p)
 	while (i[0] < g_x)
 	{
 		hit = calc_pixel(ray, args);
-//		printf("%d %d:%s, %06x\n", i[0], i[1], g_type[hit.type + 1], hit.fcol);
 		my_pixel_put(args->cam, i[0], i[1], hit.fcol);
 		i[0]++;
 		ray.d = vadd(ray.d, delta);
 	}
+	printf("%d line complete!\n", i[1]);
 	return (NULL);
 }
 

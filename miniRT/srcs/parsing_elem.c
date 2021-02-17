@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:58:08 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/15 23:22:10 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 00:05:47 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int			parsing_c(char *buf, t_scene *sn)
 		errmsg(sn, "direction vector cannot be null vector");
 	if (fov <= 0 || fov >= 180)
 		errmsg(sn, "vaild fov : (0, 180)");
-	ft_lstadd_back(&(sn->cams), ft_lstnew(newcam(o, d, fov)));
+	ft_lstadd_back(&(sn->cams), ft_lstnew(0, newcam(o, d, fov)));
 	return (0);
 }
 
@@ -81,6 +81,25 @@ int			parsing_l(char *buf, t_scene *sn)
 	color = ft_atoc(buf, &i);
 	if (inten < 0.0 || inten > 1.0)
 		errmsg(sn, "valid intensity : [0, 1]");
-	ft_lstadd_back(&(sn->lights), ft_lstnew(newlight(o, inten, color)));
+	ft_lstadd_back(&(sn->lights), ft_lstnew(0, newlight(o, inten, color)));
+	return (0);
+}
+
+int			parsing_p(char *buf, t_scene *sn)
+{
+	int		i;
+	t_v3	o;
+	double	inten;
+	int		color;
+
+	i = 1;
+	o = ft_atov(buf, &i);
+	if (!o.x && !o.y && !o.z)
+		errmsg(sn, "direction vector cannot be null vector(p_light)");
+	inten = next_atof(buf, &i);
+	color = ft_atoc(buf, &i);
+	if (inten < 0.0 || inten > 1.0)
+		errmsg(sn, "valid intensity : [0, 1]");
+	ft_lstadd_back(&(sn->p_lights), ft_lstnew(0, newlight(o, inten, color)));
 	return (0);
 }

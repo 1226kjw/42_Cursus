@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:31:25 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/14 00:31:30 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 00:36:38 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "minirt.h"
 
+t_sq	*new_sq(t_v3 o, t_v3 n[2], double d, int color);
 double	i_sp(t_ray ray, void *obj);
 double	i_pl(t_ray ray, void *obj);
 double	i_sq(t_ray ray, void *obj);

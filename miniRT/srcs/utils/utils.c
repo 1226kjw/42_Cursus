@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:58:37 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/13 23:58:38 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 00:52:21 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,16 @@ int			ft_atoc(char *str, int *i)
 	col |= (c[1] << 8);
 	col |= (c[0] << 16);
 	return (col);
+}
+
+int			issplit(t_v3 a, t_v3 b, t_v3 p, t_v3 q)
+{
+	t_v3	u;
+	t_v3	v;
+
+	u = vcross(vsub(b, a), vsub(p, a));
+	v = vcross(vsub(b, a), vsub(q, a));
+	if (vinner(u, v) <= 0)
+		return (1);
+	return (0);
 }

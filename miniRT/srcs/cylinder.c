@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:26 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/16 15:26:25 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 00:50:10 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,15 +31,14 @@ int		parsing_cy(char *buf, t_scene *sn)
 	t_list	*no;
 
 	i = 2;
-	no = ft_lstnew(new_cy(ft_atov(buf, &i), ft_atov(buf, &i),
+	no = ft_lstnew(CY, new_cy(ft_atov(buf, &i), ft_atov(buf, &i),
 				next_atof(buf, &i), next_atof(buf, &i)));
-	no->type = CY;
 	((t_cy*)(no->obj))->color = ft_atoc(buf, &i);
 	ft_lstadd_back(&sn->objs, no);
 	if (viseq(((t_cy*)no->obj)->d, vset(0.0, 0.0, 0.0)))
 		errmsg(sn, "normal vector cannot be null vector");
 	((t_cy*)no->obj)->d = vunit(((t_cy*)no->obj)->d);
-	if (((t_cy*)no->obj)->r < 0 || ((t_cy*)no->obj)->r < 0)
+	if (((t_cy*)no->obj)->r < 0 || ((t_cy*)no->obj)->h < 0)
 		errmsg(sn, "valid height/radius : [0, inf)");
 	return (0);
 }
@@ -66,7 +65,7 @@ double	i_cy(t_ray r, void *obj)
 	a[1] = vinner(vsub(vadd(r.o, vmul(r.d, root[1])), c.o), vmul(c.d, c.h));
 	if (root[0] >= 0 && a[0] >= 0 && a[0] <= c.h * c.h)
 		return (root[0]);
-	else if (root[1]  >= 0 && a[1] >= 0 && a[1] <= c.h * c.h)
+	else if (root[1] >= 0 && a[1] >= 0 && a[1] <= c.h * c.h)
 		return (root[1]);
 	else
 		return (-1.0);
