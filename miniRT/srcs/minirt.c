@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:52 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/16 20:44:13 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/17 16:29:22 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ void	errmsg(t_scene *sn, char *str)
 		ft_lstclear(&sn->objs, free);
 		free(sn->a_light);
 	}
-	printf("Error : %s\n", str);
+	if (str)
+		printf("Error : %s\n", str);
 	exit(1);
 }
 

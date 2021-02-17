@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:58:31 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/13 23:58:32 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/17 16:16:23 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,14 @@ t_tr	*new_tr(t_v3 a, t_v3 b, t_v3 c, int color)
 	ret->color = color;
 	return (ret);
 }
-
+int		temp(char *str, int *i)
+{
+	next_atof(str, i);
+	next_atof(str, i);
+	next_atof(str, i);
+	next_atof(str, i);
+	return (1);
+}
 int		parsing_tr(char *buf, t_scene *sn)
 {
 	int		i;
@@ -33,7 +40,7 @@ int		parsing_tr(char *buf, t_scene *sn)
 
 	i = 2;
 	tr = new_tr(ft_atov(buf, &i), ft_atov(buf, &i),
-			ft_atov(buf, &i), ft_atoc(buf, &i));
+			ft_atov(buf, &i), temp(buf, &i) * ft_atoc(buf, &i));
 	no = ft_lstnew((void*)tr);
 	no->type = TR;
 	ft_lstadd_back(&sn->objs, no);
