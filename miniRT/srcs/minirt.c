@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:52 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/15 23:22:35 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/16 20:44:13 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ int		main(int argc, char **argv)
 	make_img(&mlx, &sn, args);
 	mlx_put_image_to_window(mlx.mlx, mlx.win,
 			((t_cam*)(sn.basecam->obj))->img, 0, 0);
-	mlx_hook(mlx.win, KEY_PRESS, 0, key_handle, 0);
+	mlx_hook(mlx.win, KEY_PRESS, 0, key_handle, &mlx);
+	mlx_hook(mlx.win, DESTROYNOT, 1L << 17, close_program, &mlx);
 	mlx_loop(mlx.mlx);
 	return (0);
 }

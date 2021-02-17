@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:26 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/14 00:21:18 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/16 15:26:25 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,9 @@ double	i_cy(t_ray r, void *obj)
 	root[1] = (-a[1] + sqrt(disc)) / a[0];
 	a[0] = vinner(vsub(vadd(r.o, vmul(r.d, root[0])), c.o), vmul(c.d, c.h));
 	a[1] = vinner(vsub(vadd(r.o, vmul(r.d, root[1])), c.o), vmul(c.d, c.h));
-	if (root[0] >= 0 && a[0] >= 0 && a[0] <= c.h)
+	if (root[0] >= 0 && a[0] >= 0 && a[0] <= c.h * c.h)
 		return (root[0]);
-	else if (root[1]  >= 0 && a[1] >= 0 && a[1] <= c.h)
+	else if (root[1]  >= 0 && a[1] >= 0 && a[1] <= c.h * c.h)
 		return (root[1]);
 	else
 		return (-1.0);
