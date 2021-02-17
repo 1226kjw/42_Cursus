@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:59 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 00:51:35 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 01:40:08 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	*make_line_thread(void *p)
 		i[0]++;
 		ray.d = vadd(ray.d, delta);
 	}
-	printf("%d line complete!\n", i[1]);
 	return (NULL);
 }
 

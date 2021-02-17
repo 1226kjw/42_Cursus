@@ -6,13 +6,13 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:42 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 00:44:59 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 01:38:09 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_v3	(*g_normal[7])(t_hit hit) = {n_sp, n_pl, n_sq, n_cy, n_tr};
+t_v3	(*g_normal[])(t_hit hit) = {n_sp, n_pl, n_sq, n_cy, n_tr};
 double	(*g_inter[])(t_ray ray, void *obj) = {i_sp, i_pl, i_sq, i_cy, i_tr};
 int		(*g_color[])(void *obj) = {c_sp, c_pl, c_sq, c_cy, c_tr};
 
@@ -43,7 +43,6 @@ t_hit	calc_pixel(t_ray ray, t_arg *args)
 {
 	t_hit	hit;
 
-	ft_memset(&hit, 0x00, sizeof(t_hit));
 	hit = closest(ray, args->sn->objs);
 	if (hit.t >= 0)
 	{
@@ -64,6 +63,7 @@ t_hit	closest(t_ray ray, t_list *objs)
 	t_list	*cur;
 	double	tmp;
 
+	ft_memset(&hit, 0x00, sizeof(t_hit));
 	hit.t = -1;
 	hit.type = -1;
 	hit.ocol = BG_COLOR;

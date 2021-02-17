@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 00:49:36 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 00:50:22 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 01:33:12 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		calc_diffuse(t_hit hit, t_light *cur)
 	int		color;
 	double	inten;
 
-	inten = vcos(hit.n, vunit(vsub(cur->o, hit.p)));
+	inten = vcos(hit.n, vsub(cur->o, hit.p));
 	if (inten < 0)
 		inten = 0;
 	color = cmul(cur->color, cur->inten * inten);
