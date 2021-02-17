@@ -6,26 +6,47 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:42 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/16 15:53:17 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/17 21:35:48 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
+void	colorset_ads(t_scene *sn, t_ray ray, t_hit *hit)
+{
+	t_ray	lray;
+	double	t;
+	t_list	*cur;
+
+	hit->acol = cmul(sn->a_light->color, sn->a_light->inten);
+	cur = sn->lights;
+	while (cur)
+	{
+		lray.d = vunit(vsub(((t_light*)cur->obj)->o, hit->p));
+		lray.o = vadd(hit->p, vmul(lray.d, EPSILON));
+		t = closest(lray, sn->objs).t;
+		if (t <= 0 || t > vabs(vsub(((t_light*)cur->obj)->o, lray.o)))
+		{
+			hit->dcol = cadd(hit->dcol, calc_diffuse(*hit, cur->obj));
+			hit->scol = cadd(hit->scol, calc_specular(ray, *hit, cur->obj));
+		}
+		cur = cur->next;
+	}
+}
 
 t_hit	calc_pixel(t_ray ray, t_arg *args)
 {
 	t_hit	hit;
 	t_v3	(*normal[7])(t_hit hit) = {n_sp, n_pl, n_sq, n_cy, n_tr};
 
+	ft_memset(&hit, 0x00, sizeof(t_hit));
 	hit = closest(ray, args->sn->objs);
 	if (hit.t >= 0)
 	{
-		hit.acol = 0;
 		hit.n = normal[hit.type](hit);
-		hit.acol = cmul(args->sn->a_light->color, args->sn->a_light->inten);
-		hit.dcol = calc_diffuse(hit, args->sn);
-		hit.scol = calc_specular(ray, hit, args->sn);
+		if (vinner(hit.n, ray.d) > 0)
+			hit.n = vmul(hit.n, -1.0);
+		colorset_ads(args->sn, ray, &hit);
 		hit.fcol = cadd(ccom(cadd(hit.acol, hit.dcol), hit.ocol), hit.scol);
 	}
 	else

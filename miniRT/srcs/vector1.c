@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:28:27 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/14 00:28:35 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/17 18:56:29 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ t_v3	vnorm(t_v3 a)
 	if (a.x == 0.0 && a.y == 0.0)
 		return (vset(1.0, 0.0, 0.0));
 	else
-		return (vunit(vcross(a, vset(0.0, 0.0, 1.0))));
+		return (vunit(vcross(a, vset(0.0, 1.0, 0.0))));
 }
 
 int		viseq(t_v3 a, t_v3 b)

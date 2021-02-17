@@ -21,6 +21,7 @@ typedef struct	s_list
 	int				type;
 	void			*obj;
 	struct s_list	*next;
+	struct s_list	*bef;
 }				t_list;
 
 void			*ft_memset(void *b, int c, size_t len);

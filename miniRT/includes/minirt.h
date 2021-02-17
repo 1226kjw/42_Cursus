@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:31:35 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/16 20:46:01 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/17 20:06:58 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include <unistd.h>
 # include <pthread.h>
 
-# define EPSILON 0.0001
+# define EPSILON 0.000001
 # define SP 0
 # define PL 1
 # define SQ 2
