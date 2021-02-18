@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cone.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/02/18 16:26:06 by jinukim           #+#    #+#             */
+/*   Updated: 2021/02/18 16:26:32 by jinukim          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minirt.h"
 
 t_co	*new_co(t_v3 o, t_v3 d, double r, double h)
@@ -47,7 +59,7 @@ double	i_co(t_ray r, void *obj)
 	a[3] = c.r * c.r / (c.h * c.h);
 	a[0] = vinner(r.d, r.d) - (a[3] + 1) * pow(vinner(r.d, c.d), 2);
 	a[1] = vinner(r.d, w) - (a[3] + 1) * vinner(r.d, c.d) * vinner(w, c.d);
-	a[2] = vinner(w, w) - (a[3] + 1) * pow(vinner(w, c.d), 2);	
+	a[2] = vinner(w, w) - (a[3] + 1) * pow(vinner(w, c.d), 2);
 	disc = a[1] * a[1] - a[0] * a[2];
 	if (disc <= 0)
 		return (-1.0);
@@ -58,7 +70,7 @@ double	i_co(t_ray r, void *obj)
 	a[1] = vinner(vsub(vadd(r.o, vmul(r.d, root[1])), w), vmul(c.d, -1));
 	if (root[0] >= 0 && a[0] >= 0 && a[0] <= c.h)
 		return (root[0]);
-	else if (root[1] >= 0 && a[1] >= 0 && a[1] <= c.h) 
+	else if (root[1] >= 0 && a[1] >= 0 && a[1] <= c.h)
 		return (root[1]);
 	return (-1);
 }

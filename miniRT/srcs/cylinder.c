@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:26 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 15:12:13 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 16:25:23 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int		parsing_cy(char *buf, t_scene *sn)
 	ft_lstadd_back(&sn->objs, no);
 	ft_lstadd_back(&sn->objs,
 			ft_lstnew(CI, new_ci(nc->o, nc->d, nc->r, nc->color)));
-	ft_lstadd_back(&sn->objs,ft_lstnew(CI, new_ci(vadd(nc->o,
+	ft_lstadd_back(&sn->objs, ft_lstnew(CI, new_ci(vadd(nc->o,
 						vmul(nc->d, nc->h)), nc->d, nc->r, nc->color)));
 	return (0);
 }

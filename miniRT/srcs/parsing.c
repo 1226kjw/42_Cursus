@@ -6,11 +6,32 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:58:03 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 15:15:11 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 16:28:41 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
+
+int		parsing_obj(char *buf, t_scene *sn)
+{
+	if (buf[0] == 's' && buf[1] == 'p' && ft_isspace(buf[2]))
+		return (parsing_sp(buf, sn));
+	else if (buf[0] == 'p' && buf[1] == 'l' && ft_isspace(buf[2]))
+		return (parsing_pl(buf, sn));
+	else if (buf[0] == 's' && buf[1] == 'q' && ft_isspace(buf[2]))
+		return (parsing_sq(buf, sn));
+	else if (buf[0] == 'c' && buf[1] == 'y' && ft_isspace(buf[2]))
+		return (parsing_cy(buf, sn));
+	else if (buf[0] == 't' && buf[1] == 'r' && ft_isspace(buf[2]))
+		return (parsing_tr(buf, sn));
+	else if (buf[0] == 'c' && buf[1] == 'u' && ft_isspace(buf[2]))
+		return (parsing_cu(buf, sn));
+	else if (buf[0] == 'p' && buf[1] == 'y' && ft_isspace(buf[2]))
+		return (parsing_py(buf, sn));
+	else if (buf[0] == 'c' && buf[1] == 'o' && ft_isspace(buf[2]))
+		return (parsing_co(buf, sn));
+	return (1);
+}
 
 int		line_parsing(char *line, t_scene *sn)
 {
@@ -27,22 +48,8 @@ int		line_parsing(char *line, t_scene *sn)
 		return (buf[0] == 'c' ? parsing_c(buf, sn) : parsing_l(buf, sn));
 	else if (buf[0] == 'p' && ft_isspace(buf[1]))
 		return (parsing_p(buf, sn));
-	else if (buf[0] == 's' && buf[1] == 'p' && ft_isspace(buf[2]))
-		return (parsing_sp(buf, sn));
-	else if (buf[0] == 'p' && buf[1] == 'l' && ft_isspace(buf[2]))
-		return (parsing_pl(buf, sn));
-	else if (buf[0] == 's' && buf[1] == 'q' && ft_isspace(buf[2]))
-		return (parsing_sq(buf, sn));
-	else if (buf[0] == 'c' && buf[1] == 'y' && ft_isspace(buf[2]))
-		return (parsing_cy(buf, sn));
-	else if (buf[0] == 't' && buf[1] == 'r' && ft_isspace(buf[2]))
-		return (parsing_tr(buf, sn));
-	else if (buf[0] == 'c' && buf[1] == 'u' && ft_isspace(buf[2]))
-		return (parsing_cu(buf, sn));
-	else if (buf[0] == 'p' && buf[1] == 'y' && ft_isspace(buf[2]))
-		return (parsing_py(buf, sn));
-	else if (buf[0] == 'c' && buf[1] == 'o' && ft_isspace(buf[2]))
-		return (parsing_co(buf, sn));
+	else if (!parsing_obj(buf, sn))
+		return (0);
 	return (-1);
 }
 
