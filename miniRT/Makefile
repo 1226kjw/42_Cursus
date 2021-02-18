@@ -7,7 +7,9 @@ SRCS_DIR = ./srcs/
 HDR_DIR = ./includes/
 
 SRCS = $(addprefix $(SRCS_DIR),\
-	    circle.c\
+		camera0.c\
+		camera1.c\
+		circle.c\
 		color0.c\
 		color1.c\
 		cone.c\

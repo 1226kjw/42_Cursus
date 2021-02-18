@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:59 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 01:40:08 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 20:05:17 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void	*make_line_thread(void *p)
 	i[1] = args->id;
 	ray.d = vadd(args->cam->hl, vmul(args->cam->ver, (double)i[1] / g_y));
 	i[0] = 0;
-	hit.type = -1;
 	delta = vmul(args->cam->hor, 1.0 / (double)g_x);
 	ray.d = vadd(ray.d, vadd(vmul(delta, 0.5),
 				vmul(args->cam->ver, 1.0 / g_y * 2)));
@@ -71,4 +70,5 @@ void	multithreading(t_arg *args)
 	while (++i < g_y)
 		if (pthread_join(threads[i], 0))
 			errmsg(0, "pthread join error");
+	free(threads);
 }

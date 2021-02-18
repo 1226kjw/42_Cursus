@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:36 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/17 22:50:39 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 20:53:10 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,19 @@ t_cam	*newcam(t_v3 o, t_v3 d, int fov)
 	nc->ver = vmul(nc->ver, vabs(nc->hor) * (double)g_y / (double)g_x);
 	nc->hl = vsub(d, vadd(vmul(nc->hor, 0.5), vmul(nc->ver, 0.5)));
 	return (nc);
+}
+
+void	cam_renew(t_data *mlx, t_scene *sn, t_cam *c)
+{
+	t_arg	*args;
+
+	mlx_clear_window(mlx->mlx, mlx->win);
+	if (!(args = (t_arg*)ft_calloc(g_y, sizeof(t_arg))))
+		errmsg(sn, "maloc");
+	args_set(mlx, mlx->sn, c, args);
+	multithreading(args);
+	free(args);
+	mlx_put_image_to_window(mlx->mlx, mlx->win, c->img, 0, 0);
 }
 
 t_light	*newlight(t_v3 o, double inten, int color)
