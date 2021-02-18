@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:29:28 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 20:46:20 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 21:19:07 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,5 +24,6 @@ void	cam_left(t_data *mlx, t_scene *sn);
 void	cam_right(t_data *mlx, t_scene *sn);
 void	cam_backward(t_data *mlx, t_scene *sn);
 void	cam_forward(t_data *mlx, t_scene *sn);
+void	cam_reset(t_data *mlx, t_scene *sn);
 
 #endif

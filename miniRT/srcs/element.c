@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:36 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 20:53:10 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 21:26:05 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ t_cam	*newcam(t_v3 o, t_v3 d, int fov)
 		errmsg(0, "malloc");
 	nc->o = o;
 	nc->d = d;
+	nc->o_org = o;
+	nc->d_org = d;
 	nc->fov = fov;
 	nc->hor = vnorm(d);
 	nc->ver = vunit(vcross(d, nc->hor));

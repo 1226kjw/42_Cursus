@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:31:35 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 20:50:34 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 21:18:36 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,14 @@
 # define D_KEY 2
 # define Q_KEY 12
 # define E_KEY 14
+# define R_KEY 15
 # define ESC 53
 # define LEFT 123
 # define RIGHT 124
 
 # define BUT1_KEY 1
 
-# include "mlx.h"
+# include "../minilibx_mms/mlx.h"
 # include "libft.h"
 # include "get_next_line.h"
 # include "vector.h"

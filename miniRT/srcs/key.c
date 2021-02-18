@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:03:27 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 20:50:17 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 21:16:18 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,16 +70,18 @@ int		key_handle(int keycode, t_data *mlx)
 	else if (keycode == RIGHT)
 		cam_next(mlx, mlx->sn);
 	else if (keycode == W_KEY)
-		cam_up(mlx, mlx->sn);
+		cam_forward(mlx, mlx->sn);
 	else if (keycode == S_KEY)
-		cam_down(mlx, mlx->sn);
+		cam_backward(mlx, mlx->sn);
 	else if (keycode == A_KEY)
 		cam_left(mlx, mlx->sn);
 	else if (keycode == D_KEY)
 		cam_right(mlx, mlx->sn);
 	else if (keycode == Q_KEY)
-		cam_backward(mlx, mlx->sn);
+		cam_down(mlx, mlx->sn);
 	else if (keycode == E_KEY)
-		cam_forward(mlx, mlx->sn);
+		cam_up(mlx, mlx->sn);
+	else if (keycode == R_KEY)
+		cam_reset(mlx, mlx->sn);
 	return (0);
 }

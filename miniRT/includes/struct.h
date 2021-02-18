@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:30:21 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 17:58:04 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 21:17:29 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ typedef struct	s_cam
 {
 	t_v3	o;
 	t_v3	d;
+	t_v3	o_org;
+	t_v3	d_org;
 	int		fov;
 	t_v3	hl;
 	t_v3	hor;
