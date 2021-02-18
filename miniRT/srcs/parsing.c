@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:58:03 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 00:09:33 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 15:15:11 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ int		line_parsing(char *line, t_scene *sn)
 		return (parsing_tr(buf, sn));
 	else if (buf[0] == 'c' && buf[1] == 'u' && ft_isspace(buf[2]))
 		return (parsing_cu(buf, sn));
+	else if (buf[0] == 'p' && buf[1] == 'y' && ft_isspace(buf[2]))
+		return (parsing_py(buf, sn));
+	else if (buf[0] == 'c' && buf[1] == 'o' && ft_isspace(buf[2]))
+		return (parsing_co(buf, sn));
 	return (-1);
 }
 

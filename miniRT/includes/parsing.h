@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:31:00 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 00:03:41 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 15:15:27 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,7 @@ int		parsing_sq(char *buf, t_scene *sd);
 int		parsing_cy(char *buf, t_scene *sd);
 int		parsing_tr(char *buf, t_scene *sd);
 int		parsing_cu(char *buf, t_scene *sd);
+int		parsing_py(char *buf, t_scene *sd);
+int		parsing_co(char *buf, t_scene *sd);
 
 #endif

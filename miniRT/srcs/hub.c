@@ -6,15 +6,16 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:42 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 01:38:09 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 15:16:00 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_v3	(*g_normal[])(t_hit hit) = {n_sp, n_pl, n_sq, n_cy, n_tr};
-double	(*g_inter[])(t_ray ray, void *obj) = {i_sp, i_pl, i_sq, i_cy, i_tr};
-int		(*g_color[])(void *obj) = {c_sp, c_pl, c_sq, c_cy, c_tr};
+t_v3	(*g_normal[])(t_hit hit) = {n_sp, n_pl, n_sq, n_cy, n_tr, n_ci, n_co};
+double	(*g_inter[])(t_ray ray, void *) =
+{i_sp, i_pl, i_sq, i_cy, i_tr, i_ci, i_co};
+int		(*g_color[])(void *obj) = {c_sp, c_pl, c_sq, c_cy, c_tr, c_ci, c_co};
 
 void	colorset_ads(t_scene *sn, t_ray ray, t_hit *hit)
 {

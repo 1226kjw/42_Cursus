@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:26 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 00:50:10 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 15:12:13 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,22 @@ int		parsing_cy(char *buf, t_scene *sn)
 {
 	int		i;
 	t_list	*no;
+	t_cy	*nc;
 
 	i = 2;
 	no = ft_lstnew(CY, new_cy(ft_atov(buf, &i), ft_atov(buf, &i),
 				next_atof(buf, &i), next_atof(buf, &i)));
-	((t_cy*)(no->obj))->color = ft_atoc(buf, &i);
-	ft_lstadd_back(&sn->objs, no);
-	if (viseq(((t_cy*)no->obj)->d, vset(0.0, 0.0, 0.0)))
+	nc = (t_cy*)no->obj;
+	if (viseq(nc->d, vset(0.0, 0.0, 0.0)))
 		errmsg(sn, "normal vector cannot be null vector");
-	((t_cy*)no->obj)->d = vunit(((t_cy*)no->obj)->d);
-	if (((t_cy*)no->obj)->r < 0 || ((t_cy*)no->obj)->h < 0)
+	if (nc->r < 0 || nc->h < 0)
 		errmsg(sn, "valid height/radius : [0, inf)");
+	nc->color = ft_atoc(buf, &i);
+	ft_lstadd_back(&sn->objs, no);
+	ft_lstadd_back(&sn->objs,
+			ft_lstnew(CI, new_ci(nc->o, nc->d, nc->r, nc->color)));
+	ft_lstadd_back(&sn->objs,ft_lstnew(CI, new_ci(vadd(nc->o,
+						vmul(nc->d, nc->h)), nc->d, nc->r, nc->color)));
 	return (0);
 }
 
@@ -67,8 +72,7 @@ double	i_cy(t_ray r, void *obj)
 		return (root[0]);
 	else if (root[1] >= 0 && a[1] >= 0 && a[1] <= c.h * c.h)
 		return (root[1]);
-	else
-		return (-1.0);
+	return (-1.0);
 }
 
 int		c_cy(void *obj)

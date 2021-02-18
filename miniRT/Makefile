@@ -7,8 +7,10 @@ SRCS_DIR = ./srcs/
 HDR_DIR = ./includes/
 
 SRCS = $(addprefix $(SRCS_DIR),\
+	    circle.c\
 		color0.c\
 		color1.c\
+		cone.c\
 		cube.c\
 		cylinder.c\
 		element.c\
@@ -20,6 +22,7 @@ SRCS = $(addprefix $(SRCS_DIR),\
 		parsing.c\
 		parsing_elem.c\
 		plane.c\
+		pyramid.c\
 		shading.c\
 		sphere.c\
 		square.c\

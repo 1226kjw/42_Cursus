@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:30:21 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/17 23:41:28 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 15:13:49 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,19 @@ typedef struct	s_py
 	int		color;
 }				t_py;
 
+typedef struct	s_py_t
+{
+	t_v3	o;
+	t_v3	n[2];
+	double	d;
+	double	h;
+	int		color;
+}				t_py_t;
+
 typedef struct	s_co
 {
 	t_v3	o;
-	t_v3	n;
+	t_v3	d;
 	double	r;
 	double	h;
 	int		color;

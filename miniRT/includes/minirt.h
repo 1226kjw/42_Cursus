@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:31:35 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/17 23:41:58 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 14:30:46 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@
 # define SQ 2
 # define CY 3
 # define TR 4
-# define CU 5
-# define PY 6
-# define CO 7
-# define CI 8
+# define CI 5
+# define CO 6
+# define CU 7
+# define PY 8
 
 # define BG_COLOR 0x000000
 
