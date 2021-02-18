@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:42 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 19:03:48 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 22:15:04 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ t_hit	calc_pixel(t_ray ray, t_arg *args)
 		if (vinner(hit.n, ray.d) > 0)
 			hit.n = vmul(hit.n, -1.0);
 		colorset_ads(args->sn, ray, &hit);
-		hit.fcol = cadd(ccom(cadd(hit.acol, hit.dcol), hit.ocol), hit.scol);
+		hit.fcol = cadd(cfil(ccom(cadd(hit.acol, hit.dcol), hit.ocol)),
+				hit.scol);
 	}
 	else
 		hit.fcol = hit.ocol;

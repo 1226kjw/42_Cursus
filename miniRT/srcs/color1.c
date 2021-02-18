@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 01:00:36 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 01:27:58 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 22:23:21 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,19 @@ int		ccom(int a, int b)
 	c[1] = cgreen(a) * cgreen(b) / 255;
 	c[2] = cblue(a) * cblue(b) / 255;
 	return (cset(c[0], c[1], c[2]));
+}
+
+int		cfil(int a)
+{
+	double	y;
+	int		c;
+
+	if (!g_filter)
+		return (a);
+	y = (0.299 * cred(a) + 0.587 * cgreen(a) +
+			0.114 * cblue(a)) / 255;
+	c = cset((y + 1.402 * g_cr) * 255,
+			(y - 0.34414 * g_cb - 0.71414 * g_cr) * 255,
+			(y + 1.772 * g_cb) * 255);
+	return (c);
 }

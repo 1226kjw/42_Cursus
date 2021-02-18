@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 00:41:23 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 00:53:26 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 22:19:00 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,6 @@ int		cset(int r, int g, int b);
 int		cadd(int a, int b);
 int		cmul(int a, double i);
 int		ccom(int a, int b);
+int		cfil(int a);
 
 #endif

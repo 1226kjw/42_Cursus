@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 00:41:53 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 01:00:40 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 22:25:25 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,25 @@ int		cblue(int a)
 	return (a & 0xff);
 }
 
-int		cset(int r, int b, int c)
+int		cset(int r, int g, int b)
 {
 	int		color;
 
 	if (r > 255)
 		r = 255;
+	if (g > 255)
+		g = 255;
 	if (b > 255)
 		b = 255;
-	if (c > 255)
-		c = 255;
+	if (r < 0)
+		r = 0;
+	if (g < 0)
+		g = 0;
+	if (b < 0)
+		b = 0;
 	color = r << 16;
-	color |= b << 8;
-	color |= c;
+	color |= g << 8;
+	color |= b;
 	return (color);
 }
 

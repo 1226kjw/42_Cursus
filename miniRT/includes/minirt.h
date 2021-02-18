@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:31:35 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 21:18:36 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/18 22:08:06 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@
 
 int		g_x;
 int		g_y;
+int		g_filter;
+double	g_cb;
+double	g_cr;
 void	errmsg(t_scene *sn, char *str);
 int		key_handle(int keycode, t_data *mlx);
 int		button_handle(int button, int x, int y, t_data *mlx);
