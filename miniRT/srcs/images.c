@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:31 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 22:17:45 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/20 21:55:32 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,14 @@ void	my_pixel_put(t_cam *cam, int x, int y, int color)
 	p[i] = color >> 16;
 }
 
-void	make_img(t_data *mlx, t_scene *sn, t_arg *args)
+void	make_img(t_data *mlx, t_scene *sn)
 {
 	t_list	*cam;
 	int		i;
+	t_arg	*args;
 
+	if (!(args = (t_arg*)ft_calloc(g_y, sizeof(t_arg))))
+		errmsg(sn, "malloc");
 	cam = sn->cams;
 	i = 0;
 	while (cam)
@@ -39,4 +42,5 @@ void	make_img(t_data *mlx, t_scene *sn, t_arg *args)
 		multithreading(args);
 		cam = cam->next;
 	}
+	free(args);
 }

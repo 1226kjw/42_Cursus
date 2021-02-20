@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:30:38 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/14 00:30:54 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/20 22:38:50 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,8 @@ t_v3			vunit(t_v3 a);
 t_v3			vnorm(t_v3 a);
 int				viseq(t_v3 a, t_v3 b);
 double			vcos(t_v3 a, t_v3 b);
+t_v3			vrotx(t_v3 v, double a);
+t_v3			vroty(t_v3 v, double a);
+t_v3			vrotz(t_v3 v, double a);
 
 #endif

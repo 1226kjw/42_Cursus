@@ -21,6 +21,9 @@ SRCS = $(addprefix $(SRCS_DIR),\
 		key.c\
 		minirt.c\
 		multithreading.c\
+		object0.c\
+		object1.c\
+		object2.c\
 		parsing.c\
 		parsing_elem.c\
 		plane.c\

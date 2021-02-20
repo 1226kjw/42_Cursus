@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:26 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 16:25:23 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/20 18:39:44 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int		parsing_cy(char *buf, t_scene *sn)
 	int		i;
 	t_list	*no;
 	t_cy	*nc;
+	t_ci	*c[2];
 
 	i = 2;
 	no = ft_lstnew(CY, new_cy(ft_atov(buf, &i), ft_atov(buf, &i),
@@ -40,11 +41,14 @@ int		parsing_cy(char *buf, t_scene *sn)
 	if (nc->r < 0 || nc->h < 0)
 		errmsg(sn, "valid height/radius : [0, inf)");
 	nc->color = ft_atoc(buf, &i);
+	nc->tex = next_atoi(buf, &i);
 	ft_lstadd_back(&sn->objs, no);
 	ft_lstadd_back(&sn->objs,
-			ft_lstnew(CI, new_ci(nc->o, nc->d, nc->r, nc->color)));
-	ft_lstadd_back(&sn->objs, ft_lstnew(CI, new_ci(vadd(nc->o,
+		ft_lstnew(CI, c[0] = new_ci(nc->o, nc->d, nc->r, nc->color)));
+	ft_lstadd_back(&sn->objs, ft_lstnew(CI, c[1] = new_ci(vadd(nc->o,
 						vmul(nc->d, nc->h)), nc->d, nc->r, nc->color)));
+	c[0]->tex = nc->tex;
+	c[1]->tex = nc->tex;
 	return (0);
 }
 
@@ -75,9 +79,20 @@ double	i_cy(t_ray r, void *obj)
 	return (-1.0);
 }
 
-int		c_cy(void *obj)
+int		c_cy(t_hit hit)
 {
-	return (((t_cy*)obj)->color);
+	t_cy	*o;
+
+	o = (t_cy*)hit.obj;
+	if (o->tex == 1)
+	{
+		if (((int)fabs(floor(hit.p.x)) % 2) ^ ((int)fabs(floor(hit.p.y)) % 2)
+				^ ((int)fabs(floor(hit.p.z)) % 2))
+			return (~o->color);
+		else
+			return (o->color);
+	}
+	return (o->color);
 }
 
 t_v3	n_cy(t_hit hit)

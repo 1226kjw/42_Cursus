@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 16:25:48 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 16:25:49 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/20 18:25:21 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,20 @@ double	i_ci(t_ray r, void *obj)
 	return (-1.0);
 }
 
-int		c_ci(void *obj)
+int		c_ci(t_hit hit)
 {
-	return (((t_ci*)obj)->color);
+	t_ci	*o;
+
+	o = (t_ci*)hit.obj;
+	if (o->tex == 1)
+	{
+		if (((int)fabs(floor(hit.p.x)) % 2) ^ ((int)fabs(floor(hit.p.y)) % 2)
+				^ ((int)fabs(floor(hit.p.z)) % 2))
+			return (~o->color);
+		else
+			return (o->color);
+	}
+	return (o->color);
 }
 
 t_v3	n_ci(t_hit hit)

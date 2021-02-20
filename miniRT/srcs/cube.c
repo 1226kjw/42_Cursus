@@ -6,19 +6,22 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 00:45:25 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 00:59:25 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/20 23:39:05 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-void	make_sq6(t_scene *sn, t_list *nl[])
+void	make_sq6(t_scene *sn, t_list *nl[], int tex)
 {
 	int		i;
 
 	i = 0;
 	while (i < 6)
+	{
+		((t_sq*)nl[i]->obj)->tex = tex;
 		ft_lstadd_back(&sn->objs, nl[i++]);
+	}
 }
 
 int		parsing_cu(char *buf, t_scene *sn)
@@ -45,6 +48,6 @@ int		parsing_cu(char *buf, t_scene *sn)
 	nl[3] = ft_lstnew(SQ, new_sq(vsub(o, vmul(n[1], d / 2)), &n[1], d, i[1]));
 	nl[4] = ft_lstnew(SQ, new_sq(vadd(o, vmul(n[2], d / 2)), &n[2], d, i[1]));
 	nl[5] = ft_lstnew(SQ, new_sq(vsub(o, vmul(n[2], d / 2)), &n[2], d, i[1]));
-	make_sq6(sn, nl);
+	make_sq6(sn, nl, next_atoi(buf, i));
 	return (0);
 }

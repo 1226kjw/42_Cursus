@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:58:37 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 00:52:21 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/20 18:00:19 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ t_v3		ft_atov(char *str, int *i)
 
 	v.x = next_atof(str, i);
 	if (str[*i] != ',')
-		errmsg(0, "format error");
+		errmsg(0, "format error1");
 	v.y = next_atof(str, i);
 	if (str[*i] != ',')
-		errmsg(0, "format error");
+		errmsg(0, "format error2");
 	v.z = next_atof(str, i);
 	if (str[*i] != 0 && !ft_isspace(str[*i]))
 		errmsg(0, "unexpected character at vector");
@@ -63,10 +63,10 @@ int			ft_atoc(char *str, int *i)
 
 	c[0] = next_atoi(str, i);
 	if (str[*i] != ',')
-		errmsg(0, "format error");
+		errmsg(0, "format error3");
 	c[1] = next_atoi(str, i);
 	if (str[*i] != ',')
-		errmsg(0, "format error");
+		errmsg(0, "format error4");
 	c[2] = next_atoi(str, i);
 	if (str[*i] != 0 && !ft_isspace(str[*i]))
 		errmsg(0, "unexpected character at color");

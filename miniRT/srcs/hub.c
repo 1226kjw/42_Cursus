@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:42 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 22:15:04 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/20 23:33:04 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_v3	(*g_normal[])(t_hit hit) = {n_sp, n_pl, n_sq, n_cy, n_tr, n_ci, n_co};
 double	(*g_inter[])(t_ray ray, void *) =
 {i_sp, i_pl, i_sq, i_cy, i_tr, i_ci, i_co};
-int		(*g_color[])(void *obj) = {c_sp, c_pl, c_sq, c_cy, c_tr, c_ci, c_co};
+int		(*g_color[])(t_hit hit) = {c_sp, c_pl, c_sq, c_cy, c_tr, c_ci, c_co};
 
 void	colorset_ads(t_scene *sn, t_ray ray, t_hit *hit)
 {
@@ -40,6 +40,26 @@ void	colorset_ads(t_scene *sn, t_ray ray, t_hit *hit)
 	p_light(hit, sn);
 }
 
+void	anti_aliasing(t_hit *hit, t_ray ray, t_arg *args)
+{
+	t_ray	r[4];
+	int		anti[4];
+	int		i;
+
+	r[0] = (t_ray){ray.o, vsub(ray.d, vadd(vmul(args->cam->hor, 0.3 / g_x),
+				vmul(args->cam->ver, 0.3 / g_y)))};
+	r[1] = (t_ray){ray.o, vsub(ray.d, vadd(vmul(args->cam->hor, 0.3 / g_x),
+				vmul(args->cam->ver, -0.3 / g_y)))};
+	r[2] = (t_ray){ray.o, vsub(ray.d, vadd(vmul(args->cam->hor, -0.3 / g_x),
+				vmul(args->cam->ver, 0.3 / g_y)))};
+	r[3] = (t_ray){ray.o, vsub(ray.d, vadd(vmul(args->cam->hor, -0.3 / g_x),
+				vmul(args->cam->ver, -0.3 / g_y)))};
+	i = -1;
+	while (++i < 4)
+		anti[i] = closest(r[i], args->sn->objs).ocol;
+	hit->ocol = caverage(anti[0], anti[1], anti[2], anti[3]);
+}
+
 t_hit	calc_pixel(t_ray ray, t_arg *args)
 {
 	t_hit	hit;
@@ -51,6 +71,7 @@ t_hit	calc_pixel(t_ray ray, t_arg *args)
 		if (vinner(hit.n, ray.d) > 0)
 			hit.n = vmul(hit.n, -1.0);
 		colorset_ads(args->sn, ray, &hit);
+		anti_aliasing(&hit, ray, args);
 		hit.fcol = cadd(cfil(ccom(cadd(hit.acol, hit.dcol), hit.ocol)),
 				hit.scol);
 	}
@@ -79,7 +100,7 @@ t_hit	closest(t_ray ray, t_list *objs)
 			hit.p = vadd(ray.o, vmul(ray.d, tmp));
 			hit.type = cur->type;
 			hit.obj = cur->obj;
-			hit.ocol = g_color[cur->type](cur->obj);
+			hit.ocol = g_color[cur->type](hit);
 		}
 		cur = cur->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:58:28 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 00:36:59 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/20 17:49:50 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int		parsing_sq(char *buf, t_scene *sn)
 	d = next_atof(buf, &i);
 	color = ft_atoc(buf, &i);
 	no = ft_lstnew(SQ, new_sq(o[0], &o[1], d, color));
+	((t_sq*)no->obj)->tex = next_atoi(buf, &i);
 	ft_lstadd_back(&sn->objs, no);
 	if (viseq(((t_sq*)no->obj)->n, vset(0.0, 0.0, 0.0)))
 		errmsg(sn, "normal vector cannot be null vector");
@@ -74,9 +75,20 @@ double	i_sq(t_ray ray, void *obj)
 		return (t);
 }
 
-int		c_sq(void *obj)
+int		c_sq(t_hit hit)
 {
-	return (((t_sq*)obj)->color);
+	t_sq	*o;
+
+	o = (t_sq*)hit.obj;
+	if (o->tex == 1)
+	{
+		if (((int)fabs(floor(hit.p.x)) % 2) ^ ((int)fabs(floor(hit.p.y)) % 2)
+				^ ((int)fabs(floor(hit.p.z)) % 2))
+			return (~o->color);
+		else
+			return (o->color);
+	}
+	return (o->color);
 }
 
 t_v3	n_sq(t_hit hit)

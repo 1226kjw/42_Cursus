@@ -6,13 +6,13 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:58:22 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/17 23:54:06 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/20 17:43:55 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minirt.h"
 
-t_sp	*new_sp(t_v3 o, double r, int color)
+t_sp	*new_sp(t_v3 o, double r, int color, int tex)
 {
 	t_sp	*ret;
 
@@ -21,6 +21,7 @@ t_sp	*new_sp(t_v3 o, double r, int color)
 	ret->o = o;
 	ret->r = r;
 	ret->color = color;
+	ret->tex = tex;
 	return (ret);
 }
 
@@ -31,7 +32,7 @@ int		parsing_sp(char *buf, t_scene *sn)
 
 	i = 2;
 	no = ft_lstnew(SP, new_sp(ft_atov(buf, &i),
-				next_atof(buf, &i), ft_atoc(buf, &i)));
+				next_atof(buf, &i), ft_atoc(buf, &i), next_atoi(buf, &i)));
 	ft_lstadd_back(&sn->objs, no);
 	if (((t_sp*)no->obj)->r < 0)
 		errmsg(sn, "valid radius : [0, inf)");
@@ -64,9 +65,20 @@ double	i_sp(t_ray ray, void *obj)
 		return (-1.0);
 }
 
-int		c_sp(void *obj)
+int		c_sp(t_hit hit)
 {
-	return (((t_sp*)obj)->color);
+	t_sp	*o;
+
+	o = (t_sp*)hit.obj;
+	if (o->tex == 1)
+	{
+		if (((int)fabs(floor(hit.p.x)) % 2) ^ ((int)fabs(floor(hit.p.y)) % 2)
+				^ ((int)fabs(floor(hit.p.z)) % 2))
+			return (~o->color);
+		else
+			return (o->color);
+	}
+	return (o->color);
 }
 
 t_v3	n_sp(t_hit hit)

@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:58:31 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 00:52:11 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/20 17:50:50 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int		parsing_tr(char *buf, t_scene *sn)
 			ft_atov(buf, &i), ft_atoc(buf, &i));
 	no = ft_lstnew(TR, (void*)tr);
 	no->type = TR;
+	tr->tex = next_atoi(buf, &i);
 	ft_lstadd_back(&sn->objs, no);
 	if (viseq(tr->a, tr->b) || viseq(tr->b, tr->c) || viseq(tr->c, tr->a))
 		errmsg(sn, "there is at least one pair dup point on triangle");
@@ -65,9 +66,20 @@ double	i_tr(t_ray ray, void *obj)
 	return (t);
 }
 
-int		c_tr(void *obj)
+int		c_tr(t_hit hit)
 {
-	return (((t_tr*)obj)->color);
+	t_tr	*o;
+
+	o = (t_tr*)hit.obj;
+	if (o->tex == 1)
+	{
+		if (((int)fabs(floor(hit.p.x)) % 2) ^ ((int)fabs(floor(hit.p.y)) % 2)
+				^ ((int)fabs(floor(hit.p.z)) % 2))
+			return (~o->color);
+		else
+			return (o->color);
+	}
+	return (o->color);
 }
 
 t_v3	n_tr(t_hit hit)

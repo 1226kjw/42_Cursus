@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:03:27 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 21:16:18 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/20 18:56:58 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int		button_handle(int button, int x, int y, t_data *mlx)
 int		key_handle(int keycode, t_data *mlx)
 {
 	printf("%d\n", keycode);
-	if (keycode == 53)
+	if (keycode == ESC)
 		close_program(mlx);
 	else if (keycode == LEFT)
 		cam_bef(mlx, mlx->sn);
@@ -83,5 +83,7 @@ int		key_handle(int keycode, t_data *mlx)
 		cam_up(mlx, mlx->sn);
 	else if (keycode == R_KEY)
 		cam_reset(mlx, mlx->sn);
+	else
+		obj_hub(mlx, mlx->sn, keycode);
 	return (0);
 }

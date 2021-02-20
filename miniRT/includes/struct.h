@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:30:21 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 21:17:29 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/20 23:31:12 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef struct	s_sp
 	t_v3	o;
 	double	r;
 	int		color;
+	int		tex;
 }				t_sp;
 
 typedef struct	s_pl
@@ -34,6 +35,7 @@ typedef struct	s_pl
 	t_v3	o;
 	t_v3	n;
 	int		color;
+	int		tex;
 }				t_pl;
 
 typedef struct	s_sq
@@ -44,6 +46,7 @@ typedef struct	s_sq
 	int		color;
 	t_v3	hor;
 	t_v3	ver;
+	int		tex;
 }				t_sq;
 
 typedef struct	s_cy
@@ -53,6 +56,7 @@ typedef struct	s_cy
 	double	r;
 	double	h;
 	int		color;
+	int		tex;
 }				t_cy;
 
 typedef struct	s_tr
@@ -61,6 +65,7 @@ typedef struct	s_tr
 	t_v3	b;
 	t_v3	c;
 	int		color;
+	int		tex;
 }				t_tr;
 
 typedef struct	s_cu
@@ -69,6 +74,7 @@ typedef struct	s_cu
 	t_v3	n;
 	double	d;
 	int		color;
+	int		tex;
 }				t_cu;
 
 typedef struct	s_py
@@ -78,6 +84,7 @@ typedef struct	s_py
 	double	d;
 	double	h;
 	int		color;
+	int		tex;
 }				t_py;
 
 typedef struct	s_py_t
@@ -96,6 +103,7 @@ typedef struct	s_co
 	double	r;
 	double	h;
 	int		color;
+	int		tex;
 }				t_co;
 
 typedef struct	s_ci
@@ -104,6 +112,7 @@ typedef struct	s_ci
 	t_v3	n;
 	double	r;
 	int		color;
+	int		tex;
 }				t_ci;
 
 typedef struct	s_cam
@@ -133,6 +142,7 @@ typedef struct	s_scene
 	t_list	*lights;
 	t_list	*p_lights;
 	t_list	*objs;
+	t_list	*baseobj;
 }				t_scene;
 
 typedef struct	s_data
@@ -158,6 +168,7 @@ typedef struct	s_hit
 	void	*obj;
 	t_v3	n;
 	int		ocol;
+	int		anti[4];
 	int		acol;
 	int		dcol;
 	int		scol;

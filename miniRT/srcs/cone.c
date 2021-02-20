@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 16:26:06 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 16:26:32 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/20 18:03:53 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int		parsing_co(char *buf, t_scene *sn)
 	int		i;
 	t_list	*no;
 	t_co	*nc;
+	t_ci	*ci;
 
 	i = 2;
 	no = ft_lstnew(CO, new_co(ft_atov(buf, &i), ft_atov(buf, &i),
@@ -40,9 +41,11 @@ int		parsing_co(char *buf, t_scene *sn)
 	if (nc->r < 0 || nc->h < 0)
 		errmsg(sn, "valid height/radius : (0, inf)");
 	nc->color = ft_atoc(buf, &i);
+	nc->tex = next_atoi(buf, &i);
 	ft_lstadd_back(&sn->objs, no);
 	ft_lstadd_back(&sn->objs,
-			ft_lstnew(CI, new_ci(nc->o, nc->d, nc->r, nc->color)));
+			ft_lstnew(CI, ci = new_ci(nc->o, nc->d, nc->r, nc->color)));
+	ci->tex = nc->tex;
 	return (0);
 }
 
@@ -75,9 +78,20 @@ double	i_co(t_ray r, void *obj)
 	return (-1);
 }
 
-int		c_co(void *obj)
+int		c_co(t_hit hit)
 {
-	return (((t_co*)obj)->color);
+	t_co	*o;
+
+	o = (t_co*)hit.obj;
+	if (o->tex == 1)
+	{
+		if (((int)fabs(floor(hit.p.x)) % 2) ^ ((int)fabs(floor(hit.p.y)) % 2)
+				^ ((int)fabs(floor(hit.p.z)) % 2))
+			return (~o->color);
+		else
+			return (o->color);
+	}
+	return (o->color);
 }
 
 t_v3	n_co(t_hit hit)

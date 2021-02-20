@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:31:35 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 22:08:06 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/20 22:53:28 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@
 # include <pthread.h>
 
 # define EPSILON 0.00001
-# define SCALE 0.5
+# define SCALE 0.1
+# define ANGLE M_PI / 12
 
 # define SP 0
 # define PL 1
@@ -50,6 +51,17 @@
 # define ESC 53
 # define LEFT 123
 # define RIGHT 124
+# define DOWN 125
+# define UP 126
+# define NUM1 83
+# define NUM2 84
+# define NUM3 85
+# define NUM4 86
+# define NUM5 87
+# define NUM6 88
+# define NUM7 89
+# define NUM8 91
+# define NUM9 92
 
 # define BUT1_KEY 1
 

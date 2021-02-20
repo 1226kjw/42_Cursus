@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:52 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 20:12:59 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/20 19:38:59 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	my_mlx_loop(t_data *mlx)
 	mlx_loop(mlx->mlx);
 }
 
-void	my_mlx_init(t_data *mlx, t_scene *sn, t_arg **args)
+void	my_mlx_init(t_data *mlx, t_scene *sn)
 {
 	t_list	*caml;
 	t_cam	*cam;
@@ -50,6 +50,7 @@ void	my_mlx_init(t_data *mlx, t_scene *sn, t_arg **args)
 	if (!sn->cams)
 		errmsg(sn, "no cam");
 	sn->basecam = sn->cams;
+	sn->baseobj = sn->objs;
 	caml = sn->basecam;
 	while (caml)
 	{
@@ -60,12 +61,10 @@ void	my_mlx_init(t_data *mlx, t_scene *sn, t_arg **args)
 		caml = caml->next;
 	}
 	mlx->sn = sn;
-	*args = (t_arg*)ft_calloc(g_y, sizeof(t_arg));
 }
 
 int		main(int argc, char **argv)
 {
-	t_arg	*args;
 	int		fd;
 	t_data	mlx;
 	t_scene	sn;
@@ -77,8 +76,8 @@ int		main(int argc, char **argv)
 	scene_init(&sn);
 	if (parsing(fd, &sn))
 		errmsg(&sn, "parsing error");
-	my_mlx_init(&mlx, &sn, &args);
-	make_img(&mlx, &sn, args);
+	my_mlx_init(&mlx, &sn);
+	make_img(&mlx, &sn);
 	mlx_put_image_to_window(mlx.mlx, mlx.win,
 			((t_cam*)(sn.basecam->obj))->img, 0, 0);
 	my_mlx_loop(&mlx);

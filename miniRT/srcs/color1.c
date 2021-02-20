@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 01:00:36 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 22:23:21 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/20 23:25:26 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,14 @@ int		cfil(int a)
 			(y - 0.34414 * g_cb - 0.71414 * g_cr) * 255,
 			(y + 1.772 * g_cb) * 255);
 	return (c);
+}
+
+int		caverage(int a, int b, int c, int d)
+{
+	int		rgb[3];
+
+	rgb[0] = cred(a) + cred(b) + cred(c) + cred(d);
+	rgb[1] = cgreen(a) + cgreen(b) + cgreen(c) + cgreen(d);
+	rgb[2] = cblue(a) + cblue(b) + cblue(c) + cblue(d);
+	return (cset(rgb[0] / 4, rgb[1] / 4, rgb[2] / 4));
 }
