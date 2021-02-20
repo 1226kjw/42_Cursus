@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:31:35 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/21 01:11:53 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/21 01:32:56 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@
 
 # define EPSILON 0.0001
 # define SCALE 0.1
-# define ANGLE M_PI / 12
+# define ANGLE 0.261799387799
 # define NSCALE 5
 # define AMP 1
-# define RSCALE 5/7.0
+# define RSCALE 0.7
 
 # define SP 0
 # define PL 1

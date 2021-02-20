@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:52 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/20 19:38:59 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/21 01:29:56 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,8 @@ int		main(int argc, char **argv)
 		errmsg(&sn, "parsing error");
 	my_mlx_init(&mlx, &sn);
 	make_img(&mlx, &sn);
+	if (argc == 3)
+		save_file(argv[1], &mlx, &sn);
 	mlx_put_image_to_window(mlx.mlx, mlx.win,
 			((t_cam*)(sn.basecam->obj))->img, 0, 0);
 	my_mlx_loop(&mlx);
