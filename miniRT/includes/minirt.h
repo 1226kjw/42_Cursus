@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:31:35 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/20 22:53:28 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/21 01:11:53 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@
 # include <unistd.h>
 # include <pthread.h>
 
-# define EPSILON 0.00001
+# define EPSILON 0.0001
 # define SCALE 0.1
 # define ANGLE M_PI / 12
+# define NSCALE 5
+# define AMP 1
+# define RSCALE 5/7.0
 
 # define SP 0
 # define PL 1

@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:58:17 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/20 17:43:28 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/21 01:06:22 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,6 @@ int		parsing_pl(char *buf, t_scene *sn)
 	no = ft_lstnew(PL, new_pl(ft_atov(buf, &i),
 				ft_atov(buf, &i), ft_atoc(buf, &i), next_atoi(buf, &i)));
 	ft_lstadd_back(&sn->objs, no);
-	if (vabs(((t_pl*)no->obj)->n) == 0.0)
-		errmsg(sn, "normal vector cannot be null vector");
 	return (0);
 }
 
@@ -69,10 +67,23 @@ int		c_pl(t_hit hit)
 		else
 			return (o->color);
 	}
+	else if (o->tex == 3)
+		return (crainbow(hit.p, o->o));
 	return (o->color);
 }
 
 t_v3	n_pl(t_hit hit)
 {
-	return (vunit(((t_pl*)hit.obj)->n));
+	t_v3	n;
+	t_v3	p;
+	t_pl	*pl;
+
+	pl = (t_pl*)hit.obj;
+	n = vunit(pl->n);
+	if (pl->tex == 2)
+	{
+		p = vsub(pl->o, hit.p);
+		n = vadd(n, vmul(vunit(p), AMP * sin(NSCALE * vabs(p))));
+	}
+	return (vunit(n));
 }

@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 16:25:48 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/20 18:25:21 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/21 01:08:45 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,23 @@ int		c_ci(t_hit hit)
 		else
 			return (o->color);
 	}
+	else if (o->tex == 3)
+		return (crainbow(hit.p, o->o));
 	return (o->color);
 }
 
 t_v3	n_ci(t_hit hit)
 {
-	return (((t_ci*)hit.obj)->n);
+	t_ci	*ci;
+	t_v3	n;
+	t_v3	p;
+
+	ci = (t_ci*)hit.obj;
+	n = vunit(ci->n);
+	if (ci->tex == 2)
+	{
+		p = vsub(ci->o, hit.p);
+		n = vadd(n, vmul(vunit(p), AMP * sin(NSCALE * vabs(p))));
+	}
+	return (vunit(n));
 }

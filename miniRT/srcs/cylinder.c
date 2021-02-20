@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:26 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/20 18:39:44 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/21 01:07:34 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ int		parsing_cy(char *buf, t_scene *sn)
 	no = ft_lstnew(CY, new_cy(ft_atov(buf, &i), ft_atov(buf, &i),
 				next_atof(buf, &i), next_atof(buf, &i)));
 	nc = (t_cy*)no->obj;
-	if (viseq(nc->d, vset(0.0, 0.0, 0.0)))
-		errmsg(sn, "normal vector cannot be null vector");
 	if (nc->r < 0 || nc->h < 0)
 		errmsg(sn, "valid height/radius : [0, inf)");
 	nc->color = ft_atoc(buf, &i);
@@ -92,15 +90,25 @@ int		c_cy(t_hit hit)
 		else
 			return (o->color);
 	}
+	else if (o->tex == 3)
+		return (crainbow(hit.p, o->o));
 	return (o->color);
 }
 
 t_v3	n_cy(t_hit hit)
 {
-	t_cy	cy;
+	t_cy	*cy;
 	t_v3	cq;
+	t_v3	n;
+	t_v3	p;
 
-	cy = *(t_cy*)hit.obj;
-	cq = vmul(cy.d, vinner(vsub(hit.p, cy.o), cy.d));
-	return (vunit(vsub(hit.p, vadd(cy.o, cq))));
+	cy = (t_cy*)hit.obj;
+	cq = vmul(cy->d, vinner(vsub(hit.p, cy->o), cy->d));
+	n = vunit(vsub(hit.p, vadd(cy->o, cq)));
+	if (cy->tex == 2)
+	{
+		p = vsub(cy->o, hit.p);
+		n = vadd(n, vmul(vunit(p), AMP * sin(NSCALE * vabs(p))));
+	}
+	return (vunit(n));
 }

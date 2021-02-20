@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:28:27 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 00:49:11 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/20 23:48:02 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ t_v3	vcross(t_v3 a, t_v3 b)
 t_v3	vunit(t_v3 a)
 {
 	if (a.x == 0.0 && a.y == 0.0 && a.z == 0.0)
-		return (vset(1.0, 0.0, 0.0));
+		errmsg(0, "normal vector cannot be null vector");
 	return (vmul(a, 1.0 / vabs(a)));
 }
 

@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 16:26:06 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/20 18:03:53 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/21 01:08:28 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ int		parsing_co(char *buf, t_scene *sn)
 	no = ft_lstnew(CO, new_co(ft_atov(buf, &i), ft_atov(buf, &i),
 					next_atof(buf, &i), next_atof(buf, &i)));
 	nc = (t_co*)no->obj;
-	if (viseq(nc->d, vset(0.0, 0.0, 0.0)))
-		errmsg(sn, "normal vector cannot be null vector");
 	if (nc->r < 0 || nc->h < 0)
 		errmsg(sn, "valid height/radius : (0, inf)");
 	nc->color = ft_atoc(buf, &i);
@@ -91,6 +89,8 @@ int		c_co(t_hit hit)
 		else
 			return (o->color);
 	}
+	else if (o->tex == 3)
+		return (crainbow(hit.p, vadd(o->o, vmul(o->d, o->h))));
 	return (o->color);
 }
 
@@ -98,6 +98,7 @@ t_v3	n_co(t_hit hit)
 {
 	t_co	co;
 	t_v3	h;
+	t_v3	n;
 	double	pt;
 	double	x;
 
@@ -105,5 +106,11 @@ t_v3	n_co(t_hit hit)
 	pt = vabs(vsub(vadd(co.o, vmul(co.d, co.h)), hit.p));
 	x = co.h - pt / cos(atan(co.r / co.h));
 	h = vadd(co.o, vmul(co.d, x));
-	return (vunit(vsub(hit.p, h)));
+	n = vunit(vsub(hit.p, h));
+	if (co.tex == 2)
+	{
+		h = vsub(vadd(co.o, vmul(co.d, co.h)), hit.p);
+		n = vadd(n, vmul(vunit(h), AMP * sin(NSCALE * vabs(h))));
+	}
+	return (vunit(n));
 }
