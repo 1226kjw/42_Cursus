@@ -27,13 +27,11 @@ void	my_pixel_put(t_cam *cam, int x, int y, int color)
 void	make_img(t_data *mlx, t_scene *sn)
 {
 	t_list	*cam;
-	int		i;
 	t_arg	*args;
 
 	if (!(args = (t_arg*)ft_calloc(g_y, sizeof(t_arg))))
 		errmsg(sn, "malloc");
 	cam = sn->cams;
-	i = 0;
 	while (cam)
 	{
 		args_set(mlx, sn, (t_cam*)cam->obj, args);
