@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:58:08 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/18 01:25:11 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/21 17:19:33 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int			parsing_r(char *buf, t_scene *sn)
 	int		i;
 
 	i = 1;
+	if (g_x || g_y)
+		errmsg(sn, "dup resolution");
 	g_x = next_atoi(buf, &i);
 	g_y = next_atoi(buf, &i);
 	while (buf[i] && ft_isspace(buf[i]))
@@ -28,6 +30,8 @@ int			parsing_r(char *buf, t_scene *sn)
 		errmsg(sn, "res cannot be 0(18)");
 	if (buf[i])
 		errmsg(sn, "unexpected character(19)");
+	while (g_x % 64)
+		g_x++;
 	return (0);
 }
 

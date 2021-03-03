@@ -1,12 +1,13 @@
 CC = gcc
 FLAGS = -Wall -Wextra #-Werror
 
-NAME = a.out
+NAME = miniRT
 
 SRCS_DIR = ./srcs/
 HDR_DIR = ./includes/
 
 SRCS = $(addprefix $(SRCS_DIR),\
+		bmp.c\
 		camera0.c\
 		camera1.c\
 		circle.c\
@@ -47,6 +48,8 @@ LIBFT = libft.a
 
 all: $(NAME)
 
+bonus: all
+
 $(NAME): $(SRCS) $(MLXL) $(LIBFT)
 		   $(CC) -o $@ $(SRCS) $(FLAGS) -I $(HDR_DIR) -L . -l mlx -l ft
 
@@ -63,7 +66,9 @@ $(LIBFT):
 
 clean:
 	make clean -C ./libft
-	rm -rf $(MLXL) $(LIBFT)
+	rm -rf $(LIBFT)
 
 fclean: clean
 	rm -rf $(NAME)
+
+re:	fclean all

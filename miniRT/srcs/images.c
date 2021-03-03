@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:31 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/20 21:55:32 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/21 17:07:04 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,7 @@ void	make_img(t_data *mlx, t_scene *sn)
 	i = 0;
 	while (cam)
 	{
-		printf("cam no : %d\n", i++);
 		args_set(mlx, sn, (t_cam*)cam->obj, args);
-		printf("argset done\n");
 		multithreading(args);
 		cam = cam->next;
 	}

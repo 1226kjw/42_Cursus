@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/18 01:00:36 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/21 01:11:28 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/21 15:34:33 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,24 +61,23 @@ int		caverage(int a, int b, int c, int d)
 
 int		crainbow(t_v3 p, t_v3 o)
 {
-	double	d;
+	int		d;
 
-	d = vabs(vsub(p, o));
-	while (d >= RSCALE)
-		d -= RSCALE;
-	if (d < RSCALE * 1 / 7)
+	d = (int)vabs(vsub(p, o));
+	d %= 7 * RSCALE;
+	if (d < RSCALE * 1)
 		return (RED);
-	else if (d < RSCALE * 2 / 7)
+	else if (d < RSCALE * 2)
 		return (ORANGE);
-	else if (d < RSCALE * 3 / 7)
+	else if (d < RSCALE * 3)
 		return (YELLOW);
-	else if (d < RSCALE * 4 / 7)
+	else if (d < RSCALE * 4)
 		return (GREEN);
-	else if (d < RSCALE * 5 / 7)
+	else if (d < RSCALE * 5)
 		return (BLUE);
-	else if (d < RSCALE * 6 / 7)
+	else if (d < RSCALE * 6)
 		return (INDIGO);
-	else if (d < RSCALE)
+	else if (d < RSCALE * 7)
 		return (VIOLET);
 	return (0);
 }

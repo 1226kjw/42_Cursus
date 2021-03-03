@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:31:35 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/21 01:32:56 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/21 17:09:50 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@
 # include <pthread.h>
 
 # define EPSILON 0.0001
-# define SCALE 0.1
+# define SCALE 0.2
 # define ANGLE 0.261799387799
 # define NSCALE 5
 # define AMP 1
-# define RSCALE 0.7
+# define RSCALE 1
 
 # define SP 0
 # define PL 1
@@ -68,6 +68,9 @@
 
 # define BUT1_KEY 1
 
+# define XPPM 2835
+# define YPPM 2835
+
 # include "../minilibx_mms/mlx.h"
 # include "libft.h"
 # include "get_next_line.h"
@@ -80,14 +83,34 @@
 # include "object.h"
 # include "images.h"
 
-int		g_x;
-int		g_y;
-int		g_filter;
-double	g_cb;
-double	g_cr;
-void	errmsg(t_scene *sn, char *str);
-int		key_handle(int keycode, t_data *mlx);
-int		button_handle(int button, int x, int y, t_data *mlx);
-int		close_program(t_data *mlx);
+int				g_x;
+int				g_y;
+int				g_filter;
+double			g_cb;
+double			g_cr;
+void			errmsg(t_scene *sn, char *str);
+int				key_handle(int keycode, t_data *mlx);
+int				button_handle(int button, int x, int y, t_data *mlx);
+int				close_program(t_data *mlx);
+void			save_file(char *name, t_scene *sn);
+
+typedef struct	s_bmph
+{
+	char			type[2];
+	unsigned int	size_f;
+	unsigned int	reserved;
+	unsigned int	offset;
+	unsigned int	size_d;
+	int				width;
+	int				height;
+	unsigned short	planes;
+	unsigned short	bpp;
+	unsigned int	comp;
+	unsigned int	size_i;
+	int				x_ppm;
+	int				y_ppm;
+	unsigned int	color;
+	unsigned int	cimp;
+}				t_bmph;
 
 #endif

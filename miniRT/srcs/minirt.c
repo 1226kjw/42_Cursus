@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/13 23:57:52 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/21 01:29:56 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/02/21 16:56:20 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,12 @@ void	my_mlx_init(t_data *mlx, t_scene *sn)
 {
 	t_list	*caml;
 	t_cam	*cam;
+	int		r[2];
 
 	mlx->mlx = mlx_init();
+	mlx_get_screen_size(mlx->mlx, &r[0], &r[1]);
+	g_x = g_x > r[0] ? r[0] : g_x;
+	g_y = g_y > r[1] ? r[1] : g_y;
 	mlx->win = mlx_new_window(mlx->mlx, g_x, g_y, "miniRT");
 	if (!sn->cams)
 		errmsg(sn, "no cam");
@@ -77,9 +81,11 @@ int		main(int argc, char **argv)
 	if (parsing(fd, &sn))
 		errmsg(&sn, "parsing error");
 	my_mlx_init(&mlx, &sn);
+	sn.x = g_x;
+	sn.y = g_y;
 	make_img(&mlx, &sn);
 	if (argc == 3)
-		save_file(argv[1], &mlx, &sn);
+		save_file(argv[1], &sn);
 	mlx_put_image_to_window(mlx.mlx, mlx.win,
 			((t_cam*)(sn.basecam->obj))->img, 0, 0);
 	my_mlx_loop(&mlx);
