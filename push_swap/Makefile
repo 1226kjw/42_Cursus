@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -Wall -Wextra #-Werror
+CFLAGS = -Wall -Wextra -g #-Werror
 
 NAME = push_swap
 CHECKER = checker

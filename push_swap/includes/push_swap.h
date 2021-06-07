@@ -4,5 +4,7 @@
 # include "list.h"
 # include "utils.h"
 # include "board.h"
+# include "priqueue.h"
+# include "astar.h"
 
 #endif

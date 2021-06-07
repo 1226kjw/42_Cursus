@@ -59,4 +59,5 @@ void	err_msg(char *str)
 	while (str[++i])
 		;
 	write(2, str, i);
+	exit(1);
 }

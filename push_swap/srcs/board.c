@@ -1,6 +1,7 @@
 #include "board.h"
 #include "list.h"
 #include "utils.h"
+#include "astar.h"
 #include <stdio.h>
 
 t_board			*board_new(t_list *a, t_list *b, int na, int nb)
@@ -83,7 +84,7 @@ t_board			*board_cp(t_board *bd)
 	return (board_new(newa, newb, bd->na, bd->nb));
 }
 
-void			board_print(t_board *bd)
+void			board_print(t_board *bd, int *ans)
 {
 	t_list		*tmp;
 
@@ -110,7 +111,7 @@ void			board_print(t_board *bd)
 		}
 		printf("%3d", tmp->n);
 	}
-	printf("\n");
+	printf("\n%d\n", calc_h(bd, ans));
 }
 
 void			board_clear(t_board *bd)

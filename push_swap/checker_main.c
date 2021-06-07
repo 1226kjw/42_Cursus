@@ -6,7 +6,6 @@ int		main(int argc, char **argv)
 {
 	t_board	*bd;
 	char	*line;
-
 	bd = board_init(argc, argv);
 	if (!bd)
 		err_msg("Error\n");
@@ -37,7 +36,6 @@ int		main(int argc, char **argv)
 		else
 			err_msg("Error\n");
 		free(line);
-		board_print(bd);
 	}
 	if (bd->b == 0 && ft_lstsorted(bd->a))
 		write(1, "OK\n", 3);
