@@ -89,3 +89,20 @@ void	ft_lstclear(t_list **lst)
 	}
 	*lst = 0;
 }
+
+int		ft_lstsorted(t_list *lst)
+{
+	int		n;
+	t_list	*tmp;
+
+	n = lst->n;
+	tmp = lst->next;
+	while (tmp != lst)
+	{
+		if (n >= tmp->n)
+			return (0);
+		n = tmp->n;
+		tmp = tmp->next;
+	}
+	return (1);
+}

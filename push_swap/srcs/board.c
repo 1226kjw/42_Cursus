@@ -1,6 +1,7 @@
 #include "board.h"
 #include "list.h"
 #include "utils.h"
+#include <stdio.h>
 
 t_board			*board_new(t_list *a, t_list *b, int na, int nb)
 {
@@ -82,6 +83,36 @@ t_board			*board_cp(t_board *bd)
 	return (board_new(newa, newb, bd->na, bd->nb));
 }
 
+void			board_print(t_board *bd)
+{
+	t_list		*tmp;
+
+	tmp = bd->a;
+	printf("A | ");
+	if (tmp)
+	{
+		while (tmp->next != bd->a)
+		{
+			printf("%3d ", tmp->n);
+			tmp = tmp->next;
+		}
+		printf("%3d", tmp->n);
+	}
+	printf("\n");
+	tmp = bd->b;
+	printf("B | ");
+	if (tmp)
+	{
+		while (tmp->next != bd->b)
+		{
+			printf("%3d ", tmp->n);
+			tmp = tmp->next;
+		}
+		printf("%3d", tmp->n);
+	}
+	printf("\n");
+}
+
 void			board_clear(t_board *bd)
 {
 	ft_lstclear(&bd->a);
@@ -93,7 +124,7 @@ void			board_sa(t_board *bd)
 {
 	int			tmp;
 
-	if (bd->na)
+	if (bd->na < 2)
 		return ;
 	tmp = bd->a->n;
 	bd->a->n = bd->a->next->n;
@@ -104,7 +135,7 @@ void			board_sb(t_board *bd)
 {
 	int			tmp;
 
-	if (bd->nb)
+	if (bd->nb < 2)
 		return ;
 	tmp = bd->b->n;
 	bd->b->n = bd->b->next->n;
