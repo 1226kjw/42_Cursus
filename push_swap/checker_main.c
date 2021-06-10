@@ -2,13 +2,59 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+void	pre_pro(t_board *bd, int *ans)
+{
+	int		i;
+	t_list	*tmp;
+
+	tmp = bd->a;
+	while (1)
+	{
+		i = -1;
+		while (tmp->n != ans[++i])
+			;
+		tmp->n = i;
+		tmp = tmp->next;
+		if (tmp == bd->a)
+			break ;
+	}
+	i = -1;
+	while (++i < bd->na + bd->nb)
+		ans[i] = i;
+}
+
+int		comp(const void *a, const void *b)
+{
+	int		*na;
+	int		*nb;
+
+	na = (int*)a;
+	nb = (int*)b;
+	if (*na == *nb)
+		err_msg("dup!\n");
+	return (*na - *nb);
+}
+
 int		main(int argc, char **argv)
 {
 	t_board	*bd;
 	char	*line;
+	int		i;
+	int		*ans;
+
 	bd = board_init(argc, argv);
-	if (!bd)
+	if (argc == 1 || !bd)
 		err_msg("Error\n");
+	i = 0;
+	ans = (int*)malloc(sizeof(int) * bd->na);
+	while (i < bd->na)
+	{
+		ans[i] = bd->a->n;
+		bd->a = bd->a->next;
+		i++;
+	}
+	qsort(ans, bd->na, sizeof(int), comp);
+	pre_pro(bd, ans);
 	while (get_next_line(0, &line) == 1)
 	{
 		if (!ft_strcmp(line, "sa"))
@@ -35,6 +81,7 @@ int		main(int argc, char **argv)
 			board_rrr(bd);
 		else
 			err_msg("Error\n");
+		board_print(bd);
 		free(line);
 	}
 	if (bd->b == 0 && ft_lstsorted(bd->a))

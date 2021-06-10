@@ -23,7 +23,7 @@ clean :
 	rm -f $(OBJS_P) $(DEPS_P) $(OBJS_C) $(DEPS_C)
 
 fclean : clean
-	rm -f $(NAME)
+	rm -f $(NAME) $(CHECKER)
 
 re : fclean all
 

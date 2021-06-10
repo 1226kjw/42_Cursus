@@ -43,6 +43,8 @@ int		comp(const void *a, const void *b)
 
 	na = (int*)a;
 	nb = (int*)b;
+	if (*na == *nb)
+		err_msg("dup!\n");
 	return (*na - *nb);
 }
 
@@ -92,20 +94,20 @@ int		main(int argc, char **argv)
 	root->count = 0;
 
 	node.g = 0;
-	node.f = calc_h(bd, ans);
+	node.f = calc_h(bd);
 	node.hist = strdup("");
 	node.bd = board_cp(bd);
 	priq_push(root, node);
 	while (root->count)
 	{
 		t_node now = priq_pop(root);
-		if (calc_h(now.bd, ans) == 0)
+		if (calc_h(now.bd) == 0)
 		{
 			print_inst(now.hist, now.g);
 			break;
 		}
 		for (int i=0;i<11;i++)
-			priq_push(root, node_init(now, i, ans));
+			priq_push(root, node_init(now, i));
 		free(now.hist);
 		board_clear(now.bd);
 	}

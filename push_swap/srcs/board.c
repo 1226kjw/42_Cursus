@@ -84,7 +84,7 @@ t_board			*board_cp(t_board *bd)
 	return (board_new(newa, newb, bd->na, bd->nb));
 }
 
-void			board_print(t_board *bd, int *ans)
+void			board_print(t_board *bd)
 {
 	t_list		*tmp;
 
@@ -111,7 +111,7 @@ void			board_print(t_board *bd, int *ans)
 		}
 		printf("%3d", tmp->n);
 	}
-	printf("\n%d\n", calc_h(bd, ans));
+	printf("\n%d\n\n", calc_h(bd));
 }
 
 void			board_clear(t_board *bd)

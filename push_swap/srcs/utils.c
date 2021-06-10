@@ -21,8 +21,14 @@ int		ft_isspdigit(char *str)
 
 	i = -1;
 	while (str[++i])
-		if (str[i] != ' ' && str[i] != '\t' && (str[i] < '0' || str[i] > '9'))
+	{
+		if ((str[i] == '-' || str[i] == '+')
+				&& (str[i + 1] >= '0' && str[i + 1] <= '9')
+				&& (i == 0 || (str[i - 1] < '0' && str[i - 1] > '9')))
+			i++;
+		else if (str[i] != ' ' && str[i] != '\t' && (str[i] < '0' || str[i] > '9'))
 			return (0);
+	}
 	return (1);
 }
 
@@ -48,6 +54,8 @@ int		ft_atoi(char *str, int *i)
 	}
 	while (str[*i] && (str[*i] == ' ' || str[*i] == '\t'))
 		++*i;
+	if (ret * sign < -2147483648LL || ret * sign > 2147483647)
+		err_msg("Error\n");
 	return (ret * sign);
 }
 

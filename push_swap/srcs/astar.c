@@ -10,7 +10,7 @@ int		dist(int a, int b)
 		return (a - b);
 }
 
-t_node	node_init(t_node now, int inst, int *ans)
+t_node	node_init(t_node now, int inst)
 {
 	t_node	ret;
 
@@ -38,7 +38,7 @@ t_node	node_init(t_node now, int inst, int *ans)
 	else if (inst == 10)
 		board_rrr(ret.bd);
 	ret.g = now.g + 1;
-	ret.f = ret.g + calc_h(ret.bd, ans);
+	ret.f = ret.g + calc_h(ret.bd);
 	ret.hist = (char*)malloc(now.g + 1);
 	memcpy(ret.hist, now.hist, now.g);
 	ret.hist[now.g] = (char)inst;
@@ -52,35 +52,55 @@ int		board_iseq(t_board *bd1, t_board *bd2)
 	return (ft_lstiseq(bd1->a, bd2->a) * ft_lstiseq(bd1->b, bd2->b));
 }
 
-int		calc_h(t_board *bd, int *arr)
+int		ft_min(int a, int b)
+{
+	if (a < b)
+		return (a);
+	else
+		return (b);
+}
+
+int		calc_h(t_board *bd)
 {
 	t_list	*tmp;
 	int		val;
 	int		i;
+	int		min;
 
+	min = 2147483647;
 	i = 0;
-	val = 0;
-	if (bd->b)
+	while (i < bd->na + bd->nb)
 	{
-		tmp = bd->b->bef;
-		while (1)
+		val = 0;
+		if (bd->b)
 		{
-			val += dist(arr[i++], tmp->n);
-			if (tmp == bd->b)
-				break ;
-			tmp = tmp->bef;
+			tmp = bd->b->bef;
+			while (1)
+			{
+				val += dist(i++, tmp->n);
+				if (i == bd->na + bd->nb)
+					i = 0;
+				if (tmp == bd->b)
+					break ;
+				tmp = tmp->bef;
+			}
 		}
-	}
-	if (bd->a)
-	{
-		tmp = bd->a;
-		while (1)
+		if (bd->a)
 		{
-			val += dist(arr[i++], tmp->n);
-			tmp = tmp->next;
-			if (tmp == bd->a)
-				break ;
+			tmp = bd->a;
+			while (1)
+			{
+				val += dist(i++, tmp->n);
+				if (i == bd->na + bd->nb)
+					i = 0;
+				tmp = tmp->next;
+				if (tmp == bd->a)
+					break ;
+			}
 		}
+		val += 2 * ft_min(i, bd->na + bd->nb - i) + bd->nb;
+		min = ft_min(min, val);
+		i++;
 	}
-	return (val + bd->nb);
+	return (min);
 }

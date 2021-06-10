@@ -2,7 +2,7 @@
 # define PRIQUEUE_H
 
 # ifndef MAXQUEUE
-#  define MAXQUEUE 6553500
+#  define MAXQUEUE 100000000
 # endif
 
 # include <stdlib.h>

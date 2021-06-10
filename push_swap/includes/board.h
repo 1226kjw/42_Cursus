@@ -14,7 +14,7 @@ typedef struct	s_board
 t_board			*board_new(t_list *a, t_list *b, int na, int nb);
 t_board			*board_init(int argc, char **argv);
 t_board			*board_cp(t_board *bd);
-void			board_print(t_board *bd, int *ans);
+void			board_print(t_board *bd);
 void			board_clear(t_board *bd);
 void			board_sa(t_board *bd);
 void			board_sb(t_board *bd);
