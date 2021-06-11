@@ -31,7 +31,7 @@ int		comp(const void *a, const void *b)
 	na = (int*)a;
 	nb = (int*)b;
 	if (*na == *nb)
-		err_msg("dup!\n");
+		err_msg("Error\n");
 	return (*na - *nb);
 }
 

@@ -104,7 +104,7 @@ int		calc_h(t_board *bd)
 					break ;
 			}
 		}
-		val *= 1.5;
+		//val *= 1.5;
 		val += ft_min(i, bd->na + bd->nb - i) + bd->nb;
 		min = ft_min(min, val);
 		i++;
