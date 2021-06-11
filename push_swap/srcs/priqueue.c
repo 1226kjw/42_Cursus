@@ -18,7 +18,7 @@ void	priq_push(t_priq *root, t_node data)
 	if (root->count >= MAXQUEUE)
 		err_msg("heap: max_push\n");
 	root->heap[++root->count] = data;
-	if (root->count > max_heap)
+	if (root->count > max_heap)//for debug!!!!!
 		max_heap=root->count;
 	child = root->count;
 	parent = child / 2;
