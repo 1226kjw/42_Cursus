@@ -69,6 +69,8 @@ void	pre_pro(t_board *bd, int *ans)
 		ans[i] = i;
 }
 
+extern int		max_heap;
+
 int		main(int argc, char **argv)
 {
 	t_board	*bd;
@@ -107,8 +109,13 @@ int		main(int argc, char **argv)
 			break;
 		}
 		for (int i=0;i<11;i++)
-			priq_push(root, node_init(now, i));
+		{
+			t_node t = node_init(now, i);
+			if (t.bd)
+				priq_push(root, t);
+		}
 		free(now.hist);
 		board_clear(now.bd);
 	}
+	//printf("max heap : %d\n", max_heap);
 }

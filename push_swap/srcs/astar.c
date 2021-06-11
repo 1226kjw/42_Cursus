@@ -15,28 +15,34 @@ t_node	node_init(t_node now, int inst)
 	t_node	ret;
 
 	ret.bd = board_cp(now.bd);
-	if (inst == 0)
+	if (inst == 0 && ret.bd->na > 1)
 		board_sa(ret.bd);
-	else if (inst == 1)
+	else if (inst == 1 && ret.bd->nb > 1)
 		board_sb(ret.bd);
-	else if (inst == 2)
+	else if (inst == 2 && ret.bd->na > 1 && ret.bd->nb > 1)
 		board_ss(ret.bd);
-	else if (inst == 3)
+	else if (inst == 3 && ret.bd->nb > 0)
 		board_pa(ret.bd);
-	else if (inst == 4)
+	else if (inst == 4 && ret.bd->na > 0)
 		board_pb(ret.bd);
-	else if (inst == 5)
+	else if (inst == 5 && ret.bd->na > 1)
 		board_ra(ret.bd);
-	else if (inst == 6)
+	else if (inst == 6 && ret.bd->nb > 1)
 		board_rb(ret.bd);
-	else if (inst == 7)
+	else if (inst == 7 && ret.bd->na > 1 && ret.bd->nb > 1)
 		board_rr(ret.bd);
-	else if (inst == 8)
+	else if (inst == 8 && ret.bd->na > 1)
 		board_rra(ret.bd);
-	else if (inst == 9)
+	else if (inst == 9 && ret.bd->nb > 1)
 		board_rrb(ret.bd);
-	else if (inst == 10)
+	else if (inst == 10 && ret.bd->na > 1 && ret.bd->nb > 1)
 		board_rrr(ret.bd);
+	else
+	{
+		board_clear(ret.bd);
+		ret.bd = 0;
+		return ret;
+	}
 	ret.g = now.g + 1;
 	ret.f = ret.g + calc_h(ret.bd);
 	ret.hist = (char*)malloc(now.g + 1);
@@ -98,7 +104,7 @@ int		calc_h(t_board *bd)
 					break ;
 			}
 		}
-		val += 2 * ft_min(i, bd->na + bd->nb - i) + bd->nb;
+		val += ft_min(i, bd->na + bd->nb - i) + bd->nb;
 		min = ft_min(min, val);
 		i++;
 	}

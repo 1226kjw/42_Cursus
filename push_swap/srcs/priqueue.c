@@ -1,5 +1,6 @@
 #include "priqueue.h"
 #include "board.h"
+int		max_heap;
 void	node_swap(t_node *n1, t_node *n2)
 {
 	t_node	tmp;
@@ -17,6 +18,8 @@ void	priq_push(t_priq *root, t_node data)
 	if (root->count >= MAXQUEUE)
 		err_msg("heap: max_push\n");
 	root->heap[++root->count] = data;
+	if (root->count > max_heap)
+		max_heap=root->count;
 	child = root->count;
 	parent = child / 2;
 	while (child > 1 && root->heap[parent].f > root->heap[child].f)

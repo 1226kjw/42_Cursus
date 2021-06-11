@@ -81,7 +81,7 @@ int		main(int argc, char **argv)
 			board_rrr(bd);
 		else
 			err_msg("Error\n");
-		board_print(bd);
+		//board_print(bd);
 		free(line);
 	}
 	if (bd->b == 0 && ft_lstsorted(bd->a))
