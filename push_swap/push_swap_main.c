@@ -95,27 +95,30 @@ int		main(int argc, char **argv)
 	root = (t_priq*)malloc(sizeof(t_priq));
 	root->count = 0;
 
-	node.g = 0;
-	node.f = calc_h(bd);
-	node.hist = strdup("");
-	node.bd = board_cp(bd);
-	priq_push(root, node);
-	while (root->count)
+	if (bd->na < 9)
 	{
-		t_node now = priq_pop(root);
-		if (calc_h(now.bd) == 0)
+		node.g = 0;
+		node.f = calc_h(bd);
+		node.hist = strdup("");
+		node.bd = board_cp(bd);
+		priq_push(root, node);
+		while (root->count)
 		{
-			print_inst(now.hist, now.g);
-			break;
+			t_node now = priq_pop(root);
+			if (calc_h(now.bd) == 0)
+			{
+				print_inst(now.hist, now.g);
+				break;
+			}
+			for (int i=0;i<11;i++)
+			{
+				t_node t = node_init(now, i);
+				if (t.bd)
+					priq_push(root, t);
+			}
+			free(now.hist);
+			board_clear(now.bd);
 		}
-		for (int i=0;i<11;i++)
-		{
-			t_node t = node_init(now, i);
-			if (t.bd)
-				priq_push(root, t);
-		}
-		free(now.hist);
-		board_clear(now.bd);
+		//printf("max heap : %d\n", max_heap);
 	}
-	//printf("max heap : %d\n", max_heap);
 }
