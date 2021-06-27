@@ -64,9 +64,7 @@ void	pre_pro(t_board *bd, int *ans)
 		if (tmp == bd->a)
 			break ;
 	}
-	i = -1;
-	while (++i < bd->na + bd->nb)
-		ans[i] = i;
+	free(ans);
 }
 
 extern int		max_heap;
@@ -92,11 +90,10 @@ int		main(int argc, char **argv)
 	}
 	qsort(ans, bd->na, sizeof(int), comp);
 	pre_pro(bd, ans);
-	root = (t_priq*)malloc(sizeof(t_priq));
-	root->count = 0;
-
-	if (bd->na < 9)
+	if (bd->na < 10)
 	{
+		root = (t_priq*)malloc(sizeof(t_priq));
+		root->count = 0;
 		node.g = 0;
 		node.f = calc_h(bd);
 		node.hist = strdup("");
@@ -119,6 +116,6 @@ int		main(int argc, char **argv)
 			free(now.hist);
 			board_clear(now.bd);
 		}
-		//printf("max heap : %d\n", max_heap);
+		printf("max heap : %d\n", max_heap);
 	}
 }

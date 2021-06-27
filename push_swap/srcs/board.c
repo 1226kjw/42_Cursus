@@ -25,6 +25,8 @@ t_board			*board_init(int argc, char **argv)
 	int			j;
 
 	parsed = 0;
+	if (argc == 1)
+		exit(0);
 	if (argc == 2)
 	{
 		j = 0;

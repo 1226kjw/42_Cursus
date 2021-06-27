@@ -15,7 +15,7 @@ t_node	node_init(t_node now, int inst)
 	t_node	ret;
 
 	ret.bd = board_cp(now.bd);
-	if (inst == 0 && ret.bd->na > 1)
+	if (inst == 0 && ret.bd->na > 1 && ret.hist[ret.g - 1] != 0)
 		board_sa(ret.bd);
 	else if (inst == 1 && ret.bd->nb > 1)
 		board_sb(ret.bd);
@@ -107,6 +107,7 @@ int		calc_h(t_board *bd)
 		val += ft_min(i, bd->na + bd->nb - i) + (bd->nb);
 		min = ft_min(min, val);
 		i++;
+		//break;
 	}
 	return (min);
 }
