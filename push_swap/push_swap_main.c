@@ -201,11 +201,15 @@ t_board	*astar(t_board *bd, int direct, t_dp *dp)
 			write_inst(now.hist, now.g);
 			if (dp)
 			{
-				cur->hist = now.hist;
-				cur->bd = board_cp(now.bd);
+				cur->hist = (char*)malloc(sizeof(char) * now.g);
+				memcpy(cur->hist, now.hist, now.g);
+				cur->bd = now.bd;
 				cur->g = now.g;
 			}
-			ret = now.bd;
+			free(now.hist);
+			ret = board_cp(now.bd);
+			if (direct)
+				board_clear(now.bd);
 			break;
 		}
 		for (int i=0;i<=10;i++)
@@ -219,9 +223,9 @@ t_board	*astar(t_board *bd, int direct, t_dp *dp)
 		free(now.hist);
 		board_clear(now.bd);
 	}
-	//printf("max heap : %d\n", max_heap);
-	max_heap = 0;
-	//priq_free(root);
+	priq_free(root);
+	if (direct)
+		return (0);
 	return (ret);
 }
 
@@ -276,7 +280,7 @@ void	board_merge_a(t_board *org, t_board *tmp, int count, int min)
 		cur_org = cur_org->next;
 		cur_tmp = cur_tmp->next;
 	}
-	board_clear(tmp);
+	//board_clear(tmp);
 }
 
 void	board_merge_b(t_board *org, t_board *tmp, int count, int min)
@@ -297,9 +301,11 @@ void	board_merge_b(t_board *org, t_board *tmp, int count, int min)
 
 void	atob(t_board *bd, int count, int min, int max, t_dp **dp)
 {
-	int		pivot;
+	int		pivot[2];
 	int		n_ra;
+	int		n_rb;
 	int		n_pb;
+	int		i;
 
 	if (count <= ASTAR_MAX)
 	{
@@ -309,12 +315,14 @@ void	atob(t_board *bd, int count, int min, int max, t_dp **dp)
 		board_merge_a(bd, tmp, count, min);
 		return ;
 	}
-	pivot = (min + max) / 2;
+	pivot[0] = (min * 2 + max) / 3;
+	pivot[1] = (min + max * 2) / 3;
 	n_ra = 0;
+	n_rb = 0;
 	n_pb = 0;
 	for(int i=0;i<count;i++)
 	{
-		if (bd->a->n > pivot)
+		if (bd->a->n > pivot[1])
 		{
 			board_ra(bd);
 			write_inst("\x5", 1);
@@ -325,32 +333,44 @@ void	atob(t_board *bd, int count, int min, int max, t_dp **dp)
 			board_pb(bd);
 			write_inst("\x4", 1);
 			n_pb++;
+			if (bd->b->n > pivot[0])
+			{
+				board_rb(bd);
+				write_inst("\x6", 1);
+				n_rb++;
+			}
 		}
 	}
-	if (n_ra < bd->na / 2)
-		for(int i=0;i<n_ra;i++)
-		{
-			board_rra(bd);
-			write_inst("\x8", 1);
-		}
-	else
-		for(int i=0; i < bd->na - n_ra;i++)
-		{
-			board_ra(bd);
-			write_inst("\x5", 1);
-		}
-	atob(bd, n_ra, pivot + 1, max, dp);
-	btoa(bd, n_pb, min, pivot, dp);
+	for(i=0;i<n_ra && i<n_rb;i++)
+	{
+		board_rrr(bd);
+		write_inst("\xa",1);
+	}
+	while (i < n_ra)
+	{
+		board_rra(bd);
+		write_inst("\x8", 1);
+		i++;
+	}
+	while (i < n_rb)
+	{
+		board_rrb(bd);
+		write_inst("\x9", 1);
+		i++;
+	}
+	atob(bd, n_ra, pivot[1] + 1, max, dp);
+	btoa(bd, n_rb, pivot[0] + 1, pivot[1], dp);
+	btoa(bd, n_pb - n_rb, min, pivot[0], dp);
 }
 
 void	btoa(t_board *bd, int count, int min, int max, t_dp **dp)
 {
-	int		pivot;
+	int		pivot[2];
+	int		n_ra;
 	int		n_rb;
 	int		n_pa;
+	int		i;
 
-	n_rb = 0;
-	n_pa = 0;
 	if (count <= ASTAR_MAX)
 	{
 		t_board *newboard = newboard_only_b(bd, count, min);
@@ -359,10 +379,14 @@ void	btoa(t_board *bd, int count, int min, int max, t_dp **dp)
 		board_merge_b(bd, tmp, count, min);
 		return ;
 	}
-	pivot = (min + max) / 2;
+	pivot[0] = (min * 2 + max) / 3;
+	pivot[1] = (min + max * 2) / 3;
+	n_ra = 0;
+	n_rb = 0;
+	n_pa = 0;
 	for(int i=0;i<count;i++)
 	{
-		if (bd->b->n <= pivot)
+		if (bd->b->n <= pivot[0])
 		{
 			board_rb(bd);
 			write_inst("\x6", 1);
@@ -373,22 +397,34 @@ void	btoa(t_board *bd, int count, int min, int max, t_dp **dp)
 			board_pa(bd);
 			write_inst("\x3", 1);
 			n_pa++;
+			if (bd->a->n <= pivot[1])
+			{
+				board_ra(bd);
+				write_inst("\x5", 1);
+				n_ra++;
+			}
 		}
 	}
-	if (n_rb < bd->nb / 2)
-		for(int i=0;i<n_rb;i++)
-		{
-			board_rrb(bd);
-			write_inst("\x9", 1);
-		}
-	else
-		for(int i=0;i<bd->nb - n_rb;i++)
-		{
-			board_rb(bd);
-			write_inst("\x6", 1);
-		}
-	atob(bd, n_pa, pivot + 1, max, dp);
-	btoa(bd, n_rb, min, pivot + 1, dp);
+	atob(bd, n_pa - n_ra, pivot[1] + 1, max, dp);
+	for(i=0;i<n_ra && i<n_rb;i++)
+	{
+		board_rrr(bd);
+		write_inst("\xa",1);
+	}
+	while (i < n_ra)
+	{
+		board_rra(bd);
+		write_inst("\x8", 1);
+		i++;
+	}
+	while (i < n_rb)
+	{
+		board_rrb(bd);
+		write_inst("\x9", 1);
+		i++;
+	}
+	atob(bd, n_ra, pivot[0] + 1, pivot[1], dp);
+	btoa(bd, n_rb, min, pivot[0], dp);
 }
 
 int		main(int argc, char **argv)
@@ -425,5 +461,4 @@ int		main(int argc, char **argv)
 	board_clear(bd);
 	dp_free(dp[0]);
 	dp_free(dp[1]);
-	printf("%d\n", better);
 }

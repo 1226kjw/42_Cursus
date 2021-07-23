@@ -20,8 +20,9 @@ void	ft_lst_merge(t_list **org, t_list *new)
 	{
 		(*org)->bef->next = new;
 		new->bef->next = (*org);
+		t_list	*tmp = new->bef;
 		new->bef = (*org)->bef;
-		(*org)->bef = new->bef;
+		(*org)->bef = tmp;
 		*org = new;
 	}
 }
