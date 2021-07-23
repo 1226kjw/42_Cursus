@@ -42,6 +42,7 @@ int		main(int argc, char **argv)
 	int		i;
 	int		*ans;
 
+	setbuf(stdout, 0);
 	bd = board_init(argc, argv);
 	if (argc == 1 || !bd)
 		err_msg("Error\n");
@@ -80,8 +81,7 @@ int		main(int argc, char **argv)
 		else if (!ft_strcmp(line, "rrr"))
 			board_rrr(bd);
 		else
-			err_msg("Error\n");
-//		board_print(bd);
+			continue;//err_msg("Error\n");
 		free(line);
 	}
 	if (bd->b == 0 && ft_lstsorted(bd->a))

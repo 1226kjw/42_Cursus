@@ -15,27 +15,27 @@ t_node	node_init(t_node now, int inst)
 	t_node	ret;
 
 	ret.bd = board_cp(now.bd);
-	if (inst == 0 && ret.bd->na > 1 && ret.hist[ret.g - 1] != 0)
+	if (inst == 0 && ret.bd->na > 1 && now.hist[now.g - 1] != 0 && now.hist[now.g - 1] != 1 && now.hist[now.g - 1] != 2)
 		board_sa(ret.bd);
-	else if (inst == 1 && ret.bd->nb > 1)
+	else if (inst == 1 && ret.bd->nb > 1 && now.hist[now.g - 1] != 0 && now.hist[now.g - 1] != 1 && now.hist[now.g - 1] != 2)
 		board_sb(ret.bd);
-	else if (inst == 2 && ret.bd->na > 1 && ret.bd->nb > 1)
+	else if (inst == 2 && ret.bd->na > 1 && ret.bd->nb > 1 && now.hist[now.g - 1] != 0 && now.hist[now.g - 1] != 1 && now.hist[now.g - 1] != 2)
 		board_ss(ret.bd);
-	else if (inst == 3 && ret.bd->nb > 0)
+	else if (inst == 3 && ret.bd->nb > 0 && now.hist[now.g - 1] != 4)
 		board_pa(ret.bd);
-	else if (inst == 4 && ret.bd->na > 0)
+	else if (inst == 4 && ret.bd->na > 0 && now.hist[now.g - 1] != 3)
 		board_pb(ret.bd);
-	else if (inst == 5 && ret.bd->na > 1)
+	else if (inst == 5 && ret.bd->na > 1 && now.hist[now.g - 1] != 6 && now.hist[now.g - 1] != 8 && now.hist[now.g - 1] != 10)
 		board_ra(ret.bd);
-	else if (inst == 6 && ret.bd->nb > 1)
+	else if (inst == 6 && ret.bd->nb > 1 && now.hist[now.g - 1] != 5 && now.hist[now.g - 1] != 9 && now.hist[now.g - 1] != 10)
 		board_rb(ret.bd);
-	else if (inst == 7 && ret.bd->na > 1 && ret.bd->nb > 1)
+	else if (inst == 7 && ret.bd->na > 1 && ret.bd->nb > 1 && now.hist[now.g - 1] != 8 && now.hist[now.g - 1] != 9 && now.hist[now.g - 1] != 10)
 		board_rr(ret.bd);
-	else if (inst == 8 && ret.bd->na > 1)
+	else if (inst == 8 && ret.bd->na > 1 && now.hist[now.g - 1] != 5 && now.hist[now.g - 1] != 7 && now.hist[now.g - 1] != 9)
 		board_rra(ret.bd);
-	else if (inst == 9 && ret.bd->nb > 1)
+	else if (inst == 9 && ret.bd->nb > 1 && now.hist[now.g - 1] != 6 && now.hist[now.g - 1] != 7 && now.hist[now.g - 1] != 8)
 		board_rrb(ret.bd);
-	else if (inst == 10 && ret.bd->na > 1 && ret.bd->nb > 1)
+	else if (inst == 10 && ret.bd->na > 1 && ret.bd->nb > 1 && now.hist[now.g - 1] != 5 && now.hist[now.g - 1] != 6 && now.hist[now.g - 1] != 7)
 		board_rrr(ret.bd);
 	else
 	{

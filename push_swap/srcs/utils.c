@@ -32,6 +32,16 @@ int		ft_isspdigit(char *str)
 	return (1);
 }
 
+int		ft_strlen(char *str)
+{
+	int		i;
+
+	i = -1;
+	while (str[++i])
+		;
+	return (i);
+}
+
 int		ft_atoi(char *str, int *i)
 {
 	long long int	ret;
@@ -39,6 +49,8 @@ int		ft_atoi(char *str, int *i)
 
 	sign = 1;
 	ret = 0;
+	if (ft_strlen(str) > 12)
+		err_msg("Error\n");
 	if (str[*i] == '-' || str[*i] == '+')
 	{
 		if (str[*i] == '-')
