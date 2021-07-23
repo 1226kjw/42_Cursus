@@ -12,6 +12,20 @@ t_list	*ft_lstnew(int n)
 	return (newlst);
 }
 
+void	ft_lst_merge(t_list **org, t_list *new)
+{
+	if (!*org)
+		*org = new;
+	else
+	{
+		(*org)->bef->next = new;
+		new->bef->next = (*org);
+		new->bef = (*org)->bef;
+		(*org)->bef = new->bef;
+		*org = new;
+	}
+}
+
 void	ft_lstadd_front(t_list **lst, t_list *new)
 {
 	if (!*lst)
@@ -29,7 +43,6 @@ void	ft_lstadd_front(t_list **lst, t_list *new)
 		(*lst) = new;
 	}
 }
-
 void	ft_lstadd_last(t_list **lst, t_list *new)
 {
 	if (!*lst)

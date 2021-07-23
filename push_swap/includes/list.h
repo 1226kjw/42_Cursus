@@ -11,6 +11,7 @@ typedef struct		s_list
 }					t_list;
 
 t_list				*ft_lstnew(int n);
+void				ft_lst_merge(t_list **a, t_list *b);
 void				ft_lstadd_front(t_list **lst, t_list *new);
 void				ft_lstadd_last(t_list **lst, t_list *new);
 int					ft_lstsize(t_list *lst);

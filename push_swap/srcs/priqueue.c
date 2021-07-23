@@ -54,3 +54,16 @@ t_node	priq_pop(t_priq *root)
 	}
 	return (result);
 }
+
+void	priq_free(t_priq *root)
+{
+	int		i;
+
+	i = -1;
+	while (++i <= root->count)
+	{
+		free(root->heap[i].hist);
+		board_clear(root->heap[i].bd);
+	}
+	free(root);
+}
