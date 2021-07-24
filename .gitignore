@@ -1,0 +1,11 @@
+*.d
+*.o
+*.lib
+*.a
+*.dll
+*.dylib
+*.so
+*.exe
+*.out
+push_swap_tester/
+.vscode/

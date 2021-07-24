@@ -30,7 +30,7 @@ void	board_merge_a(t_board *org, int count, int min)
 		cur_org = cur_org->next;
 	}
 }
-
+#include<stdio.h>
 void	atob(t_board *bd, int count, int min, int max, t_dp **dp, t_inst *inst)
 {
 	int		pivot[2];
@@ -39,6 +39,7 @@ void	atob(t_board *bd, int count, int min, int max, t_dp **dp, t_inst *inst)
 	int		n_pb;
 	int		i;
 
+	printf("%d %d %d\n", count, min, max);
 	if (count <= ASTAR_MAX)
 	{
 		t_board *newboard = newboard_only_a(bd, count, min);
@@ -52,7 +53,8 @@ void	atob(t_board *bd, int count, int min, int max, t_dp **dp, t_inst *inst)
 	n_ra = 0;
 	n_rb = 0;
 	n_pb = 0;
-	for(int i=0;i<count;i++)
+	i = -1;
+	while (++i < count)
 	{
 		if (bd->a->n > pivot[1])
 		{
@@ -73,7 +75,8 @@ void	atob(t_board *bd, int count, int min, int max, t_dp **dp, t_inst *inst)
 			}
 		}
 	}
-	for(i=0;i<n_ra && i<n_rb;i++)
+	i = -1;
+	while (++i < n_ra && i < n_rb)
 	{
 		board_rrr(bd);
 		write_inst(inst, "\xa",1);
