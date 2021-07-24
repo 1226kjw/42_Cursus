@@ -30,6 +30,8 @@ void	priq_push(t_priq *root, t_node data)
 	int		child;
 	int		parent;
 
+	if (!data.bd)
+		return ;
 	if (root->count >= MAXQUEUE)
 		err_msg("heap: max_push\n");
 	root->heap[++root->count] = data;
@@ -70,15 +72,25 @@ t_node	priq_pop(t_priq *root)
 	return (result);
 }
 
-void	priq_free(t_priq *root)
+void	priq_free(t_priq *root, t_node *now)
 {
 	int		i;
 
 	i = 0;
-	while (++i <= root->count)
+	if (now)
 	{
-		free(root->heap[i].hist);
-		board_clear(root->heap[i].bd);
+		if (now->bd)
+			board_clear(now->bd);
+		if (now->hist)
+			free(now->hist);
 	}
-	free(root);
+	if (root)
+	{
+		while (++i <= root->count)
+		{
+			free(root->heap[i].hist);
+			board_clear(root->heap[i].bd);
+		}
+		free(root);
+	}
 }

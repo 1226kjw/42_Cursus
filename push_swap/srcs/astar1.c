@@ -66,7 +66,6 @@ void	astar(t_board *bd, int direct, t_inst *inst)
 {
 	t_priq	*root;
 	t_node	now;
-	t_node	t;
 	int		i;
 
 	root = priq_init(bd);
@@ -76,23 +75,14 @@ void	astar(t_board *bd, int direct, t_inst *inst)
 		if (calc_h(now.bd) == 0)
 		{
 			write_inst(inst, now.hist, now.g);
-			free(now.hist);
-			board_clear(now.bd);
 			break ;
 		}
 		i = -1;
-		while (++i <= 10)
-		{
-			if (!direct && (5 <= i && i <= 10))
-				continue ;
-			t = node_init(now, i);
-			if (t.bd)
-				priq_push(root, t);
-		}
-		free(now.hist);
-		board_clear(now.bd);
+		while (++i <= 4 + direct * 6)
+			priq_push(root, node_init(now, i));
+		priq_free(0, &now);
 	}
 	if (!direct)
 		board_clear(bd);
-	priq_free(root);
+	priq_free(root, &now);
 }
