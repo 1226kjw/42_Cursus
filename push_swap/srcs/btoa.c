@@ -86,7 +86,7 @@ void	btoa(t_board *bd, int count, int min, t_inst *inst)
 	while (++i < n_ra && i < n_rb)
 	{
 		board_rrr(bd);
-		write_inst(inst, "\xa",1);
+		write_inst(inst, "\xa", 1);
 	}
 	while (i < n_ra)
 	{
