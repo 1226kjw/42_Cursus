@@ -66,7 +66,7 @@ int	valid_inst(t_board *bd, char *line, int *flag)
 	else if (!ft_strcmp(line, "rrr"))
 		board_rrr(bd);
 	else if (++*flag)
-		return (1);	
+		return (1);
 	return (0);
 }
 
@@ -86,7 +86,7 @@ int	main(int argc, char **argv)
 	while (get_next_line(0, &line) == 1)
 	{
 		if (valid_inst(bd, line, &flag))
-			break;
+			break ;
 		free(line);
 	}
 	if (flag)

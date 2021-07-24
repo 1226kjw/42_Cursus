@@ -8,7 +8,7 @@ typedef struct s_inst
 	int		c;
 	int		better;
 }			t_inst;
-
+void	inst_init(t_inst *inst);
 void	write_inst(t_inst *inst, char *str, int n);
 char	bef_inst(t_inst *inst, int i, int *j);
 int		set_ff(t_inst *inst, int a, int b);

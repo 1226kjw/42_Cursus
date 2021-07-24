@@ -1,5 +1,16 @@
 #include "inst.h"
 
+void	inst_init(t_inst *inst)
+{
+	int		i;
+
+	i = -1;
+	while (++i < 65536)
+		inst->inst[i] = -1;
+	inst->c = 0;
+	inst->better = 0;
+}
+
 void	write_inst(t_inst *inst, char *str, int n)
 {
 	int		i;

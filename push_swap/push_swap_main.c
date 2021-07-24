@@ -15,11 +15,16 @@ int	comp(const void *a, const void *b)
 	return (*na - *nb);
 }
 
-void	pre_pro(t_board *bd, int *ans)
+void	pre_pro(t_board *bd, int *ans, int i)
 {
-	int		i;
 	t_list	*tmp;
 
+	while (++i < bd->na)
+	{
+		ans[i] = bd->a->n;
+		bd->a = bd->a->next;
+	}
+	qsort(ans, bd->na, sizeof(int), comp);
 	tmp = bd->a;
 	while (1)
 	{
@@ -31,6 +36,9 @@ void	pre_pro(t_board *bd, int *ans)
 		if (tmp == bd->a)
 			break ;
 	}
+	i = -1;
+	while (++i < bd->na + bd->nb)
+		ans[i] = i;
 	free(ans);
 }
 
@@ -38,27 +46,14 @@ int	main(int argc, char **argv)
 {
 	t_board	*bd;
 	int		*ans;
-	int		i;
 	t_inst	inst;
 
-	i = -1;
-	while (++i < 65536)
-		inst.inst[i] = -1;
-	inst.c = 0;
-	inst.better = 0;
+	inst_init(&inst);
 	bd = board_init(argc, argv);
 	if (!bd)
 		err_msg("Error\n");
 	ans = (int *)malloc(sizeof(int) * bd->na);
-	i = 0;
-	while (i < bd->na)
-	{
-		ans[i] = bd->a->n;
-		bd->a = bd->a->next;
-		i++;
-	}
-	qsort(ans, bd->na, sizeof(int), comp);
-	pre_pro(bd, ans);
+	pre_pro(bd, ans, -1);
 	if (bd->na < 12)
 		astar(bd, 1, &inst);
 	else
