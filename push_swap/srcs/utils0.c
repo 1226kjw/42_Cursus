@@ -71,3 +71,18 @@ int	ft_atoi(char *str, int *i)
 		err_msg("Error\n");
 	return (ret * sign);
 }
+
+void	*ft_memcpy(void *dst, const void *src, int n)
+{
+	int		i;
+
+	if (!dst && !src)
+		return (dst);
+	i = 0;
+	while (i < n)
+	{
+		*((char*)dst + i) = *((char*)src + i);
+		i++;
+	}
+	return (dst);
+}

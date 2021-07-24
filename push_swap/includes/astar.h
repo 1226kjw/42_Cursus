@@ -4,7 +4,7 @@
 # include "board.h"
 # include "list.h"
 # include "inst.h"
-# include <stdlib.h>
+# include "utils.h"
 
 typedef struct s_node
 {
@@ -14,7 +14,6 @@ typedef struct s_node
 	t_board		*bd;
 }				t_node;
 
-# include "priqueue.h"
 
 void		astar(t_board *bd, int direct, t_inst *inst);
 t_node		node_init(t_node now, int inst);

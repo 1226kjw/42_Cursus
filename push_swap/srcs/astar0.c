@@ -69,7 +69,7 @@ t_node	node_init(t_node now, int inst)
 	ret.g = now.g + 1;
 	ret.f = ret.g + calc_h(ret.bd);
 	ret.hist = (char *)malloc(now.g + 1);
-	memcpy(ret.hist, now.hist, now.g);
+	ft_memcpy(ret.hist, now.hist, now.g);
 	ret.hist[now.g] = (char)inst;
 	return (ret);
 }

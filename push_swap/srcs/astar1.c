@@ -1,4 +1,5 @@
 #include "astar.h"
+#include "priqueue.h"
 
 int	dist(int a, int b)
 {
