@@ -87,7 +87,7 @@ int	main(int argc, char **argv)
 		free(line);
 	}
 	if (flag)
-		write(1, "Error\n", 6);
+		write(2, "Error\n", 6);
 	else if (bd->b == 0 && ft_lstsorted(bd->a))
 		write(1, "OK\n", 3);
 	else

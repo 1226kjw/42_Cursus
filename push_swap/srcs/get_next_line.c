@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 21:28:28 by jinukim           #+#    #+#             */
-/*   Updated: 2021/07/24 20:51:34 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/07/24 22:03:49 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@ void	*set_ret(const char *str, int count, char **target)
 	else
 		*target = (char*)malloc(sizeof(char) * count);
 	return (*target);
+}
+
+int		read_ret(int fd, char *buf, int buffer, int *i)
+{
+	*i = read(fd, buf, buffer);
+	return (*i);
 }
 
 int	get_next_line(int fd, char **line)
@@ -36,7 +42,7 @@ int	get_next_line(int fd, char **line)
 		return (i);
 	if (!set_ret(0, BUFFER_SIZE + 1, &buf))
 		return (freeall(0, line));
-	while (!remain[fd] && (i = read(fd, buf, BUFFER_SIZE)) > 0)
+	while (!remain[fd] && read_ret(fd, buf, BUFFER_SIZE, &i) > 0)
 	{
 		buf[i] = 0;
 		i = ft_join(line, buf);
