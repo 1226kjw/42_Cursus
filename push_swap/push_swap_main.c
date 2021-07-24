@@ -61,7 +61,7 @@ int	main(int argc, char **argv)
 		err_msg("Error\n");
 	ans = (int *)malloc(sizeof(int) * bd->na);
 	pre_pro(bd, ans, -1);
-	if (bd->na < 12)
+	if (bd->na < 10)
 		astar(bd, 1, &inst);
 	else
 		atob(bd, bd->na, 0, &inst);
