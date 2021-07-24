@@ -38,57 +38,57 @@ int		set_fff(t_inst *inst, int a, int b, int c)
 
 int     useless_inst(t_inst *inst, int i, int j)
 {
-    if (inst->inst[i] == 0 && inst->inst[j] == 0)
-        return (set_ff(inst, i, j));
-    else if (inst->inst[i] == 1 && inst->inst[j] == 1)
-        return (set_ff(inst, i, j));
-    else if (inst->inst[i] == 2 && inst->inst[j] == 2)
-        return (set_fff(inst, i, j, j));
-    else if (inst->inst[i] == 3 && inst->inst[j] == 4)
-        return (set_ff(inst, i, j));
-    else if (inst->inst[i] == 4 && inst->inst[j] == 3)
-        return (set_ff(inst, i, j));
-    else if (inst->inst[i] == 5 && inst->inst[j] == 8)
-        return (set_ff(inst, i, j));
-    else if (inst->inst[i] == 6 && inst->inst[j] == 9)
-        return (set_ff(inst, i, j));
-    else if (inst->inst[i] == 7 && inst->inst[j] == 10)
-        return (set_ff(inst, i, j));
-    else if (inst->inst[i] == 8 && inst->inst[j] == 5)
-        return (set_ff(inst, i, j));
-    else if (inst->inst[i] == 9 && inst->inst[j] == 6)
-        return (set_ff(inst, i, j));
-    else if (inst->inst[i] == 10 && inst->inst[j] == 7)
-        return (set_ff(inst, i, j));
-    return (0);
+	if (inst->inst[i] == 0 && inst->inst[j] == 0)
+		return (set_ff(inst, i, j));
+	else if (inst->inst[i] == 1 && inst->inst[j] == 1)
+		return (set_ff(inst, i, j));
+	else if (inst->inst[i] == 2 && inst->inst[j] == 2)
+		return (set_fff(inst, i, j, j));
+	else if (inst->inst[i] == 3 && inst->inst[j] == 4)
+		return (set_ff(inst, i, j));
+	else if (inst->inst[i] == 4 && inst->inst[j] == 3)
+		return (set_ff(inst, i, j));
+	else if (inst->inst[i] == 5 && inst->inst[j] == 8)
+		return (set_ff(inst, i, j));
+	else if (inst->inst[i] == 6 && inst->inst[j] == 9)
+		return (set_ff(inst, i, j));
+	else if (inst->inst[i] == 7 && inst->inst[j] == 10)
+		return (set_ff(inst, i, j));
+	else if (inst->inst[i] == 8 && inst->inst[j] == 5)
+		return (set_ff(inst, i, j));
+	else if (inst->inst[i] == 9 && inst->inst[j] == 6)
+		return (set_ff(inst, i, j));
+	else if (inst->inst[i] == 10 && inst->inst[j] == 7)
+		return (set_ff(inst, i, j));
+	return (0);
 }
 
 int     messy_inst(t_inst *inst, int i, int j)
 {
-    int     flag;
+	int     flag;
 
-    flag = 0;
-    if ((inst->inst[i] | inst->inst[j]) == 1)
-    {
-        flag++;
-        inst->inst[i] = 2;
-        inst->inst[j] = -1;
-    }
-    else if ((inst->inst[i] == 5 && inst->inst[j] == 6)
-        || (inst->inst[i] == 6 && inst->inst[j] == 5))
-    {
-        flag++;
-        inst->inst[i] = 7;
-        inst->inst[j] = -1;
-    }
-    else if (inst->inst[i] * inst->inst[j] == 72)
-    {
-        flag++;
-        inst->inst[i] = 10;
-        inst->inst[j] = -1;
-    }
-    inst->better -= flag;
-    return (flag);
+	flag = 0;
+	if ((inst->inst[i] | inst->inst[j]) == 1)
+	{
+		flag++;
+		inst->inst[i] = 2;
+		inst->inst[j] = -1;
+	}
+	else if ((inst->inst[i] == 5 && inst->inst[j] == 6)
+		|| (inst->inst[i] == 6 && inst->inst[j] == 5))
+	{
+		flag++;
+		inst->inst[i] = 7;
+		inst->inst[j] = -1;
+	}
+	else if (inst->inst[i] * inst->inst[j] == 72)
+	{
+		flag++;
+		inst->inst[i] = 10;
+		inst->inst[j] = -1;
+	}
+	inst->better -= flag;
+	return (flag);
 }
 
 int		comp_inst(t_inst *inst)
@@ -100,11 +100,11 @@ int		comp_inst(t_inst *inst)
 	flag = 0;
 	i = 0;
 	while (++i < inst->c)
-        if (inst->inst[i] != -1 && bef_inst(inst, i, &j) != -1)
-        {
-		    flag = useless_inst(inst, i, j);
-		    flag = messy_inst(inst, i, j);
-        }
+		if (inst->inst[i] != -1 && bef_inst(inst, i, &j) != -1)
+		{
+			flag = useless_inst(inst, i, j);
+			flag = messy_inst(inst, i, j);
+		}
 	return (flag);
 }
 
