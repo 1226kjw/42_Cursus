@@ -19,7 +19,6 @@ t_board	*board_new(t_list *a, t_list *b, int na, int nb)
 
 t_board	*board_init(int argc, char **argv)
 {
-	t_board		*bd;
 	t_list		*parsed;
 	int			i;
 	int			j;
@@ -27,63 +26,29 @@ t_board	*board_init(int argc, char **argv)
 	parsed = 0;
 	if (argc == 1)
 		exit(0);
-	if (argc == 2)
+	i = 1;
+	j = 1;
+	while (i < argc)
+		j *= ft_isspdigit(argv[i++]);
+	if (!j)
+		return (0);
+	i = 0;
+	while (++i < argc)
 	{
 		j = 0;
-		if (!ft_isspdigit(argv[1]))
-			return (0);
-		while (argv[1][j])
-			ft_lstadd_last(&parsed, ft_lstnew(ft_atoi(argv[1], &j)));
+		while (argv[i][j])
+			ft_lstadd_last(&parsed, ft_lstnew(ft_atoi(argv[i], &j)));
 	}
-	else if (argc > 2)
-	{
-		i = 1;
-		j = 1;
-		while (i < argc)
-			j *= ft_isspdigit(argv[i++]);
-		if (!j)
-			return (0);
-		i = 1;
-		while (i < argc)
-		{
-			j = 0;
-			while (argv[i][j])
-				ft_lstadd_last(&parsed, ft_lstnew(ft_atoi(argv[i], &j)));
-			i++;
-		}
-	}
-	bd = board_new(parsed, 0, ft_lstsize(parsed), 0);
-	return (bd);
+	return (board_new(parsed, 0, ft_lstsize(parsed), 0));
 }
 
 t_board	*board_cp(t_board *bd)
 {
 	t_list		*newa;
 	t_list		*newb;
-	t_list		*tmp;
 
-	newa = 0;
-	newb = 0;
-	if (bd->a)
-	{
-		tmp = bd->a;
-		while (tmp->next != bd->a)
-		{
-			ft_lstadd_last(&newa, ft_lstnew(tmp->n));
-			tmp = tmp->next;
-		}
-		ft_lstadd_last(&newa, ft_lstnew(tmp->n));
-	}
-	if (bd->b)
-	{
-		tmp = bd->b;
-		while (tmp->next != bd->b)
-		{
-			ft_lstadd_last(&newb, ft_lstnew(tmp->n));
-			tmp = tmp->next;
-		}
-		ft_lstadd_last(&newb, ft_lstnew(tmp->n));
-	}
+	newa = ft_lstcpy(bd->a);
+	newb = ft_lstcpy(bd->b);
 	return (board_new(newa, newb, bd->na, bd->nb));
 }
 

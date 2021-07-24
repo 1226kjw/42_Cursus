@@ -60,3 +60,21 @@ void	ft_lstadd_last(t_list **lst, t_list *new)
 		(*lst)->bef = new;
 	}
 }
+
+t_list	*ft_lstcpy(t_list *org)
+{
+	t_list	*tmp;
+	t_list	*ret;
+
+	if (!org)
+		return (0);
+	ret = 0;
+	tmp = org;
+	while (tmp->next != org)
+	{
+		ft_lstadd_last(&ret, ft_lstnew(tmp->n));
+		tmp = tmp->next;
+	}
+	ft_lstadd_last(&ret, ft_lstnew(tmp->n));
+	return (ret);
+}

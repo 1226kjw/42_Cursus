@@ -19,5 +19,6 @@ t_list				*ft_lstdel_front(t_list **lst);
 void				ft_lstclear(t_list **lst);
 int					ft_lstsorted(t_list *lst);
 int					ft_lstiseq(t_list *lst1, t_list *lst2);
+t_list				*ft_lstcpy(t_list *org);
 
 #endif
