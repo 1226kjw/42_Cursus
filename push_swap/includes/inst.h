@@ -4,10 +4,10 @@
 
 typedef struct s_inst
 {
-    char		inst[65536];
-    int			c;
-    int			better;
-}				t_inst;
+	char	inst[65536];
+	int		c;
+	int		better;
+}			t_inst;
 
 void	write_inst(t_inst *inst, char *str, int n);
 char	bef_inst(t_inst *inst, int i, int *j);

@@ -10,11 +10,11 @@
 # include "utils.h"
 # include "astar.h"
 
-typedef struct	s_priq
+typedef struct s_priq
 {
-	t_node		heap[MAXQUEUE+1];
-	int			count;
-}				t_priq;
+	t_node	heap[MAXQUEUE + 1];
+	int		count;
+}			t_priq;
 
 t_priq			*priq_init(t_board *bd);
 void			node_swap(t_node *n1, t_node *n2);
