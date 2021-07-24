@@ -1,25 +1,52 @@
 #include "astar.h"
 #include "priqueue.h"
 
-int	dist(int a, int b)
+int	calc_b(t_board *bd, int *i)
 {
-	if (a < b)
-		return (b - a);
-	else
-		return (a - b);
+	t_list	*tmp;
+	int		val;
+
+	val = 0;
+	if (bd->b)
+	{
+		tmp = bd->b->bef;
+		while (1)
+		{
+			val += dist((*i)++, tmp->n);
+			if (*i == bd->na + bd->nb)
+				*i = 0;
+			if (tmp == bd->b)
+				break ;
+			tmp = tmp->bef;
+		}
+	}
+	return (val);
 }
 
-int	ft_min(int a, int b)
+int	calc_a(t_board *bd, int *i)
 {
-	if (a < b)
-		return (a);
-	else
-		return (b);
+	t_list	*tmp;
+	int		val;
+
+	val = 0;
+	if (bd->a)
+	{
+		tmp = bd->a;
+		while (1)
+		{
+			val += dist((*i)++, tmp->n);
+			if (*i == bd->na + bd->nb)
+				*i = 0;
+			tmp = tmp->next;
+			if (tmp == bd->a)
+				break ;
+		}
+	}	
+	return (val);
 }
 
 int	calc_h(t_board *bd)
 {
-	t_list	*tmp;
 	int		val;
 	int		i;
 	int		min;
@@ -28,34 +55,9 @@ int	calc_h(t_board *bd)
 	i = 0;
 	while (i < bd->na + bd->nb)
 	{
-		val = 0;
-		if (bd->b)
-		{
-			tmp = bd->b->bef;
-			while (1)
-			{
-				val += dist(i++, tmp->n);
-				if (i == bd->na + bd->nb)
-					i = 0;
-				if (tmp == bd->b)
-					break ;
-				tmp = tmp->bef;
-			}
-		}
-		if (bd->a)
-		{
-			tmp = bd->a;
-			while (1)
-			{
-				val += dist(i++, tmp->n);
-				if (i == bd->na + bd->nb)
-					i = 0;
-				tmp = tmp->next;
-				if (tmp == bd->a)
-					break ;
-			}
-		}
-		val += ft_min(i, bd->na + bd->nb - i) + (bd->nb);
+		val = calc_b(bd, &i);
+		val += calc_a(bd, &i);
+		val += ft_min(i, bd->na + bd->nb - i) + bd->nb;
 		min = ft_min(min, val);
 		i++;
 	}

@@ -35,3 +35,19 @@ int	ter_tmp(int cond, int a, int b)
 	else
 		return (b);
 }
+
+int	dist(int a, int b)
+{
+	if (a < b)
+		return (b - a);
+	else
+		return (a - b);
+}
+
+int	ft_min(int a, int b)
+{
+	if (a < b)
+		return (a);
+	else
+		return (b);
+}
