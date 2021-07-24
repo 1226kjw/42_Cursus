@@ -11,6 +11,7 @@ void	err_msg(char *str);
 char	*ft_strdup(const char *str);
 int		ter_tmp(int cond, int a, int b);
 void	*ft_memcpy(void *dst, const void *src, int n);
-int     dist(int a, int b);
-int     ft_min(int a, int b);
+int		dist(int a, int b);
+int		ft_min(int a, int b);
+
 #endif
