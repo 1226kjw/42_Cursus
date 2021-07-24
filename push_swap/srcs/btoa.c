@@ -30,22 +30,24 @@ void	board_merge_b(t_board *org, int count, int min)
 	org->nb -= count;
 }
 
-void	btoa(t_board *bd, int count, int min, int max, t_dp **dp, t_inst *inst)
+void	btoa(t_board *bd, int count, int min, t_inst *inst)
 {
 	int		pivot[2];
 	int		n_ra;
 	int		n_rb;
 	int		n_pa;
 	int		i;
+	int		max;
 
 	if (count <= ASTAR_MAX)
 	{
 		t_board *newboard = newboard_only_b(bd, count, min);
-		astar(newboard, 0, dp[1], inst);
+		astar(newboard, 0, inst);
 		board_clear(newboard);
 		board_merge_b(bd, count, min);
 		return ;
 	}
+	max = min + count - 1;
 	pivot[0] = (min * 2 + max) / 3;
 	pivot[1] = (min + max * 2) / 3;
 	n_ra = 0;
@@ -72,7 +74,7 @@ void	btoa(t_board *bd, int count, int min, int max, t_dp **dp, t_inst *inst)
 			}
 		}
 	}
-	atob(bd, n_pa - n_ra, pivot[1] + 1, max, dp, inst);
+	atob(bd, n_pa - n_ra, pivot[1] + 1, inst);
 	for(i=0;i<n_ra && i<n_rb;i++)
 	{
 		board_rrr(bd);
@@ -90,6 +92,6 @@ void	btoa(t_board *bd, int count, int min, int max, t_dp **dp, t_inst *inst)
 		write_inst(inst, "\x9", 1);
 		i++;
 	}
-	atob(bd, n_ra, pivot[0] + 1, pivot[1], dp, inst);
-	btoa(bd, n_rb, min, pivot[0], dp, inst);
+	atob(bd, n_ra, pivot[0] + 1, inst);
+	btoa(bd, n_rb, min, inst);
 }

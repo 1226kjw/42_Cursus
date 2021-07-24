@@ -15,7 +15,7 @@ int	comp(const void *a, const void *b)
 	return (*na - *nb);
 }
 
-void	pre_pro(t_board *bd, int *ans, t_dp *dp[2])
+void	pre_pro(t_board *bd, int *ans)
 {
 	int		i;
 	t_list	*tmp;
@@ -32,8 +32,6 @@ void	pre_pro(t_board *bd, int *ans, t_dp *dp[2])
 			break ;
 	}
 	free(ans);
-	dp[0] = dp_init();
-	dp[1] = dp_init();
 }
 
 int	main(int argc, char **argv)
@@ -41,7 +39,6 @@ int	main(int argc, char **argv)
 	t_board	*bd;
 	int		*ans;
 	int		i;
-	t_dp	*dp[2];
 	t_inst	inst;
 
 	i = -1;
@@ -61,15 +58,13 @@ int	main(int argc, char **argv)
 		i++;
 	}
 	qsort(ans, bd->na, sizeof(int), comp);
-	pre_pro(bd, ans, dp);
+	pre_pro(bd, ans);
 	if (bd->na < 12)
-		astar(bd, 1, 0, &inst);
+		astar(bd, 1, &inst);
 	else
-		atob(bd, bd->na, 0, bd->na - 1, dp, &inst);
+		atob(bd, bd->na, 0, &inst);
 	while (comp_inst(&inst))
 		;
 	print_inst(&inst, -1);
 	board_clear(bd);
-	dp_free(dp[0]);
-	dp_free(dp[1]);
 }
