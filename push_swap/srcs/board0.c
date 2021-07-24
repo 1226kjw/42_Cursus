@@ -47,7 +47,8 @@ t_board	*board_init(int argc, char **argv)
 		while (i < argc)
 		{
 			j = 0;
-			ft_lstadd_last(&parsed, ft_lstnew(ft_atoi(argv[i], &j)));
+			while (argv[i][j])
+				ft_lstadd_last(&parsed, ft_lstnew(ft_atoi(argv[i], &j)));
 			i++;
 		}
 	}

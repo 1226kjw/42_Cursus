@@ -21,6 +21,7 @@ void	pre_pro(t_board *bd, int *ans)
 	i = -1;
 	while (++i < bd->na + bd->nb)
 		ans[i] = i;
+	free(ans);
 }
 
 int	comp(const void *a, const void *b)
@@ -41,8 +42,9 @@ int	main(int argc, char **argv)
 	char	*line;
 	int		i;
 	int		*ans;
+	int		flag;
 
-	setbuf(stdout, 0);
+	flag = 0;
 	bd = board_init(argc, argv);
 	if (argc == 1 || !bd)
 		err_msg("Error\n");
@@ -80,12 +82,16 @@ int	main(int argc, char **argv)
 			board_rrb(bd);
 		else if (!ft_strcmp(line, "rrr"))
 			board_rrr(bd);
-		else
-			err_msg("Error\n");
+		else if (++flag)
+			break ;
 		free(line);
 	}
-	if (bd->b == 0 && ft_lstsorted(bd->a))
+	if (flag)
+		write(1, "Error\n", 6);
+	else if (bd->b == 0 && ft_lstsorted(bd->a))
 		write(1, "OK\n", 3);
 	else
 		write(1, "KO\n", 3);
+	board_clear(bd);
+	free(line);
 }

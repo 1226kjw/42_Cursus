@@ -24,8 +24,8 @@ int	ft_isspdigit(char *str)
 	{
 		if ((str[i] == '-' || str[i] == '+')
 			&& (str[i + 1] >= '0' && str[i + 1] <= '9')
-			&& (i == 0 || (str[i - 1] < '0' && str[i - 1] > '9')))
-			i++;
+			&& (i == 0 || str[i - 1] == ' '))
+			continue;
 		else if (str[i] != ' ' && str[i] != '\t'
 			&& (str[i] < '0' || str[i] > '9'))
 			return (0);
@@ -38,7 +38,7 @@ int	ft_strlen(char *str)
 	int		i;
 
 	i = -1;
-	while (str[++i])
+	while (str[++i] && str[i] != ' ' && str[i] != '\n' && str[i] != '\t')
 		;
 	return (i);
 }

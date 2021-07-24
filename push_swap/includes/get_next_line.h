@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: jinukim <jinukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/14 00:31:49 by jinukim           #+#    #+#             */
-/*   Updated: 2021/02/14 00:31:58 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/07/24 20:51:42 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 
 # include <stdlib.h>
 
+void	*set_ret(const char *str, int count, char **target);
 int		get_next_line(int fd, char **line);
 size_t	ft_len(const char *s);
 char	*ft_dup(const char *s);

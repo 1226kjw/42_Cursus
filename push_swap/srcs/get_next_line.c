@@ -3,16 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinukim <jinukim@student.42seoul.k>        +#+  +:+       +#+        */
+/*   By: jinukim <jinukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 21:28:28 by jinukim           #+#    #+#             */
-/*   Updated: 2020/10/17 03:56:46 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/07/24 20:51:34 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "checker.h"
 
-int		get_next_line(int fd, char **line)
+void	*set_ret(const char *str, int count, char **target)
+{
+	if (str)
+		*target = ft_dup(str);
+	else
+		*target = (char*)malloc(sizeof(char) * count);
+	return (*target);
+}
+
+int	get_next_line(int fd, char **line)
 {
 	static char	*remain[OPEN_MAX];
 	char		*buf;
@@ -20,19 +29,23 @@ int		get_next_line(int fd, char **line)
 
 	if (fd < 0 || fd >= OPEN_MAX || !line || BUFFER_SIZE < 1)
 		return (-1);
-	if (!(*line = ft_dup("")))
+	if (!set_ret("", 0, line))
 		return (-1);
-	if ((i = ft_remainder(fd, remain, line)) != 0)
+	i = ft_remainder(fd, remain, line);
+	if (i != 0)
 		return (i);
-	if (!(buf = (char*)malloc((BUFFER_SIZE + 1) * sizeof(char))))
+	if (!set_ret(0, BUFFER_SIZE + 1, &buf))
 		return (freeall(0, line));
 	while (!remain[fd] && (i = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
 		buf[i] = 0;
-		if (buf[(i = ft_join(line, buf))] == '\n')
-			if (!(remain[fd] = ft_dup(buf + i + 1)))
+		i = ft_join(line, buf);
+		if (buf[i] == '\n')
+			if (!set_ret(buf + i + 1, 0, &remain[fd]))
 				return (freeall(buf, line));
 	}
-	freeall(buf, i == -1 ? line : 0);
-	return (remain[fd] ? 1 : i);
+	free(buf);
+	if (!remain[fd])
+		return (i);
+	return (1);
 }

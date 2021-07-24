@@ -1,13 +1,5 @@
 #include "astar.h"
 
-int	dist(int a, int b)
-{
-	if (a < b)
-		return (b - a);
-	else
-		return (a - b);
-}
-
 int	ispossible(int inst, t_board *bd, int g, char *h)
 {
 	int		a;
