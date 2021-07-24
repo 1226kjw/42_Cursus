@@ -1,6 +1,22 @@
 #include "priqueue.h"
 #include "board.h"
 int		max_heap;
+
+t_priq	*priq_init(t_board *bd)
+{
+	t_priq	*root;
+	t_node	node;
+
+	root = (t_priq*)malloc(sizeof(t_priq));
+	root->count = 0;
+	node.g = 0;
+	node.f = calc_h(bd);
+	node.hist = ft_strdup("");
+	node.bd = board_cp(bd);
+	priq_push(root, node);
+	return (root);
+}
+
 void	node_swap(t_node *n1, t_node *n2)
 {
 	t_node	tmp;

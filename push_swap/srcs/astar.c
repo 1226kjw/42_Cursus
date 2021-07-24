@@ -1,7 +1,5 @@
 # include "astar.h"
-#include<stdio.h>
-# include<string.h>
-#include<stdlib.h>
+
 int		dist(int a, int b)
 {
 	if (a < b)
@@ -140,7 +138,52 @@ int		calc_h(t_board *bd)
 		val += ft_min(i, bd->na + bd->nb - i) + (bd->nb);
 		min = ft_min(min, val);
 		i++;
-		//break;
 	}
 	return (min);
+}
+
+void	astar(t_board *bd, int direct, t_dp *dp, t_inst *inst)
+{
+	t_priq	*root;
+	t_dp	*cur;
+
+	if (dp)
+	{
+		cur = dp_pick(dp, bd, bd->na, bd->nb);
+		if (cur->hist)
+		{
+			write_inst(inst, cur->hist, cur->g);
+			return ;
+		}
+	}
+	root = priq_init(bd);
+	while (root->count)
+	{
+		t_node now = priq_pop(root);
+		if (calc_h(now.bd) == 0)
+		{
+			write_inst(inst, now.hist, now.g);
+			if (dp)
+			{
+				cur->hist = (char*)malloc(sizeof(char) * now.g);
+				memcpy(cur->hist, now.hist, now.g);
+				cur->bd = board_cp(now.bd);
+				cur->g = now.g;
+			}
+			free(now.hist);
+			board_clear(now.bd);
+			break;
+		}
+		for (int i=0;i<=10;i++)
+		{
+			if (!direct && (5 <= i && i <= 10))
+				continue;
+			t_node t = node_init(now, i);
+			if (t.bd)
+				priq_push(root, t);
+		}
+		free(now.hist);
+		board_clear(now.bd);
+	}
+	priq_free(root);
 }
