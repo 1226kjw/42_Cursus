@@ -1,18 +1,25 @@
 #include "push_swap.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include<string.h>
 
-int	comp(const void *a, const void *b)
+void	bubblesort(int *ans, int c)
 {
-	int		*na;
-	int		*nb;
+	int		i;
+	int		j;
+	int		tmp;
 
-	na = (int *)a;
-	nb = (int *)b;
-	if (*na == *nb)
-		err_msg("Error\n");
-	return (*na - *nb);
+	i = -1;
+	while (++i < c)
+	{
+		j = 0;
+		while (++j < c - i)
+		{
+			if (ans[j] < ans[j - 1])
+			{
+				tmp = ans[j];
+				ans[j] = ans[j - 1];
+				ans[j - 1] = tmp;
+			}
+		}
+	}
 }
 
 void	pre_pro(t_board *bd, int *ans, int i)
@@ -24,7 +31,7 @@ void	pre_pro(t_board *bd, int *ans, int i)
 		ans[i] = bd->a->n;
 		bd->a = bd->a->next;
 	}
-	qsort(ans, bd->na, sizeof(int), comp);
+	bubblesort(ans, bd->na);
 	tmp = bd->a;
 	while (1)
 	{
