@@ -1,13 +1,12 @@
 #include "priqueue.h"
 #include "board.h"
-int		max_heap;
 
 t_priq	*priq_init(t_board *bd)
 {
 	t_priq	*root;
 	t_node	node;
 
-	root = (t_priq*)malloc(sizeof(t_priq));
+	root = (t_priq *)malloc(sizeof(t_priq));
 	root->count = 0;
 	node.g = 0;
 	node.f = calc_h(bd);
@@ -34,8 +33,6 @@ void	priq_push(t_priq *root, t_node data)
 	if (root->count >= MAXQUEUE)
 		err_msg("heap: max_push\n");
 	root->heap[++root->count] = data;
-	if (root->count > max_heap)//for debug!!!!!
-		max_heap=root->count;
 	child = root->count;
 	parent = child / 2;
 	while (child > 1 && root->heap[parent].f > root->heap[child].f)

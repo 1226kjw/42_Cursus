@@ -1,6 +1,6 @@
 #include "board.h"
 
-void			board_sb(t_board *bd)
+void	board_sb(t_board *bd)
 {
 	int			tmp;
 
@@ -11,13 +11,13 @@ void			board_sb(t_board *bd)
 	bd->b->next->n = tmp;
 }
 
-void			board_ss(t_board *bd)
+void	board_ss(t_board *bd)
 {
 	board_sa(bd);
 	board_sb(bd);
 }
 
-void			board_pa(t_board *bd)
+void	board_pa(t_board *bd)
 {
 	if (bd->nb < 1)
 		return ;
@@ -26,7 +26,7 @@ void			board_pa(t_board *bd)
 	bd->nb--;
 }
 
-void			board_pb(t_board *bd)
+void	board_pb(t_board *bd)
 {
 	if (bd->na < 1)
 		return ;
@@ -35,7 +35,7 @@ void			board_pb(t_board *bd)
 	bd->nb++;
 }
 
-void			board_ra(t_board *bd)
+void	board_ra(t_board *bd)
 {
 	if (bd->na < 2)
 		return ;

@@ -1,42 +1,6 @@
 #include "inst.h"
 
-void	write_inst(t_inst *inst, char *str, int n)
-{
-	int		i;
-
-	i = -1;
-	while (++i < n)
-		inst->inst[inst->c++] = str[i];
-}
-
-char	bef_inst(t_inst *inst, int i, int *j)
-{
-	while (--i >= 0 && inst->inst[i] == -1)
-		;
-	if (i < 0)
-		return (-1);
-	*j = i;
-	return (inst->inst[i]);
-}
-
-int		set_ff(t_inst *inst, int a, int b)
-{
-	inst->inst[a] = -1;
-	inst->inst[b] = -1;
-	inst->better -= 2;
-	return (1);
-}
-
-int		set_fff(t_inst *inst, int a, int b, int c)
-{
-	inst->inst[a] = -1;
-	inst->inst[b] = -1;
-	inst->inst[c] = -1;
-	inst->better -= 3;
-	return (1);
-}
-
-int     useless_inst(t_inst *inst, int i, int j)
+int	useless_inst(t_inst *inst, int i, int j)
 {
 	if (inst->inst[i] == 0 && inst->inst[j] == 0)
 		return (set_ff(inst, i, j));
@@ -63,9 +27,9 @@ int     useless_inst(t_inst *inst, int i, int j)
 	return (0);
 }
 
-int     messy_inst(t_inst *inst, int i, int j)
+int	messy_inst(t_inst *inst, int i, int j)
 {
-	int     flag;
+	int		flag;
 
 	flag = 0;
 	if ((inst->inst[i] | inst->inst[j]) == 1)
@@ -91,7 +55,7 @@ int     messy_inst(t_inst *inst, int i, int j)
 	return (flag);
 }
 
-int		comp_inst(t_inst *inst)
+int	comp_inst(t_inst *inst)
 {
 	int		flag;
 	int		i;
@@ -100,11 +64,13 @@ int		comp_inst(t_inst *inst)
 	flag = 0;
 	i = 0;
 	while (++i < inst->c)
+	{
 		if (inst->inst[i] != -1 && bef_inst(inst, i, &j) != -1)
 		{
 			flag = useless_inst(inst, i, j);
 			flag = messy_inst(inst, i, j);
 		}
+	}
 	return (flag);
 }
 

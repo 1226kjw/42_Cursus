@@ -1,6 +1,6 @@
-# include "astar.h"
+#include "astar.h"
 
-int		dist(int a, int b)
+int	dist(int a, int b)
 {
 	if (a < b)
 		return (b - a);
@@ -8,7 +8,7 @@ int		dist(int a, int b)
 		return (a - b);
 }
 
-int		ispossible(int inst, t_board *bd, int g, char *h)
+int	ispossible(int inst, t_board *bd, int g, char *h)
 {
 	int		a;
 	int		b;
@@ -38,7 +38,7 @@ int		ispossible(int inst, t_board *bd, int g, char *h)
 		return ((b > 2) && (g < 0 || (h[g] != 6 && h[g] != 7 && h[g] != 8)));
 	else if (inst == 10)
 		return ((a > 2 && b > 2) && (g < 0 || h[g] != 7));
-	return 0;
+	return (0);
 }
 
 t_node	node_init(t_node now, int inst)
@@ -72,24 +72,24 @@ t_node	node_init(t_node now, int inst)
 	{
 		board_clear(ret.bd);
 		ret.bd = 0;
-		return ret;
+		return (ret);
 	}
 	ret.g = now.g + 1;
 	ret.f = ret.g + calc_h(ret.bd);
-	ret.hist = (char*)malloc(now.g + 1);
+	ret.hist = (char *)malloc(now.g + 1);
 	memcpy(ret.hist, now.hist, now.g);
 	ret.hist[now.g] = (char)inst;
-	return ret;
+	return (ret);
 }
 
-int		board_iseq(t_board *bd1, t_board *bd2)
+int	board_iseq(t_board *bd1, t_board *bd2)
 {
 	if (bd1->na != bd2->na || bd1->nb != bd2->nb)
 		return (0);
 	return (ft_lstiseq(bd1->a, bd2->a) * ft_lstiseq(bd1->b, bd2->b));
 }
 
-int		ft_min(int a, int b)
+int	ft_min(int a, int b)
 {
 	if (a < b)
 		return (a);
@@ -97,7 +97,7 @@ int		ft_min(int a, int b)
 		return (b);
 }
 
-int		calc_h(t_board *bd)
+int	calc_h(t_board *bd)
 {
 	t_list	*tmp;
 	int		val;
@@ -145,23 +145,27 @@ int		calc_h(t_board *bd)
 void	astar(t_board *bd, int direct, t_inst *inst)
 {
 	t_priq	*root;
+	t_node	now;
+	t_node	t;
+	int		i;
 
 	root = priq_init(bd);
 	while (root->count)
 	{
-		t_node now = priq_pop(root);
+		now = priq_pop(root);
 		if (calc_h(now.bd) == 0)
 		{
 			write_inst(inst, now.hist, now.g);
 			free(now.hist);
 			board_clear(now.bd);
-			break;
+			break ;
 		}
-		for (int i=0;i<=10;i++)
+		i = -1;
+		while (++i <= 10)
 		{
 			if (!direct && (5 <= i && i <= 10))
-				continue;
-			t_node t = node_init(now, i);
+				continue ;
+			t = node_init(now, i);
 			if (t.bd)
 				priq_push(root, t);
 		}

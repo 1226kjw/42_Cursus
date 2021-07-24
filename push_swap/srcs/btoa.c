@@ -4,14 +4,16 @@ t_board	*newboard_only_b(t_board *bd, int count, int min)
 {
 	t_board		*nb;
 	t_list		*cur;
+	int			i;
 
-	nb = (t_board*)malloc(sizeof(t_board));
+	nb = (t_board *)malloc(sizeof(t_board));
 	cur = bd->b;
 	nb->a = 0;
 	nb->b = 0;
 	nb->na = 0;
 	nb->nb = count;
-	for(int i=0;i<count;i++)
+	i = -1;
+	while (++i < count)
 	{
 		ft_lstadd_last(&nb->b, ft_lstnew(cur->n - min));
 		cur = cur->next;
@@ -21,8 +23,11 @@ t_board	*newboard_only_b(t_board *bd, int count, int min)
 
 void	board_merge_b(t_board *org, int count, int min)
 {
+	int		i;
+
 	org->na += count;
-	for(int i=count-1;i>=0;i--)
+	i = count;
+	while (--i >= 0)
 	{
 		ft_lstadd_front(&org->a, ft_lstnew(i + min));
 		free(ft_lstdel_front(&org->b));
@@ -32,6 +37,7 @@ void	board_merge_b(t_board *org, int count, int min)
 
 void	btoa(t_board *bd, int count, int min, t_inst *inst)
 {
+	t_board	*newboard;
 	int		pivot[2];
 	int		n_ra;
 	int		n_rb;
@@ -41,7 +47,7 @@ void	btoa(t_board *bd, int count, int min, t_inst *inst)
 
 	if (count <= ASTAR_MAX)
 	{
-		t_board *newboard = newboard_only_b(bd, count, min);
+		newboard = newboard_only_b(bd, count, min);
 		astar(newboard, 0, inst);
 		board_clear(newboard);
 		board_merge_b(bd, count, min);
@@ -53,7 +59,8 @@ void	btoa(t_board *bd, int count, int min, t_inst *inst)
 	n_ra = 0;
 	n_rb = 0;
 	n_pa = 0;
-	for(int i=0;i<count;i++)
+	i = -1;
+	while (++i < count)
 	{
 		if (bd->b->n <= pivot[0])
 		{
@@ -75,7 +82,8 @@ void	btoa(t_board *bd, int count, int min, t_inst *inst)
 		}
 	}
 	atob(bd, n_pa - n_ra, pivot[1] + 1, inst);
-	for(i=0;i<n_ra && i<n_rb;i++)
+	i = -1;
+	while (++i < n_ra && i < n_rb)
 	{
 		board_rrr(bd);
 		write_inst(inst, "\xa",1);

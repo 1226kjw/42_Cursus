@@ -3,11 +3,12 @@
 #include "utils.h"
 #include "astar.h"
 
-t_board			*board_new(t_list *a, t_list *b, int na, int nb)
+t_board	*board_new(t_list *a, t_list *b, int na, int nb)
 {
 	t_board		*newbd;
 
-	if (!(newbd = (t_board*)malloc(sizeof(t_board))))
+	newbd = (t_board *)malloc(sizeof(t_board));
+	if (!newbd)
 		exit(0);
 	newbd->a = a;
 	newbd->b = b;
@@ -16,7 +17,7 @@ t_board			*board_new(t_list *a, t_list *b, int na, int nb)
 	return (newbd);
 }
 
-t_board			*board_init(int argc, char **argv)
+t_board	*board_init(int argc, char **argv)
 {
 	t_board		*bd;
 	t_list		*parsed;
@@ -54,7 +55,7 @@ t_board			*board_init(int argc, char **argv)
 	return (bd);
 }
 
-t_board			*board_cp(t_board *bd)
+t_board	*board_cp(t_board *bd)
 {
 	t_list		*newa;
 	t_list		*newb;
@@ -115,14 +116,14 @@ t_board			*board_cp(t_board *bd)
 	printf("\n%d\n\n", calc_h(bd));
 }*/
 
-void			board_clear(t_board *bd)
+void	board_clear(t_board *bd)
 {
 	ft_lstclear(&bd->a);
 	ft_lstclear(&bd->b);
 	free(bd);
 }
 
-void			board_sa(t_board *bd)
+void	board_sa(t_board *bd)
 {
 	int			tmp;
 
