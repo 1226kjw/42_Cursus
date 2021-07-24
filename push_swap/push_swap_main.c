@@ -3,13 +3,13 @@
 #include <stdlib.h>
 #include<string.h>
 
-int		comp(const void *a, const void *b)
+int	comp(const void *a, const void *b)
 {
 	int		*na;
 	int		*nb;
 
-	na = (int*)a;
-	nb = (int*)b;
+	na = (int *)a;
+	nb = (int *)b;
 	if (*na == *nb)
 		err_msg("Error\n");
 	return (*na - *nb);
@@ -36,7 +36,7 @@ void	pre_pro(t_board *bd, int *ans, t_dp *dp[2])
 	dp[1] = dp_init();
 }
 
-int		main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_board	*bd;
 	int		*ans;
@@ -44,14 +44,15 @@ int		main(int argc, char **argv)
 	t_dp	*dp[2];
 	t_inst	inst;
 
-	for(int i=0;i<65536;i++)
+	i = -1;
+	while (++i < 65536)
 		inst.inst[i] = -1;
 	inst.c = 0;
 	inst.better = 0;
 	bd = board_init(argc, argv);
 	if (!bd)
 		err_msg("Error\n");
-	ans = (int*)malloc(sizeof(int) * bd->na);
+	ans = (int *)malloc(sizeof(int) * bd->na);
 	i = 0;
 	while (i < bd->na)
 	{

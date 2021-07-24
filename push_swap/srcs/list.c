@@ -4,7 +4,8 @@ t_list	*ft_lstnew(int n)
 {
 	t_list	*newlst;
 
-	if (!(newlst = (t_list*)malloc(sizeof(t_list))))
+	newlst = (t_list *)malloc(sizeof(t_list));
+	if (!newlst)
 		exit(-1);
 	newlst->n = n;
 	newlst->next = newlst;
@@ -14,13 +15,15 @@ t_list	*ft_lstnew(int n)
 
 void	ft_lst_merge(t_list **org, t_list *new)
 {
+	t_list	*tmp;
+
 	if (!*org)
 		*org = new;
 	else
 	{
 		(*org)->bef->next = new;
 		new->bef->next = (*org);
-		t_list	*tmp = new->bef;
+		*tmp = new->bef;
 		new->bef = (*org)->bef;
 		(*org)->bef = tmp;
 		*org = new;
@@ -44,6 +47,7 @@ void	ft_lstadd_front(t_list **lst, t_list *new)
 		(*lst) = new;
 	}
 }
+
 void	ft_lstadd_last(t_list **lst, t_list *new)
 {
 	if (!*lst)
@@ -57,7 +61,7 @@ void	ft_lstadd_last(t_list **lst, t_list *new)
 	}
 }
 
-int		ft_lstsize(t_list *lst)
+int	ft_lstsize(t_list *lst)
 {
 	int		i;
 	t_list	*org;
@@ -69,7 +73,7 @@ int		ft_lstsize(t_list *lst)
 		i++;
 		org = org->next;
 		if (org == lst)
-			break;
+			break ;
 	}
 	return (i);
 }
@@ -79,7 +83,7 @@ t_list	*ft_lstdel_front(t_list **lst)
 	t_list	*tmp;
 
 	if (!*lst)
-		return 0;
+		return (0);
 	tmp = *lst;
 	tmp->next->bef = tmp->bef;
 	tmp->bef->next = tmp->next;

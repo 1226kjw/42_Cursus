@@ -7,12 +7,12 @@
 
 # include <stdio.h>
 
-typedef struct	s_dp
+typedef struct s_dp
 {
 	struct s_dp	*next[ASTAR_MAX];
-	char			*hist;
-	int				g;
-	t_board			*bd;
+	char		*hist;
+	int			g;
+	t_board		*bd;
 }				t_dp;
 
 t_dp	*dp_init(void);

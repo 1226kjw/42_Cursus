@@ -23,19 +23,19 @@ void	pre_pro(t_board *bd, int *ans)
 		ans[i] = i;
 }
 
-int		comp(const void *a, const void *b)
+int	comp(const void *a, const void *b)
 {
 	int		*na;
 	int		*nb;
 
-	na = (int*)a;
-	nb = (int*)b;
+	na = (int *)a;
+	nb = (int *)b;
 	if (*na == *nb)
 		err_msg("Error\n");
 	return (*na - *nb);
 }
 
-int		main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_board	*bd;
 	char	*line;
@@ -47,7 +47,7 @@ int		main(int argc, char **argv)
 	if (argc == 1 || !bd)
 		err_msg("Error\n");
 	i = 0;
-	ans = (int*)malloc(sizeof(int) * bd->na);
+	ans = (int *)malloc(sizeof(int) * bd->na);
 	while (i < bd->na)
 	{
 		ans[i] = bd->a->n;
@@ -81,7 +81,7 @@ int		main(int argc, char **argv)
 		else if (!ft_strcmp(line, "rrr"))
 			board_rrr(bd);
 		else
-			continue;//err_msg("Error\n");
+			err_msg("Error\n");
 		free(line);
 	}
 	if (bd->b == 0 && ft_lstsorted(bd->a))

@@ -3,7 +3,7 @@
 
 # include <stdlib.h>
 
-typedef struct		s_list
+typedef struct s_list
 {
 	int				n;
 	struct s_list	*next;

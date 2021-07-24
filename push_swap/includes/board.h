@@ -3,7 +3,7 @@
 
 # include "list.h"
 
-typedef struct	s_board
+typedef struct s_board
 {
 	t_list		*a;
 	t_list		*b;
