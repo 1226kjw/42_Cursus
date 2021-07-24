@@ -2,11 +2,28 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void	pre_pro(t_board *bd, int *ans)
+int	comp(const void *a, const void *b)
 {
-	int		i;
+	int		*na;
+	int		*nb;
+
+	na = (int *)a;
+	nb = (int *)b;
+	if (*na == *nb)
+		err_msg("Error\n");
+	return (*na - *nb);
+}
+
+void	pre_pro(t_board *bd, int *ans, int i)
+{
 	t_list	*tmp;
 
+	while (++i < bd->na)
+	{
+		ans[i] = bd->a->n;
+		bd->a = bd->a->next;
+	}
+	qsort(ans, bd->na, sizeof(int), comp);
 	tmp = bd->a;
 	while (1)
 	{
@@ -24,23 +41,39 @@ void	pre_pro(t_board *bd, int *ans)
 	free(ans);
 }
 
-int	comp(const void *a, const void *b)
+int	valid_inst(t_board *bd, char *line, int *flag)
 {
-	int		*na;
-	int		*nb;
-
-	na = (int *)a;
-	nb = (int *)b;
-	if (*na == *nb)
-		err_msg("Error\n");
-	return (*na - *nb);
+	if (!ft_strcmp(line, "sa"))
+		board_sa(bd);
+	else if (!ft_strcmp(line, "sb"))
+		board_sb(bd);
+	else if (!ft_strcmp(line, "ss"))
+		board_ss(bd);
+	else if (!ft_strcmp(line, "pa"))
+		board_pa(bd);
+	else if (!ft_strcmp(line, "pb"))
+		board_pb(bd);
+	else if (!ft_strcmp(line, "ra"))
+		board_ra(bd);
+	else if (!ft_strcmp(line, "rb"))
+		board_rb(bd);
+	else if (!ft_strcmp(line, "rr"))
+		board_rr(bd);
+	else if (!ft_strcmp(line, "rra"))
+		board_rra(bd);
+	else if (!ft_strcmp(line, "rrb"))
+		board_rrb(bd);
+	else if (!ft_strcmp(line, "rrr"))
+		board_rrr(bd);
+	else if (++*flag)
+		return (1);	
+	return (0);
 }
 
 int	main(int argc, char **argv)
 {
 	t_board	*bd;
 	char	*line;
-	int		i;
 	int		*ans;
 	int		flag;
 
@@ -48,42 +81,12 @@ int	main(int argc, char **argv)
 	bd = board_init(argc, argv);
 	if (argc == 1 || !bd)
 		err_msg("Error\n");
-	i = 0;
 	ans = (int *)malloc(sizeof(int) * bd->na);
-	while (i < bd->na)
-	{
-		ans[i] = bd->a->n;
-		bd->a = bd->a->next;
-		i++;
-	}
-	qsort(ans, bd->na, sizeof(int), comp);
-	pre_pro(bd, ans);
+	pre_pro(bd, ans, -1);
 	while (get_next_line(0, &line) == 1)
 	{
-		if (!ft_strcmp(line, "sa"))
-			board_sa(bd);
-		else if (!ft_strcmp(line, "sb"))
-			board_sb(bd);
-		else if (!ft_strcmp(line, "ss"))
-			board_ss(bd);
-		else if (!ft_strcmp(line, "pa"))
-			board_pa(bd);
-		else if (!ft_strcmp(line, "pb"))
-			board_pb(bd);
-		else if (!ft_strcmp(line, "ra"))
-			board_ra(bd);
-		else if (!ft_strcmp(line, "rb"))
-			board_rb(bd);
-		else if (!ft_strcmp(line, "rr"))
-			board_rr(bd);
-		else if (!ft_strcmp(line, "rra"))
-			board_rra(bd);
-		else if (!ft_strcmp(line, "rrb"))
-			board_rrb(bd);
-		else if (!ft_strcmp(line, "rrr"))
-			board_rrr(bd);
-		else if (++flag)
-			break ;
+		if (valid_inst(bd, line, &flag))
+			break;
 		free(line);
 	}
 	if (flag)
