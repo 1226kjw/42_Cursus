@@ -35,53 +35,32 @@ void	board_merge_b(t_board *org, int count, int min)
 	org->nb -= count;
 }
 
-void	btoa(t_board *bd, int count, int min, t_inst *inst)
+void	split_b(t_board *bd, t_inst *inst, int pivot[2], int n[3])
 {
-	t_board	*newboard;
-	int		pivot[2];
-	int		n_ra;
-	int		n_rb;
-	int		n_pa;
-	int		i;
-	int		max;
+	if (bd->b->n <= pivot[0])
+	{
+		board_rb(bd);
+		write_inst(inst, "\x6", 1);
+		n[1]++;
+	}
+	else
+	{
+		board_pa(bd);
+		write_inst(inst, "\x3", 1);
+		n[2]++;
+		if (bd->a->n <= pivot[1])
+		{
+			board_ra(bd);
+			write_inst(inst, "\x5", 1);
+			n[0]++;
+		}
+	}
+}
 
-	if (count <= ASTAR_MAX)
-	{
-		newboard = newboard_only_b(bd, count, min);
-		astar(newboard, 0, inst);
-		board_clear(newboard);
-		board_merge_b(bd, count, min);
-		return ;
-	}
-	max = min + count - 1;
-	pivot[0] = (min * 2 + max) / 3;
-	pivot[1] = (min + max * 2) / 3;
-	n_ra = 0;
-	n_rb = 0;
-	n_pa = 0;
-	i = -1;
-	while (++i < count)
-	{
-		if (bd->b->n <= pivot[0])
-		{
-			board_rb(bd);
-			write_inst(inst, "\x6", 1);
-			n_rb++;
-		}
-		else
-		{
-			board_pa(bd);
-			write_inst(inst, "\x3", 1);
-			n_pa++;
-			if (bd->a->n <= pivot[1])
-			{
-				board_ra(bd);
-				write_inst(inst, "\x5", 1);
-				n_ra++;
-			}
-		}
-	}
-	atob(bd, n_pa - n_ra, pivot[1] + 1, inst);
+void	rewind_b(t_board *bd, t_inst *inst, int n_ra, int n_rb)
+{
+	int		i;
+
 	i = -1;
 	while (++i < n_ra && i < n_rb)
 	{
@@ -100,6 +79,30 @@ void	btoa(t_board *bd, int count, int min, t_inst *inst)
 		write_inst(inst, "\x9", 1);
 		i++;
 	}
-	atob(bd, n_ra, pivot[0] + 1, inst);
-	btoa(bd, n_rb, min, inst);
+}
+
+void	btoa(t_board *bd, int count, int min, t_inst *inst)
+{
+	int		pivot[2];
+	int		n[3];
+	int		i;
+
+	if (count <= ASTAR_MAX)
+	{
+		astar(newboard_only_b(bd, count, min), 0, inst);
+		board_merge_b(bd, count, min);
+		return ;
+	}
+	pivot[0] = (min * 2 + min + count - 1) / 3;
+	pivot[1] = (min + (min + count - 1) * 2) / 3;
+	n[0] = 0;
+	n[1] = 0;
+	n[2] = 0;
+	i = -1;
+	while (++i < count)
+		split_b(bd, inst, pivot, n);
+	atob(bd, n[2] - n[0], pivot[1] + 1, inst);
+	rewind_b(bd, inst, n[0], n[1]);
+	atob(bd, n[0], pivot[0] + 1, inst);
+	btoa(bd, n[1], min, inst);
 }

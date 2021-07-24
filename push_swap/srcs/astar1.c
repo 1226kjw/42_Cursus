@@ -92,5 +92,7 @@ void	astar(t_board *bd, int direct, t_inst *inst)
 		free(now.hist);
 		board_clear(now.bd);
 	}
+	if (!direct)
+		board_clear(bd);
 	priq_free(root);
 }
