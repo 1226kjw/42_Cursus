@@ -57,7 +57,7 @@ t_node	priq_pop(t_priq *root)
 	child = 2;
 	if (child + 1 <= root->count)
 		child = ter_tmp(root->heap[child].f < root->heap[child + 1].f,
-			child, child + 1);
+				child, child + 1);
 	while (child <= root->count && root->heap[parent].f > root->heap[child].f)
 	{
 		node_swap(&root->heap[parent], &root->heap[child]);
@@ -65,7 +65,7 @@ t_node	priq_pop(t_priq *root)
 		child = child * 2;
 		if (child + 1 <= root->count)
 			child = ter_tmp(root->heap[child].f < root->heap[child + 1].f,
-				child, child + 1);
+					child, child + 1);
 	}
 	return (result);
 }
