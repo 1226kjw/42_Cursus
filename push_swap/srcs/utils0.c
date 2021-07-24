@@ -81,7 +81,7 @@ void	*ft_memcpy(void *dst, const void *src, int n)
 	i = 0;
 	while (i < n)
 	{
-		*((char*)dst + i) = *((char*)src + i);
+		*((char *)dst + i) = *((char *)src + i);
 		i++;
 	}
 	return (dst);

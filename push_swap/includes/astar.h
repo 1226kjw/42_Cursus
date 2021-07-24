@@ -14,7 +14,6 @@ typedef struct s_node
 	t_board		*bd;
 }				t_node;
 
-
 void		astar(t_board *bd, int direct, t_inst *inst);
 t_node		node_init(t_node now, int inst);
 int			board_iseq(t_board *bd1, t_board *bd2);
