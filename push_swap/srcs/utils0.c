@@ -25,7 +25,7 @@ int	ft_isspdigit(char *str)
 		if ((str[i] == '-' || str[i] == '+')
 			&& (str[i + 1] >= '0' && str[i + 1] <= '9')
 			&& (i == 0 || str[i - 1] == ' '))
-			continue;
+			continue ;
 		else if (str[i] != ' ' && str[i] != '\t'
 			&& (str[i] < '0' || str[i] > '9'))
 			return (0);
@@ -70,32 +70,4 @@ int	ft_atoi(char *str, int *i)
 	if (ret * sign < -2147483648LL || ret * sign > 2147483647)
 		err_msg("Error\n");
 	return (ret * sign);
-}
-
-void	err_msg(char *str)
-{
-	int		i;
-
-	i = -1;
-	while (str[++i])
-		;
-	write(2, str, i);
-	exit(1);
-}
-
-char	*ft_strdup(const char *str)
-{
-	int		i;
-	char	*arr;
-
-	i = -1;
-	while (str[++i])
-		;
-	arr = (char *)malloc((i + 1) * sizeof(char));
-	if (arr == 0)
-		return ((char *)0);
-	arr[i] = 0;
-	while (--i >= 0)
-		arr[i] = str[i];
-	return (arr);
 }

@@ -6,7 +6,7 @@
 /*   By: jinukim <jinukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 21:28:28 by jinukim           #+#    #+#             */
-/*   Updated: 2021/07/24 22:03:49 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/07/24 22:06:58 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ void	*set_ret(const char *str, int count, char **target)
 	if (str)
 		*target = ft_dup(str);
 	else
-		*target = (char*)malloc(sizeof(char) * count);
+		*target = (char *)malloc(sizeof(char) * count);
 	return (*target);
 }
 
-int		read_ret(int fd, char *buf, int buffer, int *i)
+int	read_ret(int fd, char *buf, int buffer, int *i)
 {
 	*i = read(fd, buf, buffer);
 	return (*i);

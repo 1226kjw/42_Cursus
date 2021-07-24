@@ -9,5 +9,6 @@ int		ft_isspdigit(char *str);
 int		ft_atoi(char *str, int *i);
 void	err_msg(char *str);
 char	*ft_strdup(const char *str);
+int 	ter_tmp(int cond, int a, int b);
 
 #endif

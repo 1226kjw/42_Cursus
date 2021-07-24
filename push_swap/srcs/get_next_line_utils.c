@@ -6,13 +6,11 @@
 /*   By: jinukim <jinukim@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/14 22:31:43 by jinukim           #+#    #+#             */
-/*   Updated: 2021/07/24 21:54:23 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/07/24 22:06:25 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-
 
 size_t	ft_len(const char *s)
 {
@@ -32,7 +30,7 @@ char	*ft_dup(const char *str)
 	i = -1;
 	while (str[++i])
 		;
-	arr = (char*)malloc((i + 1) * sizeof(char));
+	arr = (char *)malloc((i + 1) * sizeof(char));
 	if (!arr)
 		return (0);
 	arr[i] = 0;
