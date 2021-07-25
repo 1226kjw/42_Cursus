@@ -41,12 +41,12 @@ int		redirect_out(char *file, int *pipefd)
 	{
 		perror(file);
 		free(pipefd);
-		return (-1);
+		return (errno);
 	}
 	if (dup2(fd, STDOUT_FILENO) < 0)
 	{
 		perror("dup2");
-		return (-1);
+		return (errno);
 	}
 	close(fd);
 	return (0);

@@ -78,14 +78,14 @@ int		main(int argc, char **argv, char **envp)
 			if (i == 2)
 			{
 				pipe_attach(fd, STDOUT_FILENO);
-				if (redirect_in(argv[1], fd) < 0)
-					exit(-1);
+				if (redirect_in(argv[1], fd) != 0)
+					exit(errno);
 			}
 			else if (i == argc - 2)
 			{
 				pipe_attach(fd + 2 * (i - 3), STDIN_FILENO);
-				if (redirect_out(argv[i + 1], fd) < 0)
-					exit(-1);
+				if (redirect_out(argv[i + 1], fd) != 0)
+					exit(errno);
 			}
 			else
 			{
