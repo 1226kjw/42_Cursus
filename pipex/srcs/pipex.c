@@ -52,6 +52,7 @@ void	ft_exec(char *cmds, char **envp)
 	for(int i=0;cmd[i];i++)
 		free(cmd[i]);
 	free(cmd);
+	exit(1);
 }
 
 int		main(int argc, char **argv, char **envp)
