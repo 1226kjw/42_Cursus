@@ -18,6 +18,7 @@
 # include <stdlib.h>
 
 # include "libft.h"
+# include "utils.h"
 # include "redirect.h"
 
 # define READ 0

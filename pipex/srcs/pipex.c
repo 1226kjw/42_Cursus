@@ -37,7 +37,7 @@ void	ft_exec(char *cmds, char **envp)
 {
 	char		**p;
 	int			i;
-	char		*tmp[2];
+	char		*tmp;
 	char		**cmd;
 	struct stat	s;
 
@@ -46,18 +46,16 @@ void	ft_exec(char *cmds, char **envp)
 	p = ft_split(get_path(envp), ":");
 	while (p[++i])
 	{
-		tmp[0] = ft_strjoin(p[i], "/");
-		tmp[1] = ft_strjoin(tmp[0], cmd[0]);
-		free(tmp[0]);
-		if (stat(tmp[1], &s) == 0)
-			execve(tmp[1], cmd, envp);
-		free(tmp[1]);
+		tmp = ft_strjoin_3(p[i], "/", cmd[0]);
+		if (stat(tmp, &s) == 0)
+			execve(tmp, cmd, envp);
+		free(tmp);
 	}
 	free_all(p);
 	if (stat(cmd[0], &s) == 0 && execve(cmd[0], cmd, envp) < 0)
 	{
 		perror(cmd[0]);
-		exit(-1);
+		exit(errno);
 	}
 	write(2, "command not found\n", 18);
 	free_all(cmd);
