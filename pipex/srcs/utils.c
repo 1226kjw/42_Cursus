@@ -1,5 +1,16 @@
 #include "libft.h"
 
+char	*get_path(char **envp)
+{
+	int		i;
+
+	i = -1;
+	while (envp[++i])
+		if (!ft_strncmp("PATH", envp[i], 4))
+			return (envp[i] + 5);
+	return (0);
+}
+
 void	free_all(char **strs)
 {
 	int		i;

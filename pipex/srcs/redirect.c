@@ -68,7 +68,7 @@ int	redirect_out(char *file, t_pipe p)
 
 	if (p.heredoc)
 		fd = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
-	else	
+	else
 		fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
 	{

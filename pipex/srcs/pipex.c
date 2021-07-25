@@ -27,17 +27,6 @@ void	init_pipe(int argc, char **argv, t_pipe *p)
 	p->pipe = (int *)malloc(2 * sizeof(int) * (argc - 4 - p->heredoc));
 }
 
-char	*get_path(char **envp)
-{
-	int		i;
-
-	i = -1;
-	while (envp[++i])
-		if (!ft_strncmp("PATH", envp[i], 4))
-			return (envp[i] + 5);
-	return (0);
-}
-
 void	ft_exec(char *cmds, char **envp)
 {
 	char		**p;
