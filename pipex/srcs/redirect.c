@@ -12,7 +12,7 @@
 
 #include "redirect.h"
 
-int		redirect_in(char *file, int *pipefd)
+int	redirect_in(char *file, int *pipefd)
 {
 	int		fd;
 
@@ -32,7 +32,7 @@ int		redirect_in(char *file, int *pipefd)
 	return (0);
 }
 
-int		redirect_out(char *file, int *pipefd)
+int	redirect_out(char *file, int *pipefd)
 {
 	int		fd;
 

@@ -23,6 +23,16 @@ char	*get_path(char **envp)
 	return (0);
 }
 
+void	free_all(char **strs)
+{
+	int		i;
+
+	i = -1;
+	while (strs[++i])
+		free(strs[i]);
+	free(strs);
+}
+
 void	ft_exec(char *cmds, char **envp)
 {
 	char		**p;
@@ -32,32 +42,29 @@ void	ft_exec(char *cmds, char **envp)
 	struct stat	s;
 
 	i = -1;
-	cmd = ft_split(cmds, " ");
+	cmd = ft_strap(ft_split(cmds, " "));
 	p = ft_split(get_path(envp), ":");
 	while (p[++i])
 	{
 		tmp[0] = ft_strjoin(p[i], "/");
-		free(p[i]);
 		tmp[1] = ft_strjoin(tmp[0], cmd[0]);
 		free(tmp[0]);
 		if (stat(tmp[1], &s) == 0)
 			execve(tmp[1], cmd, envp);
 		free(tmp[1]);
 	}
-	free(p);
+	free_all(p);
 	if (stat(cmd[0], &s) == 0 && execve(cmd[0], cmd, envp) < 0)
 	{
 		perror(cmd[0]);
 		exit(-1);
 	}
 	write(2, "command not found\n", 18);
-	for(int i=0;cmd[i];i++)
-		free(cmd[i]);
-	free(cmd);
-	exit(1);
+	free_all(cmd);
+	exit(127);
 }
 
-int		main(int argc, char **argv, char **envp)
+int	main(int argc, char **argv, char **envp)
 {
 	int		*fd;
 	pid_t	pid;
@@ -66,7 +73,7 @@ int		main(int argc, char **argv, char **envp)
 
 	if (argc < 5)
 		exit(1);
-	fd = (int*)malloc(2 * sizeof(int) * (argc - 4));
+	fd = (int *)malloc(2 * sizeof(int) * (argc - 4));
 	i = 1;
 	while (++i < argc - 1)
 	{

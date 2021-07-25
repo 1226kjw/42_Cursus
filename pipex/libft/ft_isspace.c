@@ -5,17 +5,17 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinukim <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/06/28 17:47:40 by jinukim           #+#    #+#             */
-/*   Updated: 2021/06/28 17:47:41 by jinukim          ###   ########.fr       */
+/*   Created: 2021/07/05 15:07:58 by jinukim           #+#    #+#             */
+/*   Updated: 2021/07/05 15:08:02 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int		ft_isspace(int c)
+int	ft_isspace(int c)
 {
 	if (c > 0xff)
 		return (0);
 	return (c == ' ' || c == '\t' || c == '\n'
-			|| c == '\f' || c == '\r' || c == '\v');
+		|| c == '\f' || c == '\r' || c == '\v');
 }
