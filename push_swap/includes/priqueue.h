@@ -5,9 +5,6 @@
 #  define MAXQUEUE 5000000
 # endif
 
-# include <string.h>
-# include <stdlib.h>
-# include "utils.h"
 # include "astar.h"
 
 typedef struct s_priq

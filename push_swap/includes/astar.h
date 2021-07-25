@@ -2,7 +2,6 @@
 # define ASTAR_H
 
 # include "board.h"
-# include "list.h"
 # include "inst.h"
 # include "utils.h"
 
