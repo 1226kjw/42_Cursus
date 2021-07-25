@@ -17,6 +17,8 @@ size_t	ft_len(const char *s)
 	int		i;
 
 	i = 0;
+	if (!s)
+		return (0);
 	while (s[i] && s[i] != '\n')
 		i++;
 	return (i);

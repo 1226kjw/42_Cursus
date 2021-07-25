@@ -7,6 +7,12 @@ int	ft_strcmp(const char *s1, const char *s2)
 
 	ret = 0;
 	idx = 0;
+	if (!s1 && !s2)
+		return (0);
+	else if (!s1 && s2)
+		return (-1);
+	else if (s1 && !s2)
+		return (1);
 	while (!ret && (s1[idx] || s2[idx]))
 	{
 		ret = (unsigned char)s1[idx] - (unsigned char)s2[idx];

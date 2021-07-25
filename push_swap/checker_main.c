@@ -99,6 +99,7 @@ int	main(int argc, char **argv)
 			break ;
 		free(line);
 	}
+	free(line);
 	if (flag)
 		write(2, "Error\n", 6);
 	else if (bd->b == 0 && ft_lstsorted(bd->a))
@@ -106,5 +107,4 @@ int	main(int argc, char **argv)
 	else
 		write(1, "KO\n", 3);
 	board_clear(bd);
-	free(line);
 }

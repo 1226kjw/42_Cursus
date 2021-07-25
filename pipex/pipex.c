@@ -55,20 +55,18 @@ void	ft_exec(char *cmds, char **envp)
 int		main(int argc, char **argv, char **envp)
 {
 	int		*fd;
-	pid_t	*pid;
+	pid_t	pid;
 	int		s;
 	int		i;
 
 	if (argc < 5)
 		return (0);
 	fd = (int*)malloc(2 * sizeof(int) * (argc - 4));
-	pid = (pid_t*)malloc(sizeof(pid_t) * (argc - 3));
 	i = 1;
 	while (++i < argc - 1)
 	{
-		printf("%d\n", i);
-		pid[i - 2] = fork();
-		if (pid[i - 2] == 0)
+		pid = fork();
+		if (pid == 0)
 		{
 			if (i == 2)
 			{
@@ -91,11 +89,11 @@ int		main(int argc, char **argv, char **envp)
 			}
 			ft_exec(argv[i], envp);
 		}
-		waitpid(pid[i - 2], &s, 0);
+		wait(&s);
 		if (!WIFEXITED(s))
 			exit(EXIT_FAILURE);
 	}
-	waitpid(pid[argc - 2], &s, 0);
+	wait(&s);
 	if (!WIFEXITED(s))
 		exit(EXIT_FAILURE);
 }

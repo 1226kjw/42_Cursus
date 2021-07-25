@@ -27,6 +27,16 @@ int	read_ret(int fd, char *buf, int buffer, int *i)
 	return (*i);
 }
 
+int	set_null(char **str)
+{
+	if ((*str)[0] == 0)
+	{
+		free(*str);
+		*str = 0;
+	}
+	return (1);
+}
+
 int	get_next_line(int fd, char **line)
 {
 	static char	*remain[OPEN_MAX];
@@ -35,8 +45,7 @@ int	get_next_line(int fd, char **line)
 
 	if (fd < 0 || fd >= OPEN_MAX || !line || BUFFER_SIZE < 1)
 		return (-1);
-	if (!set_ret("", 0, line))
-		return (-1);
+	*line = 0;
 	i = ft_remainder(fd, remain, line);
 	if (i != 0)
 		return (i);
@@ -51,7 +60,7 @@ int	get_next_line(int fd, char **line)
 				return (freeall(buf, line));
 	}
 	free(buf);
-	if (!remain[fd])
-		return (i);
-	return (1);
+	if (remain[fd])
+		return (set_null(&remain[fd]));
+	return (i);
 }
