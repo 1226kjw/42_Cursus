@@ -101,6 +101,8 @@ int	main(int argc, char **argv, char **envp)
 
 	if (argc < 5)
 		exit(1);
+	if (!BONUS && argc > 5)
+		exit(1);
 	init_pipe(argc, argv, &p);
 	while (++p.iter < argc - 1)
 	{

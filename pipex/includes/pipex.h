@@ -15,9 +15,7 @@
 
 # include <sys/wait.h>
 # include <sys/stat.h>
-# include <stdlib.h>
 
-# include "libft.h"
 # include "utils.h"
 # include "redirect.h"
 
