@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipemng.c                                          :+:      :+:    :+:   */
+/*   re.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinukim <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 17:55:58 by jinukim           #+#    #+#             */
-/*   Updated: 2021/06/28 17:55:59 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/06/28 21:17:13 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "redirect.h"
 
 int		redirect_in(char *file)
 {
@@ -35,7 +35,7 @@ int		redirect_out(char *file)
 {
 	int		fd;
 
-	fd = open(file, O_CREAT | O_RDWR, 0644);
+	fd = open(file, O_CREAT | O_RDWR | O_TRUNC, 0644);
 	if (fd < 0)
 	{
 		perror(file);

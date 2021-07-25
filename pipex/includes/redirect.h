@@ -10,8 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEMNG_H
-# define PIPEMNG_H
+#ifndef REDIRECT_H
+# define REDIRECT_H
+
+# include <unistd.h>
+# include <fcntl.h>
+# include <errno.h>
+# include <stdio.h>
 
 int		redirect_in(char *file);
 int		redirect_out(char *file);

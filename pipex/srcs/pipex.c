@@ -6,7 +6,7 @@
 /*   By: jinukim <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/06/28 17:18:16 by jinukim           #+#    #+#             */
-/*   Updated: 2021/06/28 18:20:55 by jinukim          ###   ########.fr       */
+/*   Updated: 2021/06/28 21:27:11 by jinukim          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,33 +48,62 @@ void	ft_exec(char *cmds, char **envp)
 		perror(cmd[0]);
 		exit(-1);
 	}
+	for(int i=0;cmd[i];i++)
+		free(cmd[i]);
+	free(cmd);
 }
 
 int		main(int argc, char **argv, char **envp)
 {
-	int		fd[2];
+	int		*fd;
 	pid_t	pid;
 	int		s;
+	int		i;
 
 	if (argc < 5)
 		return (0);
-	pipe(fd);
-	pid = fork();
-	if (pid == 0)
+	fd = (int*)malloc(2 * sizeof(int) * (argc - 4));
+	i = 1;
+	while (++i < argc - 1)
 	{
-		if (redirect_in(argv[1]) < 0)
-			return (-1);
-		pipe_attach(fd, STDOUT_FILENO);
-		ft_exec(argv[2], envp);
-	}
-	else
-	{
-		waitpid(pid, &s, 0);
+		if (i != argc - 2)
+			pipe(fd + 2 * (i - 2));
+		pid = fork();
+		if (pid == 0)
+		{
+			if (i == 2)
+			{
+				pipe_attach(fd, STDOUT_FILENO);
+				if (redirect_in(argv[1]) < 0)
+					return (-1);
+			}
+			else if (i == argc - 2)
+			{
+				pipe_attach(fd + 2 * (i - 3), STDIN_FILENO);
+				if (redirect_out(argv[i + 1]) < 0)
+					return (-1);
+			}
+			else
+			{
+				pipe_attach(fd + 2 * (i - 2), STDOUT_FILENO);
+				pipe_attach(fd + 2 * (i - 3), STDIN_FILENO);
+			}
+			ft_exec(argv[i], envp);
+			free(fd);
+		}
+		else
+		{
+			wait(&s);
+			if (i != argc - 2)
+				close(fd[2 * (i - 2) + 1]);
+			if (i != 2)
+				close(fd[2 * (i - 3)]);
+		}
 		if (!WIFEXITED(s))
 			exit(EXIT_FAILURE);
-		if (redirect_out(argv[4]) < 0)
-			return (-1);
-		pipe_attach(fd, STDIN_FILENO);
-		ft_exec(argv[3], envp);
 	}
+	wait(&s);
+	if (!WIFEXITED(s))
+		exit(EXIT_FAILURE);
+	free(fd);
 }
