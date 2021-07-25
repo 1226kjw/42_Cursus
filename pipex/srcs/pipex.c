@@ -38,6 +38,7 @@ void	ft_exec(char *cmds, char **envp)
 	{
 		tmp[0] = ft_strjoin(p[i], "/");
 		tmp[1] = ft_strjoin(tmp[0], cmd[0]);
+		free(p[i]);
 		free(tmp[0]);
 		if (stat(tmp[1], &s) == 0)
 			execve(tmp[1], cmd, envp);
@@ -46,7 +47,7 @@ void	ft_exec(char *cmds, char **envp)
 	if (stat(cmd[0], &s) == 0 && execve(cmd[0], cmd, envp) < 0)
 	{
 		perror(cmd[0]);
-		exit(errno);
+		exit(1);
 	}
 	write(2, "command not found\n", 18);
 	for(int i=0;cmd[i];i++)
@@ -63,7 +64,7 @@ int		main(int argc, char **argv, char **envp)
 	int		i;
 
 	if (argc < 5)
-		return (0);
+		exit(1);
 	fd = (int*)malloc(2 * sizeof(int) * (argc - 4));
 	i = 1;
 	while (++i < argc - 1)
@@ -95,16 +96,14 @@ int		main(int argc, char **argv, char **envp)
 		else
 		{
 			waitpid(pid, &s, WNOWAIT);
+			if (!WIFEXITED(s))
+				exit(EXIT_FAILURE);
 			if (i != argc - 2)
 				close(fd[2 * (i - 2) + 1]);
 			if (i != 2)
 				close(fd[2 * (i - 3)]);
 		}
-		if (!WIFEXITED(s))
-			exit(EXIT_FAILURE);
 	}
-	waitpid(pid, &s, WNOWAIT);
-	if (!WIFEXITED(s))
-		exit(EXIT_FAILURE);
 	free(fd);
+	exit(WEXITSTATUS(s));
 }
