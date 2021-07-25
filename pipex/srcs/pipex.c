@@ -43,11 +43,12 @@ void	ft_exec(char *cmds, char **envp)
 			execve(tmp[1], cmd, envp);
 		free(tmp[1]);
 	}
-	if (execve(cmd[0], cmd, envp) < 0)
+	if (stat(cmd[0], &s) == 0 && execve(cmd[0], cmd, envp) < 0)
 	{
 		perror(cmd[0]);
-		exit(-1);
+		exit(errno);
 	}
+	write(2, "command not found\n", 18);
 	for(int i=0;cmd[i];i++)
 		free(cmd[i]);
 	free(cmd);
@@ -89,11 +90,10 @@ int		main(int argc, char **argv, char **envp)
 				pipe_attach(fd + 2 * (i - 3), STDIN_FILENO);
 			}
 			ft_exec(argv[i], envp);
-			free(fd);
 		}
 		else
 		{
-			wait(&s);
+			waitpid(pid, &s, WNOWAIT);
 			if (i != argc - 2)
 				close(fd[2 * (i - 2) + 1]);
 			if (i != 2)
@@ -102,7 +102,7 @@ int		main(int argc, char **argv, char **envp)
 		if (!WIFEXITED(s))
 			exit(EXIT_FAILURE);
 	}
-	wait(&s);
+	waitpid(pid, &s, WNOWAIT);
 	if (!WIFEXITED(s))
 		exit(EXIT_FAILURE);
 	free(fd);
