@@ -12,7 +12,7 @@
 
 #include "redirect.h"
 
-int		redirect_in(char *file)
+int		redirect_in(char *file, int *pipefd)
 {
 	int		fd;
 
@@ -20,6 +20,7 @@ int		redirect_in(char *file)
 	if (fd < 0)
 	{
 		perror(file);
+		free(pipefd);
 		return (-1);
 	}
 	if (dup2(fd, STDIN_FILENO) < 0)
@@ -31,14 +32,15 @@ int		redirect_in(char *file)
 	return (0);
 }
 
-int		redirect_out(char *file)
+int		redirect_out(char *file, int *pipefd)
 {
 	int		fd;
 
-	fd = open(file, O_CREAT | O_RDWR | O_TRUNC, 0644);
+	fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
 	{
 		perror(file);
+		free(pipefd);
 		return (-1);
 	}
 	if (dup2(fd, STDOUT_FILENO) < 0)

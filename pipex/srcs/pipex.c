@@ -37,17 +37,18 @@ void	ft_exec(char *cmds, char **envp)
 	while (p[++i])
 	{
 		tmp[0] = ft_strjoin(p[i], "/");
-		tmp[1] = ft_strjoin(tmp[0], cmd[0]);
 		free(p[i]);
+		tmp[1] = ft_strjoin(tmp[0], cmd[0]);
 		free(tmp[0]);
 		if (stat(tmp[1], &s) == 0)
 			execve(tmp[1], cmd, envp);
 		free(tmp[1]);
 	}
+	free(p);
 	if (stat(cmd[0], &s) == 0 && execve(cmd[0], cmd, envp) < 0)
 	{
 		perror(cmd[0]);
-		exit(1);
+		exit(-1);
 	}
 	write(2, "command not found\n", 18);
 	for(int i=0;cmd[i];i++)
@@ -77,20 +78,21 @@ int		main(int argc, char **argv, char **envp)
 			if (i == 2)
 			{
 				pipe_attach(fd, STDOUT_FILENO);
-				if (redirect_in(argv[1]) < 0)
-					return (-1);
+				if (redirect_in(argv[1], fd) < 0)
+					exit(-1);
 			}
 			else if (i == argc - 2)
 			{
 				pipe_attach(fd + 2 * (i - 3), STDIN_FILENO);
-				if (redirect_out(argv[i + 1]) < 0)
-					return (-1);
+				if (redirect_out(argv[i + 1], fd) < 0)
+					exit(-1);
 			}
 			else
 			{
 				pipe_attach(fd + 2 * (i - 2), STDOUT_FILENO);
 				pipe_attach(fd + 2 * (i - 3), STDIN_FILENO);
 			}
+			free(fd);
 			ft_exec(argv[i], envp);
 		}
 		else
@@ -105,5 +107,6 @@ int		main(int argc, char **argv, char **envp)
 		}
 	}
 	free(fd);
+	waitpid(pid, &s, 0);
 	exit(WEXITSTATUS(s));
 }
