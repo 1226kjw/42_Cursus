@@ -21,6 +21,10 @@
 # include "utils.h"
 # include "redirect.h"
 
+# ifndef BONUS
+#  define BONUS 0
+# endif
+
 # define READ 0
 # define WRITE 1
 

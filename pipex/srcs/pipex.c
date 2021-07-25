@@ -12,6 +12,21 @@
 
 #include "pipex.h"
 
+void	init_pipe(int argc, char **argv, t_pipe *p)
+{
+	p->argc = argc;
+	p->argv = argv;
+	p->iter = 1;
+	if (BONUS && !ft_strcmp(argv[1], "here_doc"))
+	{
+		if (argc < 6)
+			exit(1);
+		p->heredoc = 1;
+		p->iter++;
+	}
+	p->pipe = (int *)malloc(2 * sizeof(int) * (argc - 4 - p->heredoc));
+}
+
 char	*get_path(char **envp)
 {
 	int		i;
@@ -21,16 +36,6 @@ char	*get_path(char **envp)
 		if (!ft_strncmp("PATH", envp[i], 4))
 			return (envp[i] + 5);
 	return (0);
-}
-
-void	free_all(char **strs)
-{
-	int		i;
-
-	i = -1;
-	while (strs[++i])
-		free(strs[i]);
-	free(strs);
 }
 
 void	ft_exec(char *cmds, char **envp)
@@ -62,56 +67,60 @@ void	ft_exec(char *cmds, char **envp)
 	exit(127);
 }
 
+void	on_child(t_pipe p, char **envp)
+{
+	if (p.iter - p.heredoc == 2)
+	{
+		pipe_attach(p.pipe, STDOUT_FILENO);
+		if (redirect_in(p.argv[1 + p.heredoc], p) != 0)
+			exit(errno);
+	}
+	else if (p.iter == p.argc - 2)
+	{
+		pipe_attach(p.pipe + 2 * (p.iter - p.heredoc - 3), STDIN_FILENO);
+		if (redirect_out(p.argv[p.iter + 1], p) != 0)
+			exit(errno);
+	}
+	else
+	{
+		pipe_attach(p.pipe + 2 * (p.iter - p.heredoc - 2), STDOUT_FILENO);
+		pipe_attach(p.pipe + 2 * (p.iter - p.heredoc - 3), STDIN_FILENO);
+	}
+	free(p.pipe);
+	ft_exec(p.argv[p.iter], envp);
+}
+
+void	on_parent(t_pipe p, int *s)
+{
+	waitpid(p.pid, s, WNOWAIT);
+	if (p.iter != p.argc - 2)
+		close(p.pipe[2 * (p.iter - p.heredoc - 2) + 1]);
+	if (p.iter - p.heredoc != 2)
+		close(p.pipe[2 * (p.iter - p.heredoc - 3)]);
+	if (p.iter == p.argc - 2)
+	{
+		free(p.pipe);
+		waitpid(p.pid, s, 0);
+		exit(WEXITSTATUS(*s));
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
-	int		*fd;
-	pid_t	pid;
 	int		s;
-	int		i;
+	t_pipe	p;
 
 	if (argc < 5)
 		exit(1);
-	fd = (int *)malloc(2 * sizeof(int) * (argc - 4));
-	i = 1;
-	while (++i < argc - 1)
+	init_pipe(argc, argv, &p);
+	while (++p.iter < argc - 1)
 	{
-		if (i != argc - 2)
-			pipe(fd + 2 * (i - 2));
-		pid = fork();
-		if (pid == 0)
-		{
-			if (i == 2)
-			{
-				pipe_attach(fd, STDOUT_FILENO);
-				if (redirect_in(argv[1], fd) != 0)
-					exit(errno);
-			}
-			else if (i == argc - 2)
-			{
-				pipe_attach(fd + 2 * (i - 3), STDIN_FILENO);
-				if (redirect_out(argv[i + 1], fd) != 0)
-					exit(errno);
-			}
-			else
-			{
-				pipe_attach(fd + 2 * (i - 2), STDOUT_FILENO);
-				pipe_attach(fd + 2 * (i - 3), STDIN_FILENO);
-			}
-			free(fd);
-			ft_exec(argv[i], envp);
-		}
+		if (p.iter != argc - 2)
+			pipe(p.pipe + 2 * (p.iter - p.heredoc - 2));
+		p.pid = fork();
+		if (p.pid == 0)
+			on_child(p, envp);
 		else
-		{
-			waitpid(pid, &s, WNOWAIT);
-			if (!WIFEXITED(s))
-				exit(EXIT_FAILURE);
-			if (i != argc - 2)
-				close(fd[2 * (i - 2) + 1]);
-			if (i != 2)
-				close(fd[2 * (i - 3)]);
-		}
+			on_parent(p, &s);
 	}
-	free(fd);
-	waitpid(pid, &s, 0);
-	exit(WEXITSTATUS(s));
 }

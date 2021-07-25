@@ -1,18 +1,25 @@
-NAME 			= pipex
+NAME 		= pipex
 
-CC 				= gcc
-CFLAGS 		= -Wall -Wextra #-Werror
+CC 			= gcc
+CFLAGS 		= -Wall -Wextra -Werror
 
 
 LIBFT 		= libft.a
 INCLUDE 	= ./includes/
 SRCS_DIR 	= ./srcs/
 
-SRCS 			= $(wildcard $(SRCS_DIR)*.c)
-OBJS 			= $(SRCS:.c=.o)
-DEPS 			= $(SRCS:.c=.d)
+SRCS		= $(addprefix $(SRCS_DIR),\
+			  pipex.c\
+			  redirect.c\
+			  utils.c\
+			  get_next_line.c\
+			  get_next_line_utils.c)
+OBJS 		= $(SRCS:.c=.o)
+DEPS 		= $(SRCS:.c=.d)
 
 all : $(NAME)
+
+bonus : $(NAME)
 
 $(NAME) : $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $@ -L. -lft $(RL) $(RL_LIB)
@@ -33,8 +40,8 @@ fclean : clean
 re : fclean all
 
 .c.o :
-	$(CC) $(CFLAGS) -MD -c -o $@ $< -I$(INCLUDE)
+	$(CC) $(CFLAGS) -DBONUS=1 -MD -c -o $@ $< -I$(INCLUDE)
 
 -include $(DEPS)
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus

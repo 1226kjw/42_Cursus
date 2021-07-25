@@ -12,40 +12,74 @@
 
 #include "redirect.h"
 
-int	redirect_in(char *file, int *pipefd)
+int	here_doc(t_pipe p)
 {
-	int		fd;
+	char	*deli;
+	char	*line;
+	char	*linenl;
+	int		fd[2];
 
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
+	pipe(fd);
+	deli = p.argv[2];
+	while (get_next_line(0, &line) != 0)
 	{
-		perror(file);
-		free(pipefd);
-		return (-1);
+		if (!ft_strcmp(line, deli))
+			break ;
+		linenl = ft_strjoin(line, "\n");
+		free(line);
+		write(fd[1], linenl, ft_strlen(linenl));
+		free(linenl);
 	}
-	if (dup2(fd, STDIN_FILENO) < 0)
-	{
-		perror("dup2");
-		return (-1);
-	}
-	close(fd);
+	close(fd[1]);
+	dup2(fd[0], STDIN_FILENO);
+	close(fd[0]);
 	return (0);
 }
 
-int	redirect_out(char *file, int *pipefd)
+int	redirect_in(char *file, t_pipe p)
 {
 	int		fd;
 
-	fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	if (p.heredoc)
+		return (here_doc(p));
+	else
+	{
+		fd = open(file, O_RDONLY);
+		if (fd < 0)
+		{
+			perror(file);
+			free(p.pipe);
+			return (-1);
+		}
+		if (dup2(fd, STDIN_FILENO) < 0)
+		{
+			perror("dup2");
+			free(p.pipe);
+			return (-1);
+		}
+		close(fd);
+		return (0);
+	}
+}
+
+int	redirect_out(char *file, t_pipe p)
+{
+	int		fd;
+
+	if (p.heredoc)
+		fd = open(file, O_CREAT | O_WRONLY | O_APPEND, 0644);
+	else	
+		fd = open(file, O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
 	{
 		perror(file);
-		free(pipefd);
+		free(p.pipe);
 		return (errno);
 	}
 	if (dup2(fd, STDOUT_FILENO) < 0)
 	{
 		perror("dup2");
+		free(p.pipe);
 		return (errno);
 	}
 	close(fd);
