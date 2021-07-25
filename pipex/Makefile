@@ -14,7 +14,7 @@ DEPS 			= $(SRCS:.c=.d)
 
 all : $(NAME)
 
-$(NAME) : $(OBJS) $(LIBFT)
+$(NAME) : $(LIBFT) $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $@ -L. -lft $(RL) $(RL_LIB)
 
 $(LIBFT) :
