@@ -102,7 +102,8 @@ void	atob(t_board *bd, int count, int min, t_inst *inst)
 	while (++i < count)
 		split_a(bd, inst, pivot, n);
 	rewind_a(bd, inst, n[0], n[1]);
-	atob(bd, n[0], pivot[1] + 1, inst);
+	if (!ft_lstsorted(bd->a))
+		atob(bd, n[0], pivot[1] + 1, inst);
 	btoa(bd, n[1], pivot[0] + 1, inst);
 	btoa(bd, n[2] - n[1], min, inst);
 }

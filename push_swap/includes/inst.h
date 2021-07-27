@@ -4,7 +4,7 @@
 
 typedef struct s_inst
 {
-	char	inst[65536];
+	char	inst[655360];
 	int		c;
 	int		better;
 }			t_inst;
