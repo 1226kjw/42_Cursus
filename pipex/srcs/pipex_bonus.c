@@ -17,6 +17,7 @@ void	init_pipe(int argc, char **argv, t_pipe *p)
 	p->argc = argc;
 	p->argv = argv;
 	p->iter = 1;
+	p->heredoc = 0;
 	if (BONUS && !ft_strcmp(argv[1], "here_doc"))
 	{
 		if (argc < 6)
