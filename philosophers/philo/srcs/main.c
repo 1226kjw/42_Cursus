@@ -53,33 +53,31 @@ pthread_mutex_t	*init_mutex(t_env p)
 
 t_philo	*init_philo(t_env p, pthread_mutex_t *m)
 {
-	t_philo	*philo;
-	int		i;
+	t_philo			*philo;
+	int				i;
 	struct timeval	t;
-	int		*prog;
-	int		*fullcount;
 
-	prog = (int *)malloc(sizeof(int));
-	*prog = P_ALIVE;
-	fullcount = (int *)malloc(sizeof(int));
-	*fullcount = 0;
 	philo = (t_philo *)malloc(sizeof(t_philo) * p.n);
+	memset(philo, 0, sizeof(t_philo) * p.n);
 	if (!philo)
 		err_msg("malloc error!\n");
+	philo[0].prog = (int *)malloc(sizeof(int));
+	*(philo[0].prog) = P_ALIVE;
+	philo[0].fullcount = (int *)malloc(sizeof(int));
+	*(philo[0].fullcount) = 0;
+	philo[0].status_mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
+	pthread_mutex_init(philo[0].status_mutex, 0);
 	i = -1;
 	gettimeofday(&t, 0);
-	pthread_mutex_t *tmp = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	pthread_mutex_init(tmp, 0);
 	while (++i < p.n)
 	{
-		memset(&philo[i], 0, sizeof(t_philo));
-		philo[i].prog = prog;
-		philo[i].fullcount = fullcount;
+		philo[i].prog = philo[0].prog;
+		philo[i].fullcount = philo[0].fullcount;
 		philo[i].start = my_gettime(0L);
 		philo[i].id = i + 1;
 		philo[i].left_fork = &m[i];
 		philo[i].right_fork = &m[(i + 1) % p.n];
-		philo[i].status_mutex = tmp;
+		philo[i].status_mutex = philo[0].status_mutex;
 		philo[i].env = p;
 	}
 	return (philo);
@@ -112,11 +110,10 @@ void	*monit_func(void *arg)
 			++*p->fullcount;
 			if (*p->fullcount == p->env.n)
 			{
-				printf("%6ldms: All philosophers are full\n", my_gettime(p->start));
+				printf("%6ldms: All philosophers are full\n",
+						my_gettime(p->start));
 				*p->prog = P_FULL;
 			}
-			//print_msg("is full\n", p);
-			//p->status = P_FULL;
 		}
 	}
 	return (0);
@@ -179,15 +176,16 @@ void	end_thread(t_philo *philo, t_env p, pthread_mutex_t *m)
 	pthread_mutex_destroy(philo->status_mutex);
 	free(philo->status_mutex);
 	free(philo->prog);
+	free(philo->fullcount);
 	free(m);
 	free(philo);
 }
 
 int	main(int argc, char **argv)
 {
-	t_env	p;
+	t_env			p;
 	pthread_mutex_t	*m_fork;
-	t_philo	*philo;
+	t_philo			*philo;
 
 	p = init_param(argc, argv);
 	m_fork = init_mutex(p);
