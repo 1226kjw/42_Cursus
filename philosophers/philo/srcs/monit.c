@@ -28,7 +28,7 @@ void	*monit_func(void *arg)
 			if (*p->fullcount == p->env.n)
 			{
 				printf("%6ldms: All philosophers are full\n",
-						my_gettime(p->start));
+					my_gettime(p->start));
 				*p->prog = P_FULL;
 			}
 		}

@@ -39,6 +39,8 @@ void	make_thread(t_philo *philo, t_env p)
 {
 	int		i;
 
+	*philo->prog = 0;
+	*philo->fullcount = 0;
 	i = -1;
 	while (++i < p.n)
 		if (pthread_create(&philo[i].thread, 0, thread_func, &philo[i]) < 0)

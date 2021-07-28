@@ -43,20 +43,16 @@ t_philo	*init_philo(t_env p, pthread_mutex_t *m)
 {
 	t_philo			*philo;
 	int				i;
-	struct timeval	t;
 
 	philo = (t_philo *)malloc(sizeof(t_philo) * p.n);
 	memset(philo, 0, sizeof(t_philo) * p.n);
 	if (!philo)
 		err_msg("malloc error!\n");
 	philo[0].prog = (int *)malloc(sizeof(int));
-	*(philo[0].prog) = P_ALIVE;
 	philo[0].fullcount = (int *)malloc(sizeof(int));
-	*(philo[0].fullcount) = 0;
 	philo[0].status_mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
 	pthread_mutex_init(philo[0].status_mutex, 0);
 	i = -1;
-	gettimeofday(&t, 0);
 	while (++i < p.n)
 	{
 		philo[i].prog = philo[0].prog;
@@ -70,7 +66,6 @@ t_philo	*init_philo(t_env p, pthread_mutex_t *m)
 	}
 	return (philo);
 }
-
 
 int	main(int argc, char **argv)
 {
