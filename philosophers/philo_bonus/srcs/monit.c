@@ -2,10 +2,10 @@
 
 void	print_msg(char *str, t_philo *p)
 {
-	pthread_mutex_lock(p->status_mutex);
-	if (*p->prog == P_ALIVE && p->status != P_FULL)
+	sem_wait(p->print_sem);
+	if (p->status == P_ALIVE)
 		printf("%6ldms: %3d %s", my_gettime(p->start), p->id, str);
-	pthread_mutex_unlock(p->status_mutex);
+	sem_post(p->print_sem);
 }
 
 void	*monit_func(void *arg)
@@ -13,26 +13,36 @@ void	*monit_func(void *arg)
 	t_philo		*p;
 
 	p = (t_philo *)arg;
-	while (*p->prog == P_ALIVE)
+	while (p->status == P_ALIVE)
 	{
 		if (my_gettime(p->last) >= p->env.die)
 		{
-			print_msg("is died\n", p);
-			*p->prog = P_DIE;
-			pthread_mutex_unlock(p->left_fork);
+			sem_wait(p->print_sem);
+			printf("%6ldms: %3d is died\n", my_gettime(p->start), p->id);
+			p->status = P_DIE;
+			sem_post(p->die_sem);
 		}
 		if (p->env.end != -1 && p->count == p->env.end)
 		{
 			p->count++;
-			if (++*p->fullcount == p->env.n)
-			{
-				pthread_mutex_lock(p->status_mutex);
-				printf("%6ldms: All philosophers are full\n",
-					my_gettime(p->start));
-				*p->prog = P_FULL;
-				pthread_mutex_unlock(p->status_mutex);
-			}
+			sem_post(p->full_sem);
 		}
 	}
+	return (0);
+}
+
+void	*isfull_func(void *arg)
+{
+	int		i;
+	t_philo	*p;
+
+	p = (t_philo *)arg;
+	i = -1;
+	while (++i < p->env.end)
+		sem_wait(p->full_sem);
+	sem_wait(p->print_sem);
+	printf("%6ldms: All philosophers are full\n", my_gettime(p->start));
+	p->status = P_FULL;
+	sem_post(p->die_sem);
 	return (0);
 }

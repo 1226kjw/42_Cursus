@@ -25,57 +25,36 @@ t_env	init_param(int argc, char **argv)
 	return (ret);
 }
 
-pthread_mutex_t	*init_mutex(t_env p)
-{
-	int				i;
-	pthread_mutex_t	*m;
-
-	m = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * p.n);
-	if (!m)
-		err_msg("malloc error!\n");
-	i = -1;
-	while (++i < p.n)
-		pthread_mutex_init(&m[i], 0);
-	return (m);
-}
-
-t_philo	*init_philo(t_env p, pthread_mutex_t *m)
+t_philo	*init_philo(t_env p)
 {
 	t_philo			*philo;
-	int				i;
 
-	philo = (t_philo *)malloc(sizeof(t_philo) * p.n);
-	memset(philo, 0, sizeof(t_philo) * p.n);
+	philo = (t_philo *)malloc(sizeof(t_philo));
 	if (!philo)
 		err_msg("malloc error!\n");
-	philo[0].prog = (int *)malloc(sizeof(int));
-	philo[0].fullcount = (int *)malloc(sizeof(int));
-	philo[0].status_mutex = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t));
-	pthread_mutex_init(philo[0].status_mutex, 0);
-	i = -1;
-	while (++i < p.n)
-	{
-		philo[i].prog = philo[0].prog;
-		philo[i].fullcount = philo[0].fullcount;
-		philo[i].start = my_gettime(0L);
-		philo[i].id = i + 1;
-		philo[i].left_fork = &m[i];
-		philo[i].right_fork = &m[(i + 1) % p.n];
-		philo[i].status_mutex = philo[0].status_mutex;
-		philo[i].env = p;
-	}
+	memset(philo, 0, sizeof(t_philo));
+	sem_unlink("fork_sem");
+	sem_unlink("die_sem");
+	sem_unlink("full_sem");
+	sem_unlink("print_sem");
+	philo->fork_sem = sem_open("fork_sem", O_CREAT, 0644, p.n / 2);
+	philo->die_sem = sem_open("die_sem", O_CREAT, 0644, 0);
+	philo->full_sem = sem_open("full_sem", O_CREAT, 0644, 0);
+	philo->print_sem = sem_open("print_sem", O_CREAT, 0644, 1);
+	philo->start = my_gettime(0L);
+	philo->last = philo->start;
+	philo->env = p;
 	return (philo);
 }
 
 int	main(int argc, char **argv)
 {
-	t_env			p;
-	pthread_mutex_t	*m_fork;
-	t_philo			*philo;
+	t_env		p;
+	t_philo		*philo;
+	pid_t		*pid;
 
 	p = init_param(argc, argv);
-	m_fork = init_mutex(p);
-	philo = init_philo(p, m_fork);
-	make_thread(philo, p);
-	end_thread(philo, p, m_fork);
+	philo = init_philo(p);
+	pid = make_process(philo, p);
+	end_process(philo, p, pid);
 }

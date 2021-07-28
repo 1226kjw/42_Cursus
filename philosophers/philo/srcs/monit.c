@@ -3,7 +3,7 @@
 void	print_msg(char *str, t_philo *p)
 {
 	pthread_mutex_lock(p->status_mutex);
-	if (*p->prog == P_ALIVE && p->status != P_FULL)
+	if (*p->prog == P_ALIVE)
 		printf("%6ldms: %3d %s", my_gettime(p->start), p->id, str);
 	pthread_mutex_unlock(p->status_mutex);
 }

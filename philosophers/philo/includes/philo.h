@@ -31,7 +31,6 @@ typedef struct s_philo
 	pthread_mutex_t	*right_fork;
 	pthread_mutex_t	*status_mutex;
 	int				id;
-	int				status;
 	int				count;
 	long			last;
 	long			start;

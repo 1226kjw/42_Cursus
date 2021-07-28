@@ -6,6 +6,10 @@
 # include <pthread.h>
 # include <stdlib.h>
 # include <string.h>
+# include <semaphore.h>
+# include <fcntl.h>
+# include <signal.h>
+# include <sys/wait.h>
 
 # include "utils.h"
 
@@ -24,23 +28,22 @@ typedef struct s_env
 
 typedef struct s_philo
 {
-	int				*prog;
-	int				*fullcount;
-	pthread_t		thread;
-	pthread_mutex_t	*left_fork;
-	pthread_mutex_t	*right_fork;
-	pthread_mutex_t	*status_mutex;
-	int				id;
-	int				status;
-	int				count;
-	long			last;
-	long			start;
-	t_env			env;
-}					t_philo;
+	sem_t		*fork_sem;
+	sem_t		*die_sem;
+	sem_t		*full_sem;
+	sem_t		*print_sem;
+	int			status;
+	int			count;
+	int			id;
+	long		last;
+	long		start;
+	t_env		env;
+}				t_philo;
 
 void	print_msg(char *str, t_philo *p);
 void	*monit_func(void *arg);
-void	make_thread(t_philo *philo, t_env p);
-void	end_thread(t_philo *philo, t_env p, pthread_mutex_t *m);
+void	*isfull_func(void *arg);
+pid_t	*make_process(t_philo *philo, t_env p);
+void	end_process(t_philo *philo, t_env p, pid_t *pid);
 
 #endif

@@ -32,7 +32,7 @@ void	*thread_func(void *arg)
 		print_msg("is thinking\n", p);
 	}
 	pthread_join(monit, 0);
-	return ((void *)&p->status);
+	return (0);
 }
 
 void	make_thread(t_philo *philo, t_env p)
