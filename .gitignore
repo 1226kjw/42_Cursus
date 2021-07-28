@@ -9,5 +9,5 @@
 *.out
 push_swap_tester/
 .vscode/
-push_swap
-checker
+.gitignore
+*.swp
