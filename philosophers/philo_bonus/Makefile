@@ -6,7 +6,11 @@ CFLAGS 		= -Wall -Wextra #-Werror
 INCLUDE 	= ./includes/
 SRCS_DIR 	= ./srcs
 
-SRCS		= $(wildcard $(SRCS_DIR)/*.c)
+SRCS		= $(addprefix $(SRCS_DIR)/,\
+			  main.c\
+			  process.c\
+			  monit.c\
+			  utils.c)
 OBJS 		= $(SRCS:.c=.o)
 DEPS 		= $(SRCS:.c=.d)
 
