@@ -8,9 +8,9 @@ void	eating(t_philo *p)
 	print_msg("is eating\n", p);
 	p->last = my_gettime(0L);
 	my_usleep(p->env.eat * 1000);
+	p->count++;
 	pthread_mutex_unlock(p->right_fork);
 	pthread_mutex_unlock(p->left_fork);
-	p->count++;
 }
 
 void	*thread_func(void *arg)
