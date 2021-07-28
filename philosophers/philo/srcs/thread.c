@@ -7,7 +7,7 @@ void	eating(t_philo *p)
 	print_msg("has take a fork\n", p);
 	print_msg("is eating\n", p);
 	p->last = my_gettime(0L);
-	usleep(p->env.eat * 1000);
+	my_usleep(p->env.eat * 1000);
 	p->count++;
 	pthread_mutex_unlock(p->right_fork);
 	pthread_mutex_unlock(p->left_fork);
@@ -22,13 +22,13 @@ void	*thread_func(void *arg)
 	p->last = my_gettime(0L);
 	pthread_create(&monit, 0, monit_func, arg);
 	if (p->id % 2 == 0)
-		usleep(p->env.eat * 500);
+		my_usleep(p->env.eat * 500);
 	while (*p->prog == P_ALIVE)
 	{
 		eating(p);
 		if (p->env.end == -1 || p->count < p->env.end)
 			print_msg("is sleeping\n", p);
-		usleep(p->env.sleep * 1000);
+		my_usleep(p->env.sleep * 1000);
 		print_msg("is thinking\n", p);
 	}
 	pthread_join(monit, 0);

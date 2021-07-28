@@ -12,6 +12,15 @@ long	my_gettime(long bef)
 	return (now - bef);
 }
 
+void	my_usleep(long time)
+{
+	long			end;
+
+	end = my_gettime(0L) * 1000 + time;
+	while (my_gettime(0L) * 1000 < end)
+		usleep(100);
+}
+
 void	err_msg(char *str)
 {
 	if (str)
@@ -30,24 +39,17 @@ int	ft_isdigit(char *str)
 	return (1);
 }
 
-int	ft_strlen(char *str)
-{
-	int		i;
-
-	if (!str)
-		return (0);
-	i = -1;
-	while (str[++i])
-		;
-	return (i);
-}
-
 int	ft_atoi(char *str)
 {
 	long long int	ret;
 	int				i;
 
-	if (ft_strlen(str) > 12)
+	i = -1;
+	while (str && str[++i])
+		;
+	if (i <= 0)
+		err_msg("nothing in arg\n");
+	if (i > 12)
 		err_msg("not in 'int' range.\n");
 	i = -1;
 	ret = 0;
