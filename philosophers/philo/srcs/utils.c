@@ -1,5 +1,17 @@
 #include "utils.h"
 
+long	my_gettime(long bef)
+{
+	struct timeval	t;
+	long			now;
+
+	t.tv_sec = 0;
+	t.tv_usec = 0;
+	gettimeofday(&t, 0);
+	now = t.tv_sec * 1000L + t.tv_usec / 1000L;
+	return (now - bef);
+}
+
 void	err_msg(char *str)
 {
 	if (str)

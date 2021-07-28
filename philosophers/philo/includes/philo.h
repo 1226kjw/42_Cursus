@@ -2,7 +2,6 @@
 # define PHILO_H
 
 # include <unistd.h>
-# include <sys/time.h>
 # include <stdio.h>
 # include <pthread.h>
 # include <stdlib.h>
@@ -39,6 +38,9 @@ typedef struct s_philo
 	t_env			env;
 }					t_philo;
 
-void	err_msg(char *str);
+void	print_msg(char *str, t_philo *p);
+void	*monit_func(void *arg);
+void	make_thread(t_philo *philo, t_env p);
+void	end_thread(t_philo *philo, t_env p, pthread_mutex_t *m);
 
 #endif
