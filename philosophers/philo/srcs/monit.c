@@ -18,8 +18,6 @@ void	*monit_func(void *arg)
 		if (my_gettime(p->last) >= p->env.die)
 		{
 			print_msg("is died\n", p);
-			pthread_mutex_unlock(p->right_fork);
-			pthread_mutex_unlock(p->left_fork);
 			*p->prog = P_DIE;
 		}
 		if (p->env.end != -1 && p->count >= p->env.end)
@@ -27,9 +25,11 @@ void	*monit_func(void *arg)
 			++*p->fullcount;
 			if (*p->fullcount == p->env.n)
 			{
+				pthread_mutex_lock(p->status_mutex);
 				printf("%6ldms: All philosophers are full\n",
 					my_gettime(p->start));
 				*p->prog = P_FULL;
+				pthread_mutex_unlock(p->status_mutex);
 			}
 		}
 	}
