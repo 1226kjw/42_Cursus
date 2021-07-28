@@ -20,8 +20,9 @@ void	*monit_func(void *arg)
 			print_msg("is died\n", p);
 			*p->prog = P_DIE;
 		}
-		if (p->env.end != -1 && p->count >= p->env.end)
+		if (p->env.end != -1 && p->count == p->env.end)
 		{
+			p->count++;
 			++*p->fullcount;
 			if (*p->fullcount == p->env.n)
 			{
