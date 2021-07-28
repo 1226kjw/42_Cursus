@@ -1,7 +1,7 @@
 NAME 		= philo_bonus
 
 CC 			= gcc
-CFLAGS 		= -Wall -Wextra -Werror
+CFLAGS 		= -Wall -Wextra #-Werror
 
 INCLUDE 	= ./includes/
 SRCS_DIR 	= ./srcs
@@ -16,7 +16,6 @@ $(NAME) : $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $@ -lpthread
 
 clean :
-	make clean -C ./libft
 	rm -f $(OBJS) $(DEPS)
 
 fclean : clean
