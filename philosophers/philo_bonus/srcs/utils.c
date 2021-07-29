@@ -23,8 +23,15 @@ void	my_usleep(long time)
 
 void	err_msg(char *str)
 {
+	int		i;
+
 	if (str)
-		printf("%s", str);
+	{
+		i = -1;
+		while (str[++i])
+			;
+		write(2, str, i);
+	}
 	exit(-1);
 }
 

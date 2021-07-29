@@ -4,7 +4,7 @@ void	print_msg(char *str, t_philo *p)
 {
 	pthread_mutex_lock(p->status_mutex);
 	if (*p->prog == P_ALIVE)
-		printf("%6ldms: %3d %s", my_gettime(p->start), p->id, str);
+		printf("%6ld %3d %s", my_gettime(p->start), p->id, str);
 	pthread_mutex_unlock(p->status_mutex);
 }
 
@@ -17,7 +17,7 @@ void	*monit_func(void *arg)
 	{
 		if (my_gettime(p->last) >= p->env.die)
 		{
-			print_msg("is died\n", p);
+			print_msg("died\n", p);
 			*p->prog = P_DIE;
 			pthread_mutex_unlock(p->left_fork);
 		}
@@ -27,7 +27,7 @@ void	*monit_func(void *arg)
 			if (++*p->fullcount == p->env.n)
 			{
 				pthread_mutex_lock(p->status_mutex);
-				printf("%6ldms: All philosophers are full\n",
+				printf("%6ld All philosophers are full\n",
 					my_gettime(p->start));
 				*p->prog = P_FULL;
 				pthread_mutex_unlock(p->status_mutex);

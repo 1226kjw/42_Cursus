@@ -3,7 +3,8 @@
 void	eating(t_philo *p)
 {
 	sem_wait(p->fork_sem);
-	print_msg("has take a fork\n", p);
+	print_msg("has taken a fork\n", p);
+	print_msg("has taken a fork\n", p);
 	print_msg("is eating\n", p);
 	p->last = my_gettime(0L);
 	my_usleep(p->env.eat * 1000);
