@@ -1,6 +1,6 @@
 #include "push_swap.h"
 
-void	bubblesort(int *ans, int c)
+void	bubblesort(int *ans, int c, t_board *bd)
 {
 	int		i;
 	int		j;
@@ -19,7 +19,11 @@ void	bubblesort(int *ans, int c)
 				ans[j - 1] = tmp;
 			}
 			else if (ans[j] == ans[j - 1])
+			{
+				board_clear(bd);
+				free(ans);
 				err_msg("Error\n");
+			}
 		}
 	}
 }
@@ -33,7 +37,7 @@ void	pre_pro(t_board *bd, int *ans, int i)
 		ans[i] = bd->a->n;
 		bd->a = bd->a->next;
 	}
-	bubblesort(ans, bd->na);
+	bubblesort(ans, bd->na, bd);
 	tmp = bd->a;
 	while (1)
 	{
