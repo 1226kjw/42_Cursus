@@ -18,6 +18,8 @@ void	bubblesort(int *ans, int c)
 				ans[j] = ans[j - 1];
 				ans[j - 1] = tmp;
 			}
+			else if (ans[j] == ans[j - 1])
+				err_msg("Error\n");
 		}
 	}
 }
