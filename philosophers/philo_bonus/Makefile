@@ -1,7 +1,7 @@
 NAME 		= philo_bonus
 
 CC 			= gcc
-CFLAGS 		= -Wall -Wextra #-Werror
+CFLAGS 		= -Wall -Wextra -Werror
 
 INCLUDE 	= ./includes/
 SRCS_DIR 	= ./srcs
