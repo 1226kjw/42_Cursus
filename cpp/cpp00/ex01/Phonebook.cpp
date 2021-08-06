@@ -1,10 +1,7 @@
 #include "Phonebook.hpp"
 
-Phonebook::Phonebook() : str_const({"First Name : ", "Last Name : ", "Nickname : ", "Phone Number : ", "Darkest Secret : "})
-{
-	this->total = 0;
-	this->idx = 0;
-}
+Phonebook::Phonebook() : total(0), idx(0), str_const({"First Name",
+		"Last Name", "Nickname", "Phone Number", "Darkest Secret"}) {}
 
 Phonebook::~Phonebook() {}
 
@@ -14,7 +11,7 @@ void	Phonebook::add_contact()
 	std::string	str[5];
 	for (int i = 0; i < 5; i++)
 	{
-		std::cout << str_const[i];
+		std::cout << str_const[i] << " : ";
 		do
 		{
 			clearerr(stdin);
@@ -48,7 +45,7 @@ void	Phonebook::search()
 		std::cout << std::endl;
 		std::string *info = contact[i].get_info();
 		for (int i = 0; i < 5; i++)
-			std::cout << std::setw(17) << str_const[i] << info[i] << std::endl;
+			std::cout << std::setw(15) << str_const[i] << " : " << info[i] << std::endl;
 		delete[] info;
 	}
 	else
