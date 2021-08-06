@@ -53,6 +53,7 @@ int	main(int argc, char **argv)
 	t_philo		*philo;
 	pid_t		*pid;
 
+	setbuf(stdout, 0);
 	p = init_param(argc, argv);
 	philo = init_philo(p);
 	pid = make_process(philo, p);
