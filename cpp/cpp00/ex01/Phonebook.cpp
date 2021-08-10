@@ -55,7 +55,7 @@ void	Phonebook::search()
 	else if (0 <= i && i < total)
 	{
 		std::cout << std::endl;
-		for (int j = 0; j < 5; i++)
+		for (int j = 0; j < 5; j++)
 		{
 			std::string data = contact[i].get_info(j);
 			std::cout << std::setw(15) << str_const[j] << " : " << data << std::endl;

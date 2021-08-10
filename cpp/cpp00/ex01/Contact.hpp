@@ -17,7 +17,7 @@ public:
 	Contact();
 	Contact(std::string str[]);
 	~Contact();
-	std::string	*get_info(void);
+	std::string	get_info(int i);
 	void	print(int index);
 };
 
