@@ -11,15 +11,23 @@ Contact::Contact(std::string str[])
 }
 Contact::~Contact() {}
 
-std::string	*Contact::get_info(void)
+std::string	*Contact::get_info(int i)
 {
-	std::string *str = new std::string[5];
-	str[0] = first_name;
-	str[1] = last_name;
-	str[2] = nickname;
-	str[3] = phone_number;
-	str[4] = darkest_secret;
-	return (str);
+	switch (i)
+	{
+	case 1:
+		return first_name;
+	case 2:
+		return last_name;
+	case 3:
+		return nickname;
+	case 4:
+		return phone_number;
+	case 5:
+		return darkest_secret;
+	default:
+		return "";
+	}
 }
 
 void    Contact::print(int index)

@@ -55,10 +55,11 @@ void	Phonebook::search()
 	else if (0 <= i && i < total)
 	{
 		std::cout << std::endl;
-		std::string *info = contact[i].get_info();
-		for (int i = 0; i < 5; i++)
-			std::cout << std::setw(15) << str_const[i] << " : " << info[i] << std::endl;
-		delete[] info;
+		for (int j = 0; j < 5; i++)
+		{
+			std::string data = contact[i].get_info(j);
+			std::cout << std::setw(15) << str_const[j] << " : " << data << std::endl;
+		}
 	}
 	else
 		std::cout << "Nothing in idx " << i << std::endl;
