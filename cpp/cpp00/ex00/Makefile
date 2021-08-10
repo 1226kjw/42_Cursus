@@ -11,20 +11,15 @@ all : $(NAME)
 $(NAME) : $(OBJS)
 	$(CC) -o $(NAME) $(CFLAGS) $(OBJS)
 
-%.o: %.c
+%.o : %.c
 	$(CC) $(CFLAGS) -c -o $@ $<
 
-test:	$(NAME)
-	./megaphone "shhhhh... I think the students are asleep..."
-	./megaphone Damnit " ! " "Sorry students, I thought this thing was off."
-	./megaphone
-
-clean:
+clean :
 	rm -rf $(OBJS)
 
-fclean: clean
+fclean : clean
 	rm -rf $(NAME)
 
-re:				fclean all
+re : fclean all
 
-.PHONY:			all clean fclean re test
+.PHONY : all clean fclean re

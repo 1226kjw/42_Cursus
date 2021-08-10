@@ -17,7 +17,7 @@ private:
 public:
 	Phonebook();
 	~Phonebook();
-	void	add_contact();
+	void	add();
 	void	search();
 	void	print(int i);
 	void	print(void);

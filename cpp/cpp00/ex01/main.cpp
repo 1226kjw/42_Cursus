@@ -17,7 +17,7 @@ int main()
 		if (input == "EXIT")
 			break ;
 		else if (input == "ADD")
-			phonebook.add_contact();
+			phonebook.add();
 		else if (input == "SEARCH")
 			phonebook.search();
 	}

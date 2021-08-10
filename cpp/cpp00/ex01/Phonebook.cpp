@@ -2,10 +2,9 @@
 
 Phonebook::Phonebook() : total(0), idx(0), str_const({"First Name",
 		"Last Name", "Nickname", "Phone Number", "Darkest Secret"}) {}
-
 Phonebook::~Phonebook() {}
 
-void	Phonebook::add_contact()
+void	Phonebook::add()
 {
 	std::cout << std::endl;
 	std::string	str[5];
@@ -30,6 +29,11 @@ void	Phonebook::add_contact()
 
 void	Phonebook::search()
 {
+	if (total == 0)
+	{
+		std::cout << std::endl << "Phonebook is empty!" << std::endl << std::endl;
+		return ;
+	}
 	std::cout << std::endl;
 	print();
 	std::cout << std::endl << "Input Index of Contact : ";
@@ -56,11 +60,10 @@ void	Phonebook::search()
 
 void	Phonebook::print(void)
 {
+	std::cout << std::setw(10) << "Index" << '|';
 	std::cout << std::setw(10) << "First Name" << '|';
     std::cout << std::setw(10) << "Last Name" << '|';
-    std::cout << std::setw(10) << "Nickname" << '|';
-    std::cout << std::setw(10) << "Phone Num" << '|';
-    std::cout << std::setw(10) << "D. Secret" << std::endl;
+    std::cout << std::setw(10) << "Nickname" << std::endl;
 	for (int i = 0; i < total; i++)
-		contact[i].print();
+		contact[i].print(i);
 }
