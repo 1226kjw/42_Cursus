@@ -5,22 +5,24 @@ CFLAGS	= -Wall -Wextra -Werror -std=c++98
 
 SRCS	= Account.cpp test.cpp
 OBJS	= $(SRCS:.cpp=.o)
+DEPS	= $(SRCS:.cpp=.d)
 
 all : $(NAME)
 
 $(NAME) : $(OBJS)
 	$(CC) -o $(NAME) $(CFLAGS) $(OBJS)
 
-%.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
+%.o: %.cpp
+	$(CC) $(CFLAGS) -MD -c -o $@ $<
 
 clean:
-	rm -rf $(OBJS)
+	rm -rf $(OBJS) $(DEPS)
 
 fclean: clean
 	rm -rf $(NAME)
 
 re:				fclean all
 
+-include $(DEPS)
 
-.PHONY:			all clean fclean re
+.PHONY : all clean fclean re

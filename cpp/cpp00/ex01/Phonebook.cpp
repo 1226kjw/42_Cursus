@@ -1,7 +1,13 @@
 #include "Phonebook.hpp"
 
-Phonebook::Phonebook() : total(0), idx(0), str_const({"First Name",
-		"Last Name", "Nickname", "Phone Number", "Darkest Secret"}) {}
+Phonebook::Phonebook() : total(0), idx(0)
+{
+	str_const[0] = "First Name";
+	str_const[1] = "Last Name";
+	str_const[2] = "NickName";
+	str_const[3] = "Phone Number";
+	str_const[4] = "Darkest Secret";
+}
 Phonebook::~Phonebook() {}
 
 void	Phonebook::add()
