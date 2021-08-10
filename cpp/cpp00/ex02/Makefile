@@ -12,16 +12,16 @@ all : $(NAME)
 $(NAME) : $(OBJS)
 	$(CC) -o $(NAME) $(CFLAGS) $(OBJS)
 
-%.o: %.cpp
+%.o : %.cpp
 	$(CC) $(CFLAGS) -MD -c -o $@ $<
 
-clean:
+clean :
 	rm -rf $(OBJS) $(DEPS)
 
-fclean: clean
+fclean : clean
 	rm -rf $(NAME)
 
-re:				fclean all
+re : fclean all
 
 -include $(DEPS)
 

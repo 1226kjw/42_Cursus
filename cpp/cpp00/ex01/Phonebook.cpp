@@ -16,13 +16,15 @@ void	Phonebook::add()
 	std::string	str[5];
 	for (int i = 0; i < 5; i++)
 	{
-		std::cout << str_const[i] << " : ";
 		do
 		{
+			if (std::cin.eof())
+				std::cout << std::endl;
+			std::cout << str_const[i] << " : ";
 			clearerr(stdin);
 			std::cin.clear();
 			std::getline(std::cin, str[i]);
-		} while (std::cin.eof());	
+		} while (std::cin.eof() || str[i] == "");	
 	}
 	Contact	c(str);
 	contact[idx++] = c;
