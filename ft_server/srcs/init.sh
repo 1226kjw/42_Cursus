@@ -20,7 +20,7 @@ mv wordpress /var/www/html/
 chown -R www-data:www-data /var/www/html/wordpress
 mv wp-config.php /var/www/html/wordpress/
 
-if [ $AUTOINDEX = "on" ]; then
+if [ x$AUTOINDEX = x"on" ]; then
 	mv default_a ./etc/nginx/sites-available/default
 else
 	rm default_a
