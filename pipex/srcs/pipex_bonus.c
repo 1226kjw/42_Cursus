@@ -37,7 +37,7 @@ void	ft_exec(char *cmds, char **envp)
 	struct stat	s;
 
 	i = -1;
-	cmd = ft_strap(ft_split(cmds, " "));
+	cmd = ft_strip(ft_split(cmds, " "));
 	p = ft_split(get_path(envp), ":");
 	while (p[++i])
 	{

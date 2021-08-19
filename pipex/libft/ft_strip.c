@@ -6,7 +6,7 @@ static void	init(int *a, char *b)
 	*b = 0;
 }
 
-char	**ft_strap(char **strs)
+char	**ft_strip(char **strs)
 {
 	int		i;
 	int		j;
