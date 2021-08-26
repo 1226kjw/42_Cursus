@@ -1,5 +1,12 @@
 #include "Phonebook.hpp"
 
+using std::cin;
+using std::cout;
+using std::endl;
+using std::getline;
+using std::setw;
+using std::string;
+
 Phonebook::Phonebook() : total(0), idx(0)
 {
 	str_const[0] = "First Name";
@@ -12,19 +19,17 @@ Phonebook::~Phonebook() {}
 
 void	Phonebook::add()
 {
-	std::cout << std::endl;
-	std::string	str[5];
+	cout << endl;
+	string	str[5] = {"", "", "", "", ""};
 	for (int i = 0; i < 5; i++)
 	{
-		do
+		while (str[i] == "")
 		{
-			if (std::cin.eof())
-				std::cout << std::endl;
-			std::cout << str_const[i] << " : ";
-			clearerr(stdin);
-			std::cin.clear();
-			std::getline(std::cin, str[i]);
-		} while (std::cin.eof() || str[i] == "");	
+			cout << str_const[i] << " : ";
+			getline(cin, str[i]);
+			if (cin.eof())
+				exit(0);
+		}
 	}
 	Contact	c(str);
 	contact[idx++] = c;
@@ -32,47 +37,52 @@ void	Phonebook::add()
 		idx = 0;
 	if (total < 8)
 		total++;
-	std::cout << std::endl;
+	cout << endl;
 }
 
 void	Phonebook::search()
 {
+	cout << endl;
 	if (total == 0)
 	{
-		std::cout << std::endl << "Phonebook is empty!" << std::endl << std::endl;
+		cout << "Phonebook is empty!" << endl << endl;
 		return ;
 	}
-	std::cout << std::endl;
 	print();
-	std::cout << std::endl << "Input Index of Contact : ";
-	int	i;
-	std::cin >> i;
-	if (std::cin.fail())
+	int	i = -1;
+	while (1)
 	{
-		std::cout << "Idx must be integer" << std::endl;
-		std::cin.clear();
+		cout << endl << "Input Index of Contact : ";
+		cin >> i;
+		if (cin.eof())
+			exit(0);
+		if (!cin.fail())
+			break ;
+		cin.clear();
+		cin.ignore(LLONG_MAX, '\n');
+		cout << "Idx must be integer" << endl;
 	}
-	else if (0 <= i && i < total)
+	if (0 <= i && i < total)
 	{
-		std::cout << std::endl;
+		cout << endl;
 		for (int j = 0; j < 5; j++)
 		{
-			std::string data = contact[i].get_info(j);
-			std::cout << std::setw(15) << str_const[j] << " : " << data << std::endl;
+			string data = contact[i].get_info(j);
+			cout << setw(15) << str_const[j] << " : " << data << endl;
 		}
 	}
 	else
-		std::cout << "Nothing in idx " << i << std::endl;
-	std::cout << std::endl;
-	std::cin.ignore(LLONG_MAX, '\n');
+		cout << "Nothing in idx " << i << endl;
+	cout << endl;
+	cin.ignore(LLONG_MAX, '\n');
 }
 
 void	Phonebook::print(void)
 {
-	std::cout << std::setw(10) << "Index" << '|';
-	std::cout << std::setw(10) << "First Name" << '|';
-    std::cout << std::setw(10) << "Last Name" << '|';
-    std::cout << std::setw(10) << "Nickname" << std::endl;
+	cout << setw(10) << "Index" << '|';
+	cout << setw(10) << "First Name" << '|';
+    cout << setw(10) << "Last Name" << '|';
+    cout << setw(10) << "Nickname" << endl;
 	for (int i = 0; i < total; i++)
 		contact[i].print(i);
 }

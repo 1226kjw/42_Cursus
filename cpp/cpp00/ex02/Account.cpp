@@ -1,5 +1,12 @@
 #include "Account.hpp"
 
+using std::cin;
+using std::cout;
+using std::endl;
+using std::string;
+using std::setw;
+using std::setfill;
+
 int Account::_nbAccounts = 0;
 int Account::_totalAmount = 0;
 int Account::_totalNbDeposits = 0;
@@ -9,7 +16,7 @@ Account::Account( int initial_deposit )
 	:  _accountIndex(_nbAccounts), _amount(initial_deposit), _nbDeposits(0), _nbWithdrawals(0)
 {
 	_displayTimestamp();
-	std::cout << "index:" << _accountIndex << ";amount:" << _amount << ";created" << std::endl;
+	cout << "index:" << _accountIndex << ";amount:" << _amount << ";created" << endl;
 	_nbAccounts++;
 	_totalAmount += _amount;
 }
@@ -17,7 +24,7 @@ Account::Account( int initial_deposit )
 Account::~Account()
 {
 	_displayTimestamp();
-	std::cout << "index:" << _accountIndex << ";amount:" << _amount << ";closed" << std::endl;
+	cout << "index:" << _accountIndex << ";amount:" << _amount << ";closed" << endl;
 }
 
 int	Account::getNbAccounts(void)
@@ -43,46 +50,46 @@ int	Account::getNbWithdrawals(void)
 void	Account::displayAccountsInfos(void)
 {
 	_displayTimestamp();
-	std::cout << "accounts:" << _nbAccounts << ";total:" << _totalAmount;
-	std::cout << ";deposits:" << _totalNbDeposits << ";withdrawals:" << _totalNbWithdrawals;
-	std::cout << std::endl;
+	cout << "accounts:" << _nbAccounts << ";total:" << _totalAmount;
+	cout << ";deposits:" << _totalNbDeposits << ";withdrawals:" << _totalNbWithdrawals;
+	cout << endl;
 	return ;
 }
 
 void	Account::makeDeposit(int deposit)
 {
 	_displayTimestamp();
-	std::cout << "index:" << _accountIndex << ";p_amount:" << _amount;
-	std::cout << ";deposit:";
+	cout << "index:" << _accountIndex << ";p_amount:" << _amount;
+	cout << ";deposit:";
 	if (deposit <= 0)
 	{
-		std::cout << "refused" << std::endl;
+		cout << "refused" << endl;
 		return ;
 	}
 	_amount += deposit;
 	++_nbDeposits;
 	_totalAmount += deposit;
 	++_totalNbDeposits;
-	std::cout << deposit << ";amount:" << _amount << ";nb_deposits:" << _nbDeposits;
-	std::cout << std::endl;
+	cout << deposit << ";amount:" << _amount << ";nb_deposits:" << _nbDeposits;
+	cout << endl;
 }
 
 bool	Account::makeWithdrawal(int withdrawal)
 {
 	_displayTimestamp();
-	std::cout << "index:" << _accountIndex << ";p_amount:" << _amount;
-	std::cout << ";withdrawal:";
+	cout << "index:" << _accountIndex << ";p_amount:" << _amount;
+	cout << ";withdrawal:";
 	if (withdrawal <= 0 || _amount < withdrawal)
 	{
-		std::cout << "refused" << std::endl;
+		cout << "refused" << endl;
 		return false;
 	}
 	_amount -= withdrawal;
 	++_nbWithdrawals;
 	_totalAmount -= withdrawal;
 	++_totalNbWithdrawals;
-	std::cout << withdrawal << ";amount:" << _amount << ";nb_withdrawals:" << _nbWithdrawals;
-	std::cout << std::endl;
+	cout << withdrawal << ";amount:" << _amount << ";nb_withdrawals:" << _nbWithdrawals;
+	cout << endl;
 	return true;
 }
 
@@ -94,20 +101,20 @@ int		Account::checkAmount(void) const
 void	Account::displayStatus(void) const
 {
 	_displayTimestamp();
-	std::cout << "index:" << _accountIndex << ";amount:" << _amount;
-	std::cout << ";deposits:" << _nbDeposits << ";withdrawals:" << _nbWithdrawals;
-	std::cout << std::endl;
+	cout << "index:" << _accountIndex << ";amount:" << _amount;
+	cout << ";deposits:" << _nbDeposits << ";withdrawals:" << _nbWithdrawals;
+	cout << endl;
 }
 
 void	Account::_displayTimestamp(void)
 {
 	time_t		now = time(0);
 	struct tm	*parsed_time = localtime(&now);
-	std::cout << '[';
-	std::cout << std::setfill('0') << std::setw(4) << parsed_time->tm_year + 1900;
-	std::cout << std::setw(2) << parsed_time->tm_mon + 1;
-	std::cout << std::setw(2) << parsed_time->tm_mday << '_';
-	std::cout << std::setw(2) << parsed_time->tm_hour;
-	std::cout << std::setw(2) << parsed_time->tm_min;
-	std::cout << std::setw(2) << parsed_time->tm_sec << "] ";
+	cout << '[';
+	cout << setfill('0') << setw(4) << parsed_time->tm_year + 1900;
+	cout << setw(2) << parsed_time->tm_mon + 1;
+	cout << setw(2) << parsed_time->tm_mday << '_';
+	cout << setw(2) << parsed_time->tm_hour;
+	cout << setw(2) << parsed_time->tm_min;
+	cout << setw(2) << parsed_time->tm_sec << "] ";
 }
