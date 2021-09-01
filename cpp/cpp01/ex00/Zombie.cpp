@@ -5,7 +5,7 @@ using std::cout;
 using std::endl;
 using std::string;
 
-Zombie::Zombie() : name("") {}
+Zombie::Zombie() : name("default") {}
 Zombie::Zombie(string name) : name(name) {}
 Zombie::~Zombie()
 {
