@@ -26,7 +26,7 @@ Fixed& Fixed::operator= (Fixed &a)
 	return *this;
 }
 
-int Fixed::getRawBits(void)
+int Fixed::getRawBits(void) const
 {
 	cout << "getRawBits member function called" << endl;
 	return fixed;

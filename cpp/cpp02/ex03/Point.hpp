@@ -17,7 +17,7 @@ public:
 
 	Fixed getx(void) const;
 	Fixed gety(void) const;
-	//Point& operator=(const Point &a);
+	Point& operator=(const Point &a);
 	Point operator-(const Point& a) const;
 	float operator*(const Point& a) const;
 };

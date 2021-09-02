@@ -16,6 +16,7 @@ int main()
 	Point e(-0.5,0.45);
 	Point f(0.1,0.1);
 	Point g(1.5,0.45);
+	g = f;
 	cout << bsp(a,b,c,d) << endl;
 	cout << bsp(a,b,c,e) << endl;
 	cout << bsp(a,b,c,f) << endl;

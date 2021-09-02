@@ -15,12 +15,12 @@ Fixed Point::gety() const
 	return y;
 }
 
-/*Point& Point::operator=(const Point& a)
+Point& Point::operator=(const Point& a)
 {
-	x = a.getx();
-	y = a.gety();
+	*const_cast<Fixed*>(&x) = a.getx();
+	*const_cast<Fixed*>(&y) = a.gety();
 	return *this;
-}*/
+}
 
 Point Point::operator-(const Point& a) const
 {
