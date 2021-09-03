@@ -10,8 +10,8 @@ ClapTrap::ClapTrap(string name) : name(name), hp(10), ep(10), ad(0)
 }
 ClapTrap::ClapTrap(ClapTrap& c)
 {
-	cout << name << "(ClapTrap) copy constructor called" << endl << endl;
 	*this = c;
+	cout << name << "(ClapTrap) copy constructor called" << endl << endl;
 }
 ClapTrap::~ClapTrap()
 {
@@ -20,11 +20,11 @@ ClapTrap::~ClapTrap()
 
 ClapTrap& ClapTrap::operator=(const ClapTrap& c)
 {
-	cout << this->name << " assignation operator called" << endl << endl;
 	name = c.name;
 	hp = c.hp;
 	ep = c.ep;
 	ad = c.ad;
+	cout << this->name << " assignation operator called" << endl << endl;
 	return *this;
 }
 

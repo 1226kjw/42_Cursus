@@ -49,5 +49,5 @@ void ScavTrap::beRepaired(unsigned int amount)
 }
 void ScavTrap::guardGate(void)
 {
-	cout << name << "(ScavTrap) has enterred in Gate Keeper mode" << endl << endl;
+	cout << name << "(ScavTrap) has entered in Gate Keeper mode" << endl << endl;
 }

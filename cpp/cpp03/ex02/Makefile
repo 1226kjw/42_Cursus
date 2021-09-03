@@ -1,4 +1,4 @@
-NAME	= scavtrap
+NAME	= fragtrap
 
 CC		= clang++ 
 CFLAGS	= -Wall -Wextra -Werror -std=c++98
