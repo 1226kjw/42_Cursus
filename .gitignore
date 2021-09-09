@@ -1,3 +1,4 @@
+a.out
 *.d
 *.o
 *.lib
@@ -8,5 +9,4 @@
 *.exe
 *.out
 .vscode/
-.gitignore
 *.swp

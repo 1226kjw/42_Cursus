@@ -8,10 +8,6 @@ INCLUDE 		= includes/
 SRCS_DIR 		= ./srcs/
 
 RL				= -lreadline
-RL_DIR			= /Users/$(USER)/.brew/opt/readline/
-RL_LIB			= -L $(RL_DIR)lib
-RL_INC			= -I $(RL_DIR)include
-RL_M = -I /usr/local/opt/readline/include
 
 SRCS 			= $(addprefix $(SRCS_DIR),\
 				  builtin.c\
@@ -36,7 +32,7 @@ DEPS 			= $(SRCS:.c=.d)
 all : $(NAME)
 
 $(NAME) : $(OBJS) $(LIBFT)
-	$(CC) $(CFLAGS) $(OBJS) -o $@ -L. -lft $(RL) $(RL_LIB) -lncurses
+	$(CC) $(CFLAGS) $(OBJS) -o $@ -L. -lft $(RL) -lncurses
 
 $(LIBFT) :
 	make all -C ./libft
@@ -54,7 +50,7 @@ fclean : clean
 re : fclean all
 
 .c.o :
-	$(CC) $(CFLAGS) -MD -c -o $@ $< -I$(INCLUDE) $(RL_INC) $(RL_M)
+	$(CC) $(CFLAGS) -MD -c -o $@ $< -I$(INCLUDE)
 
 -include $(DEPS)
 
