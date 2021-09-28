@@ -16,8 +16,8 @@ int main()
 	const Animal* i = new Dog();
 	const Animal* j = new Cat();
 
-	cout << i->getType() << " " << endl;
-	cout << j->getType() << " " << endl;
+	cout << "i(Dog): " << i->getType() << endl;
+	cout << "j(Cat): " << j->getType() << endl;
 
 	i->makeSound();
 	j->makeSound();
@@ -29,8 +29,8 @@ int main()
 	const WrongAnimal *wrongmeta = new WrongAnimal();
 	const WrongAnimal *wrongi = new WrongCat();
 
-	cout << wrongmeta->getType() << " " << endl;
-	cout << wrongi->getType() << " " << endl;
+	cout << "wrongmeta(WrongAnimal): " << wrongmeta->getType() << endl;
+	cout << "wrongi(WrongCat): " << wrongi->getType() << endl;
 	
 	wrongmeta->makeSound();
 	wrongi->makeSound();

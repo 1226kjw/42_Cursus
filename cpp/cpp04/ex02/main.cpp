@@ -16,10 +16,15 @@ int main()
 	b->makeSound();
 	delete a;
 	delete b;
-
+	
 	Dog c;
 	Dog d;
 	d = c;
 	c.tellIdeas();
 	d.tellIdeas();
+
+	Cat e;
+	Cat f(e);
+	e.tellIdeas();
+	f.tellIdeas();
 }

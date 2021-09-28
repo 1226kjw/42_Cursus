@@ -23,8 +23,3 @@ string Animal::getType() const
 {
 	return type;
 }
-
-void Animal::makeSound() const
-{
-	cout << "Unknown Sound" << endl;
-}
