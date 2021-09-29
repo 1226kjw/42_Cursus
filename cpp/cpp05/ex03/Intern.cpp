@@ -12,7 +12,13 @@ Intern::Intern()
 	make[2] = makerob;
 	make[3] = makepre;
 }
-Intern::Intern(const Intern&) {}
+Intern::Intern(const Intern&)
+{
+	make[0] = makedef;
+	make[1] = makeshr;
+	make[2] = makerob;
+	make[3] = makepre;
+}
 Intern::~Intern() {}
 Intern& Intern::operator= (const Intern&) { return *this; }
 
