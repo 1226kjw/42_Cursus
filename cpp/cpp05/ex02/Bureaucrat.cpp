@@ -59,14 +59,14 @@ void Bureaucrat::executeForm(const Form& f) const
 		cout << name << " can not execute " << f.getName() << " because " << e.what() << endl;
 	}
 }
-/*const char* Bureaucrat::GradeTooHighException::what() const throw()
+const char* Bureaucrat::GradeTooHighException::what() const throw()
 {
 	return "Grade is too high";
 }
 const char* Bureaucrat::GradeTooLowException::what() const throw()
 {
 	return "Grade is too low";
-}*/
+}
 
 std::ostream& operator<< (std::ostream& out, const Bureaucrat& a)
 {

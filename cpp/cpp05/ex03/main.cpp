@@ -2,7 +2,7 @@
 #include "Intern.hpp"
 int main()
 {
-	Bureaucrat a("jinukim", 70);
+	Bureaucrat a("jinukim", 7);
 	Intern intern;
 	Form* s = intern.makeForm("shrubbery creation", "here");
 	Form* r = intern.makeForm("robotomy request", "dog");

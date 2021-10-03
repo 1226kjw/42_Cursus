@@ -35,3 +35,6 @@ void Form::execute(const Bureaucrat& executor) const
 		throw Form::GradeTooLowException();
 	this->_execute();
 }
+const char* Form::GradeTooHighException::what() const throw() { return "Grade too high"; }
+const char* Form::GradeTooLowException::what() const throw() { return "Grade too low"; }
+const char* Form::NotSignedException::what() const throw() { return "Form is not signed"; }

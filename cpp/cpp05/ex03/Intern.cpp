@@ -24,6 +24,11 @@ Intern& Intern::operator= (const Intern&) { return *this; }
 
 Form* Intern::makeForm(string type, string target)
 {
+	return type == "shrubbery creation" ? make[1](target) :
+			type == "robotomy request" ? make[2](target) :
+			type == "presidential pardon" ? make[3](target) :
+			make[0](type);
+	/*
 	string pool = "                   shrubbery creation robotomy request   presidential pardon";
-	return make[(pool.find(type) + 1) / 19](target);
+	return make[(pool.find(type) + 1) / 19](target);*/
 }
