@@ -1,6 +1,6 @@
 #include "Intern.hpp"
 
-Form* Intern::makedef(string s) { cout << "Unknown type: " << s << endl; return 0; }
+Form* Intern::makedef(string) { cout << "Unknown type" << endl; return 0; }
 Form* Intern::makeshr(string s) { cout << "Intern create ShrubberyCreationForm" << endl; return new ShrubberyCreationForm(s); }
 Form* Intern::makerob(string s) { cout << "Intern create RobotomyRequestForm" << endl; return new RobotomyRequestForm(s); }
 Form* Intern::makepre(string s) { cout << "Intern create PresidentialPardonForm" << endl; return new PresidentialPardonForm(s); }
@@ -24,11 +24,9 @@ Intern& Intern::operator= (const Intern&) { return *this; }
 
 Form* Intern::makeForm(string type, string target)
 {
-	return type == "shrubbery creation" ? make[1](target) :
-			type == "robotomy request" ? make[2](target) :
-			type == "presidential pardon" ? make[3](target) :
-			make[0](type);
-	/*
-	string pool = "                   shrubbery creation robotomy request   presidential pardon";
-	return make[(pool.find(type) + 1) / 19](target);*/
+	int pos = 0;
+	pos += (type=="shrubbery creation")*1;
+	pos += (type=="robotomy request")*2;
+	pos += (type=="presidential pardon")*3;
+	return make[pos](target);
 }
