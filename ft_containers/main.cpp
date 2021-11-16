@@ -26,7 +26,6 @@ int main()
 		cout << b[i] << ' ';
 	cout << endl;
 	cout << t-b.begin() << endl;
-
 	ft::vector<int> d(3,2);
 	ft::vector<int> e(4,1);
 	swap(d,e);
