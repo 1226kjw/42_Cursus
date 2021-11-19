@@ -19,7 +19,7 @@ namespace ft
 		typedef size_t size_type;
 		typedef ptrdiff_t difference_type;
 		typedef Alloc allocator_type;
-		typedef node<Val> node;
+		typedef struct node<Val> node;
 		typedef node* node_pointer;
 		typedef rb_tree_iterator<value_type> iterator;
 		typedef rb_tree_iterator<value_type> const_iterator;
