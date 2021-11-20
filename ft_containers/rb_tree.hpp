@@ -24,17 +24,23 @@ namespace ft
 		typedef rb_tree_iterator<value_type> iterator;
 		typedef rb_tree_iterator<value_type> const_iterator;
 
-		rb_tree(const Comp& comp = Comp(), const allocator_type& alloc = allocator_type()): _comp(comp), _alloc(alloc), _root(0), _size(0)
+		rb_tree(const Comp& comp = Comp(), const allocator_type& alloc = allocator_type()): _comp(comp), _alloc(alloc), _size(0)
 		{
 			_nil = new node;
+			_nil->value = 0;
 			_nil->parent = _nil->left = _nil->right = _nil;
 			_nil->color = black;
+			_root = _nil;
 		}
-		rb_tree(const rb_tree& x): _comp(x._comp), _alloc(x._alloc), _root(0), _size(x._size)
+		rb_tree(const rb_tree& x): _comp(x._comp), _alloc(x._alloc), _size(x._size)
 		{
 			_nil = new node;
+			_nil->value = 0;
 			_nil->parent = _nil->left = _nil->right = _nil;
 			_nil->color = black;
+			_root = _nil;
+			for (rb_tree::iterator itr = x.begin(); itr != x.end(); ++itr)
+				insert(make_pair(itr->first, itr->second));
 		}
 		~rb_tree()
 		{
@@ -50,6 +56,8 @@ namespace ft
 		}
 		void left_rotate(node_pointer x)
 		{
+			if (x == _nil && x->right == _nil)
+				return;
 			node_pointer y = x->right;
 			x->right = y->left;
 			if (y->left != _nil)
@@ -66,6 +74,8 @@ namespace ft
 		}
 		void right_rotate(node_pointer x)
 		{
+			if (x == _nil && x->left == _nil)
+				return;
 			node_pointer y = x->left;
 			x->left = y->right;
 			if (y->right != _nil)
@@ -80,34 +90,36 @@ namespace ft
 			y->right = x;
 			x->parent = y;
 		}
-		void insert(value_type& x)
+		pair<iterator, bool> insert(const value_type x, bool find = false)
 		{
 			node_pointer newnode = new node;
-			newnode->value = x;
-			insert(newnode);
+			newnode->value = _alloc.allocate(1);
+			_alloc.construct(newnode->value, value_type(x));
+			return insert(newnode, find);
 		}
-		void insert(node_pointer z)
+		pair<iterator, bool> insert(node_pointer z, bool find = false)
 		{
 			node_pointer y = _nil;
 			node_pointer x = _root;
 			while (x != _nil)
 			{
 				y = x;
-				if (_comp(KeyOfValue(z->value), KeyOfValue(x->value)))
+				if (KeyOfValue()(*z->value) == KeyOfValue()(*x->value))
+				{
+					if (!find)
+						x->value->second = z->value->second;
+					delete z;
+					return make_pair(iterator(_nil, x), false);
+				}
+				else if (_comp(KeyOfValue()(*z->value), KeyOfValue()(*x->value)))
 					x = x->left;
 				else
 					x = x->right;
-				if (KeyOfValue(z->value) == KeyOfValue(x->value))
-				{
-					x->value.second = z->value.second;
-					delete z;
-					return ;
-				}
 			}
 			z->parent = y;
 			if (y == _nil)
 				_root = z;
-			else if (_comp(KeyOfValue(z->value), KeyOfValue(y->value)))
+			else if (_comp(KeyOfValue()(*z->value), KeyOfValue()(*y->value)))
 				y->left = z;
 			else
 				y->right = z;
@@ -115,6 +127,7 @@ namespace ft
 			z->color = red;
 			insert_fixup(z);
 			++_size;
+			return make_pair(iterator(_nil, x), true);
 		}
 		void insert_fixup(node_pointer z)
 		{
@@ -158,6 +171,7 @@ namespace ft
 					z->parent->parent->color = red;
 					left_rotate(z->parent->parent);
 				}
+				_nil->color = black;
 			}
 			_root->color = black;
 		}
@@ -275,14 +289,26 @@ namespace ft
 		{
 			return _size;
 		}
-	private:
+		iterator begin() const
+		{
+			node_pointer cur = _root;
+			while (cur->left != _nil)
+				cur = cur->left;
+			return iterator(_nil, cur);
+		}
+		iterator end() const
+		{
+			return iterator(_nil, _nil);
+		}
 
+	private:
 		void _clear(node_pointer cur)
 		{
 			if (cur == _nil)
-				return;
+				return;	
 			_clear(cur->left);
 			_clear(cur->right);
+			_alloc.deallocate(cur->value, 1);
 			delete cur;
 		}
 		Comp _comp;

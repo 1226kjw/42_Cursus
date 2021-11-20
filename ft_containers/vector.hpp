@@ -80,7 +80,7 @@ namespace ft
 			for (size_t i = 0; i < x.size(); ++i)
 				*_finish++ = x[i];
 		}
-
+		
 		//iterators
 		iterator				begin() { return _start; }
 		iterator				end() { return _finish; }

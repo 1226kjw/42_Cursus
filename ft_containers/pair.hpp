@@ -14,7 +14,7 @@ namespace ft
 
 		first_type first;
 		second_type second;
-		pair() {}
+		pair(): first(), second() {}
 		template <typename U1, typename U2>
 		pair(const pair<U1, U2>& pr): first(pr.first), second(pr.second) {}
 		pair(const first_type& x, const second_type& y): first(x), second(y) {}
@@ -22,6 +22,7 @@ namespace ft
 		{
 			first = pr.first;
 			second = pr.second;
+			return *this;
 		}
 	};
 	template <typename T1, typename T2>
@@ -43,12 +44,14 @@ namespace ft
 	template <typename Pair>
 	struct Select1st: public std::unary_function<Pair, typename Pair::first_type>
 	{
+	public:
 		typename Pair::first_type operator()(Pair& x) const { return x.first; }
 		const typename Pair::first_type operator()(const Pair& x) const { return x.first; }
 	};
 	template <typename Pair>
 	struct Select2nd: public std::unary_function<Pair, typename Pair::second_type>
 	{
+	public:
 		typename Pair::second_type operator()(Pair& x) const { return x.second; }
 		const typename Pair::second_type operator()(const Pair& x) const { return x.second; }
 	};

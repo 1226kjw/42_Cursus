@@ -9,7 +9,18 @@ using std::endl;
 
 int main()
 {
-	ft::map<int, int> a;
+	ft::map<int, int> b;
+	for (int i = 0; i < 40; i++)
+	{
+		b.insert(ft::make_pair(i, i*i));
+	}
+	cout << b.size() << endl;
+	cout << (b.begin()==b.end()) << endl;
+	for (ft::map<int, int>::iterator itr = b.begin(); itr != b.end(); ++itr)
+		cout << itr->first << ' ' << itr->second << endl;
+
+	//b.insert(ft::make_pair(2, 3));
+	//cout << b.size() << endl;
 	//ft::vector<int> b(a.begin(), a.end());
 
 	// for (size_t i = 0; i < b.size(); ++i)
