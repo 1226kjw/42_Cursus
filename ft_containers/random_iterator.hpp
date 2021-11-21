@@ -2,6 +2,7 @@
 # define RANDOM_ITERATOR_HPP
 
 # include "iterator.hpp"
+# include "random_reverse_iterator.hpp"
 
 namespace ft
 {
@@ -32,6 +33,10 @@ namespace ft
 		// 	(is_same<Iter, typename Cont::pointer>::value), Cont>::type>& x)
 		// : _cur(x) {}
 		~random_iterator() {}
+		random_iterator& operator=(const random_iterator& x) { _cur = x._cur; return *this; }
+		operator random_iterator<const value_type*, Cont>() const { return random_iterator<const value_type*, Cont>(_cur); }
+		operator random_reverse_iterator<value_type*, Cont>() { return random_reverse_iterator<value_type*, Cont>(_cur); }
+		//operator pointer() { return _cur; }
 		const Iter& base() const { return _cur; }
 
 		reference			operator*() const { return *_cur; }

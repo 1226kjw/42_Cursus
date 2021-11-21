@@ -48,12 +48,12 @@ namespace ft
 		typename Pair::first_type operator()(Pair& x) const { return x.first; }
 		const typename Pair::first_type operator()(const Pair& x) const { return x.first; }
 	};
-	template <typename Pair>
-	struct Select2nd: public std::unary_function<Pair, typename Pair::second_type>
+	template <typename T>
+	struct Itself: public std::unary_function<T, T>
 	{
 	public:
-		typename Pair::second_type operator()(Pair& x) const { return x.second; }
-		const typename Pair::second_type operator()(const Pair& x) const { return x.second; }
+		T operator()(T& x) const { return x; }
+		const T operator()(const T& x) const { return x; }
 	};
 };
 

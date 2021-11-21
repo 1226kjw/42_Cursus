@@ -2,7 +2,9 @@
 # define RB_TREE_HPP
 
 # include <memory>
+# include "vector.hpp"
 # include "rb_tree_iterator.hpp"
+# include "rb_tree_reverse_iterator.hpp"
 
 namespace ft
 {
@@ -22,7 +24,9 @@ namespace ft
 		typedef struct node<Val> node;
 		typedef node* node_pointer;
 		typedef rb_tree_iterator<value_type> iterator;
-		typedef rb_tree_iterator<value_type> const_iterator;
+		typedef rb_tree_const_iterator<value_type> const_iterator;
+		typedef rb_tree_reverse_iterator<value_type> reverse_iterator;
+		typedef rb_tree_const_reverse_iterator<value_type> const_reverse_iterator;
 
 		rb_tree(const Comp& comp = Comp(), const allocator_type& alloc = allocator_type()): _comp(comp), _alloc(alloc), _size(0)
 		{
@@ -39,13 +43,20 @@ namespace ft
 			_nil->parent = _nil->left = _nil->right = _nil;
 			_nil->color = black;
 			_root = _nil;
-			for (rb_tree::iterator itr = x.begin(); itr != x.end(); ++itr)
-				insert(make_pair(itr->first, itr->second));
+			for (iterator itr = x.begin(); itr != x.end(); ++itr)
+				insert(*itr);
 		}
 		~rb_tree()
 		{
-			_clear(_root);
+			clear();
 			delete _nil;
+		}
+		rb_tree& operator=(const rb_tree& x)
+		{
+			clear();
+			for (iterator itr = x.begin(); itr != x.end(); ++itr)
+				insert(*itr);
+			return *this;
 		}
 
 		node_pointer minimum(node_pointer x)
@@ -90,7 +101,7 @@ namespace ft
 			y->right = x;
 			x->parent = y;
 		}
-		pair<iterator, bool> insert(const value_type x, bool find = false)
+		pair<iterator, bool> insert(const value_type& x, bool find = false)
 		{
 			node_pointer newnode = new node;
 			newnode->value = _alloc.allocate(1);
@@ -107,9 +118,14 @@ namespace ft
 				if (KeyOfValue()(*z->value) == KeyOfValue()(*x->value))
 				{
 					if (!find)
-						x->value->second = z->value->second;
+					{
+						_alloc.destroy(x->value);
+						_alloc.construct(x->value, value_type(*z->value));
+					}
+					_alloc.destroy(z->value);
+					_alloc.deallocate(z->value, 1);
 					delete z;
-					return make_pair(iterator(_nil, x), false);
+					return ft::make_pair(iterator(_nil, _root, x), false);
 				}
 				else if (_comp(KeyOfValue()(*z->value), KeyOfValue()(*x->value)))
 					x = x->left;
@@ -127,7 +143,7 @@ namespace ft
 			z->color = red;
 			insert_fixup(z);
 			++_size;
-			return make_pair(iterator(_nil, x), true);
+			return ft::make_pair(iterator(_nil, _root, z), true);
 		}
 		void insert_fixup(node_pointer z)
 		{
@@ -203,7 +219,7 @@ namespace ft
 			{
 				y = minimum(z->right);
 				org = y->color;
-				x = y->Right;
+				x = y->right;
 				if (y->parent == z)
 					x->parent = y;
 				else
@@ -242,7 +258,7 @@ namespace ft
 						w->color = red;
 						x = x->parent;
 					}
-					else if (w->right->Color == black)
+					else if (w->right->color == black)
 					{
 						w->left->color = black;
 						w->color = red;
@@ -270,7 +286,7 @@ namespace ft
 						w->color = red;
 						x = x->parent;
 					}
-					else if (w->left->Color == black)
+					else if (w->left->color == black)
 					{
 						w->right->color = black;
 						w->color = red;
@@ -285,22 +301,215 @@ namespace ft
 				}
 			}
 		}
-		size_type size() const
-		{
-			return _size;
-		}
-		iterator begin() const
+
+		iterator begin()
 		{
 			node_pointer cur = _root;
 			while (cur->left != _nil)
 				cur = cur->left;
-			return iterator(_nil, cur);
+			return iterator(_nil, _root, cur);
 		}
-		iterator end() const
+		const_iterator begin() const
 		{
-			return iterator(_nil, _nil);
+			node_pointer cur = _root;
+			while (cur->left != _nil)
+				cur = cur->left;
+			return const_iterator(_nil, _root, cur);
+		}
+		iterator end()
+		{
+			return iterator(_nil, _root, _nil);
+		}
+		const_iterator end() const
+		{
+			return const_iterator(_nil, _root, _nil);
+		}
+		reverse_iterator rbegin()
+		{
+			node_pointer cur = _root;
+			while (cur->right != _nil)
+				cur = cur->right;
+			return reverse_iterator(_nil, _root, cur);
+		}
+		const_reverse_iterator rbegin() const
+		{
+			node_pointer cur = _root;
+			while (cur->right != _nil)
+				cur = cur->right;
+			return const_reverse_iterator(_nil, _root, cur);
+		}
+		reverse_iterator rend()
+		{
+			return reverse_iterator(_nil, _root, _nil);
+		}
+		const_reverse_iterator rend() const
+		{
+			return const_reverse_iterator(_nil, _root, _nil);
 		}
 
+		bool empty() const
+		{
+			return _size == 0;
+		}
+		size_type size() const
+		{
+			return _size;
+		}
+		size_type max_size() const
+		{
+			ptrdiff_t m = 1;
+			m <<= sizeof(ptrdiff_t) * 8 - 1;
+			m = ~m;
+			size_type diffmax = m;
+			size_type allocmax = _alloc.max_size();
+			return std::min(diffmax, allocmax);
+		}
+
+		void erase(iterator position)
+		{
+			remove(position.cur());
+		}
+		void erase(const_iterator position)
+		{
+			remove(position.cur());
+		}
+		size_type erase(const key_type& k)
+		{
+			iterator itr = find(k);
+			if (itr.cur() != _nil)
+				erase(itr);
+			return itr.cur() != _nil;
+		}
+		void erase(iterator first, iterator last)
+		{
+			vector<node_pointer> l;
+			for (; first != last; ++first)
+				l.push_back(first.cur());
+			for (typename vector<node_pointer>::iterator itr = l.begin(); itr != l.end(); ++itr)
+				remove(*itr);
+		}
+		void swap(rb_tree& x)
+		{
+			std::swap(_comp, x._comp);
+			std::swap(_alloc, x._alloc);
+			std::swap(_root, x._root);
+			std::swap(_nil, x._nil);
+			std::swap(_size, x._size);
+		}
+		void clear()
+		{
+			_clear(_root);
+			_size = 0;
+			_root = _nil;
+		}
+
+		Comp key_compare() const
+		{
+			return _comp;
+		}
+
+		iterator find(const key_type& k)
+		{
+			node_pointer x = _root;
+			while (x != _nil)
+			{
+				if (KeyOfValue()(*x->value) == k)
+					break;
+				else if (!_comp(KeyOfValue()(*x->value), k))
+					x = x->left;
+				else
+					x = x->right;;
+			}
+			return iterator(_nil, _root, x);
+		}
+		const_iterator find(const key_type& k) const
+		{
+			node_pointer x = _root;
+			while (x != _nil)
+			{
+
+				if (KeyOfValue()(*x->value) == k)
+					break;
+				else if (!_comp(KeyOfValue()(*x->value), k))
+					x = x->left;
+				else
+					x = x->right;;
+			}
+			return const_iterator(_nil, _root, x);
+		}
+		size_type count(const key_type& k) const
+		{
+			const_iterator itr = find(k);
+			return itr.cur() != _nil;
+		}
+		iterator lower_bound(const key_type& k)
+		{
+			node_pointer x = _root, y = _nil;
+			while (x != _nil)
+			{
+				if (!(_comp(KeyOfValue()(*x->value), k)))
+				{
+					y = x;
+					x = x->left;
+				}
+				else
+					x = x->right;
+			}
+			return iterator(_nil, _root, y);
+		}
+		const_iterator lower_bound(const key_type& k) const
+		{
+			node_pointer x = _root, y = _nil;
+			while (x != _nil)
+			{
+				if (!(_comp(KeyOfValue()(*x->value), k)))
+				{
+					y = x;
+					x = x->left;
+				}
+				else
+					x = x->right;
+			}
+			return const_iterator(_nil, _root, y);
+		}
+		iterator upper_bound(const key_type& k)
+		{
+			node_pointer x = _root, y = _nil;
+			while (x != _nil)
+			{
+				if (_comp(KeyOfValue()(*x->value), k))
+				{
+					y = x;
+					x = x->left;
+				}
+				else
+					x = x->right;
+			}
+			return iterator(_nil, _root, y);
+		}
+		const_iterator upper_bound(const key_type& k) const
+		{
+			node_pointer x = _root, y = _nil;
+			while (x != _nil)
+			{
+				if (_comp(KeyOfValue()(*x->value), k))
+				{
+					y = x;
+					x = x->left;
+				}
+				else
+					x = x->right;
+			}
+			return const_iterator(_nil, _root, y);
+		}
+		pair<iterator, iterator> equal_range(const key_type& k)
+		{
+			return ft::make_pair(lower_bound(k), upper_bound(k));
+		}
+		pair<const_iterator, const_iterator> equal_range(const key_type& k) const
+		{
+			return ft::make_pair(lower_bound(k), upper_bound(k));
+		}
 	private:
 		void _clear(node_pointer cur)
 		{
@@ -308,6 +517,7 @@ namespace ft
 				return;	
 			_clear(cur->left);
 			_clear(cur->right);
+			_alloc.destroy(cur->value);
 			_alloc.deallocate(cur->value, 1);
 			delete cur;
 		}

@@ -10,3 +10,4 @@ a.out
 *.out
 .vscode/
 *.swp
+accuracy_tester/

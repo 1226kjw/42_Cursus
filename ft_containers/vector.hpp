@@ -2,6 +2,7 @@
 # define VECTOR_HPP
 
 # include <memory>
+# include <stdexcept>
 # include "random_iterator.hpp"
 # include "random_reverse_iterator.hpp"
 
@@ -37,35 +38,10 @@ namespace ft
 			while (n--)
 				*_finish++ = val;
 		}
-		// template <typename Iter>
-		// vector(typename ft::enable_if<ft::is_same<typename Iter::iterator_category, random_access_iterator_tag>::value, Iter>::type first,
-		// 		Iter last, const allocator_type& alloc = allocator_type())
-		// {
-		// 	size_type n = last - first;
-		// 	_alloc = alloc;
-		// 	_start = _finish = _alloc.allocate(n);
-		// 	_end_storage = _start + n;
-		// 	while (n--)
-		// 		*_finish++ = *first++;
-		// }
-		// template <typename Iter>
-		// vector(typename ft::enable_if<!ft::is_same<typename Iter::iterator_category, random_access_iterator_tag>::value, Iter>::type first,
-		// 		Iter last, const allocator_type& alloc = allocator_type())
-		// {
-		// 	size_type n = 0;
-		// 	for (Iter cur = first; cur != last; ++cur)
-		// 		++n;
-		// 	_alloc = alloc;
-		// 	_start = _finish = _alloc.allocate(n);
-		// 	_end_storage = _start + n;
-		// 	while (n--)
-		// 		*_finish++ = *first++;
-		// }
 		template <typename Iter>
 		vector(typename ft::enable_if<!ft::is_same<typename Iter::iterator_category, void>::value, Iter>::type first,
 				Iter last, const allocator_type& alloc = allocator_type())
 		{
-			Iter cur = first;
 			size_type n = count_num(first, last);
 			_alloc = alloc;
 			_start = _finish = _alloc.allocate(n);
@@ -80,16 +56,16 @@ namespace ft
 			for (size_t i = 0; i < x.size(); ++i)
 				*_finish++ = x[i];
 		}
-		
+
 		//iterators
-		iterator				begin() { return _start; }
-		iterator				end() { return _finish; }
-		const_iterator			begin() const { return _start; }
-		const_iterator			end() const { return _finish; }
-		reverse_iterator		rbegin() { return _finish - 1; }
-		reverse_iterator		rend() { return _start - 1; }
-		const_reverse_iterator	rbegin() const { return _finish - 1; }
-		const_reverse_iterator	rend() const { return _start - 1; }
+		iterator				begin() { return iterator(_start); }
+		iterator				end() { return iterator(_finish); }
+		const_iterator			begin() const { return const_iterator(_start); }
+		const_iterator			end() const { return const_iterator(_finish); }
+		reverse_iterator		rbegin() { return reverse_iterator(_finish - 1); }
+		reverse_iterator		rend() { return reverse_iterator(_start - 1); }
+		const_reverse_iterator	rbegin() const { return const_reverse_iterator(_finish - 1); }
+		const_reverse_iterator	rend() const { return const_reverse_iterator(_start - 1); }
 		
 		//capacity
 		size_type size() const
@@ -185,7 +161,7 @@ namespace ft
 
 		//modifier
 		template <typename Iter>
-		void assign(typename ft::enable_if<!ft::is_same<typename Iter::iterator_category, random_access_iterator_tag>::value, Iter>::type first, Iter last)
+		void assign(typename ft::enable_if<!ft::is_same<typename Iter::iterator_category, void>::value, Iter>::type first, Iter last)
 		{
 			size_type n = count_num(first, last);
 			reserve(n);
@@ -238,7 +214,7 @@ namespace ft
 		}
 		template <typename Iter>
 		iterator insert(iterator position, Iter first,
-				typename ft::enable_if<ft::is_same<typename Iter::iterator_category, random_access_iterator_tag>::value, Iter>::type last)
+				typename ft::enable_if<!ft::is_same<typename Iter::iterator_category, void>::value, Iter>::type last)
 		{
 			size_type n = count_num(first, last);
 			size_type tmp = position - begin();

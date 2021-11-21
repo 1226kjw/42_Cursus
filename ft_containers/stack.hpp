@@ -18,39 +18,43 @@ namespace ft
 		template <typename TT, typename CC>
 		friend bool operator<(const stack<TT, CC>& l, const stack<TT, CC>& r);
 
-		stack(const container_type& ctnr = container_type()) : _c(ctnr) {}
+		stack(const container_type& ctnr = container_type()) : c(ctnr) {}
 		bool empty() const
 		{
-			return _c.empty();
+			return c.empty();
 		}
 		size_type size() const
 		{
-			return _c.size();
+			return c.size();
 		}
 		value_type& top()
 		{
-			return _c.back();
+			return c.back();
 		}
 		const value_type& top() const
 		{
-			return _c.back();
+			return c.back();
 		}
 		void push(const value_type& val)
 		{
-			_c.push_back(val);
+			c.push_back(val);
 		}
 		void pop()
 		{
-			_c.pop_back();
+			c.pop_back();
 		}
-	private:
-		container_type _c;
+		void swap(stack& x)
+		{
+			c.swap(x);
+		}
+	protected:
+		container_type c;
 	};
 
 	template <typename T, typename Cont>
 	bool operator==(const stack<T, Cont>& l, const stack<T, Cont>& r)
 	{
-		return l._c == r._c;
+		return l.c == r.c;
 	}
 	template <typename T, typename Cont>
 	bool operator!=(const stack<T, Cont>& l, const stack<T, Cont>& r)
@@ -60,7 +64,7 @@ namespace ft
 	template <typename T, typename Cont>
 	bool operator<(const stack<T, Cont>& l, const stack<T, Cont>& r)
 	{
-		return l._c < r._c;
+		return l.c < r.c;
 	}
 	template <typename T, typename Cont>
 	bool operator>(const stack<T, Cont>& l, const stack<T, Cont>& r)
@@ -76,6 +80,11 @@ namespace ft
 	bool operator>=(const stack<T, Cont>& l, const stack<T, Cont>& r)
 	{
 		return !(l < r);
+	}
+	template <typename T, typename Cont>
+	void swap(stack<T, Cont>& x, stack<T, Cont>& y)
+	{
+		x.swap(y);
 	}
 };
 

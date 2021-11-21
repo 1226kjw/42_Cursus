@@ -1,5 +1,5 @@
-#ifndef MAP_HPP
-# define MAP_HPP
+#ifndef SET_HPP
+# define SET_HPP
 
 # include <memory>
 # include "pair.hpp"
@@ -8,28 +8,20 @@
 
 namespace ft
 {
-	template <typename Key, typename T, typename Compare = std::less<Key>, typename Alloc = std::allocator<pair<const Key, T> > >
-	class map
+	template <typename T, class Compare = std::less<T>, typename Alloc = std::allocator<T> >
+	class set
 	{
 	public:
-		typedef Key key_type;
-		typedef T mapped_type;
-		typedef pair<const key_type, mapped_type> value_type;
+		typedef T key_type;
+		typedef T value_type;
 		typedef Compare key_compare;
-		class value_compare : public std::binary_function<value_type, value_type, bool>
-		{
-		public:
-			value_compare(Compare c): comp(c){}
-			bool operator()(const value_type& x, const value_type& y) const { return comp(x.first, y.first); }
-		private:
-			Compare comp;
-		};
+		typedef Compare value_compare;
 		typedef Alloc allocator_type;
 		typedef typename allocator_type::reference reference;
 		typedef typename allocator_type::const_reference const_reference;
 		typedef typename allocator_type::pointer pointer;
 		typedef typename allocator_type::const_pointer const_pointer;
-		typedef rb_tree<key_type, value_type, Select1st<value_type>, key_compare, allocator_type> tree;
+		typedef rb_tree<key_type, value_type, Itself<value_type>, key_compare, allocator_type> tree;
 		typedef rb_tree_iterator<value_type> iterator;
 		typedef rb_tree_const_iterator<value_type> const_iterator;
 		typedef rb_tree_reverse_iterator<value_type> reverse_iterator;
@@ -37,28 +29,25 @@ namespace ft
 		typedef typename iterator_traits<iterator>::difference_type difference_type;
 		typedef typename tree::size_type size_type;
 
-		map(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
+		set(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
 		: _container(tree()), _comp(comp), _alloc(alloc) {}
 		template <typename Iter>
-		map(typename ft::enable_if<!ft::is_same<typename Iter::iterator_category, void>::value, Iter>::type first,
+		set(typename ft::enable_if<!ft::is_same<typename Iter::iterator_category, void>::value, Iter>::type first,
 				Iter last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())
 		: _container(tree()), _comp(comp), _alloc(alloc)
 		{
 			for (Iter cur = first; cur != last; ++cur)
 				insert(*cur);
 		}
-		map(const map& x): _container(x._container), _comp(x._comp), _alloc(x._alloc) {}
-		map& operator=(const map& x)
+		set(const set& x): _container(x._container), _comp(x._comp), _alloc(x._alloc) {}
+		set& operator=(const set& x)
 		{
 			_container = x._container;
 			_comp = x._comp;
 			_alloc = x._alloc;
 			return *this;
 		}
-		~map()
-		{
-			_container.clear();
-		}
+		~set() {}
 
 		//iterators
 		iterator begin()
@@ -99,12 +88,6 @@ namespace ft
 		size_type size() const { return _container.size(); }
 		size_type max_size() const { return _container.max_size(); }
 
-		//element access
-		mapped_type& operator[](const key_type& k)
-		{
-			return ((_container.insert(ft::make_pair(k, mapped_type()), true)).first)->second;
-		}
-
 		//modifiers
 		pair<iterator, bool> insert(const value_type& val)
 		{
@@ -129,7 +112,7 @@ namespace ft
 		{
 			_container.erase(position);
 		}
-		size_type erase(const key_type& k)
+		size_type erase(const value_type& k)
 		{
 			return _container.erase(k);
 		}
@@ -137,7 +120,7 @@ namespace ft
 		{
 			_container.erase(first, last);
 		}
-		void swap(map& x)
+		void swap(set& x)
 		{
 			_container.swap(x._container);
 			std::swap(_comp, x._comp);
@@ -206,9 +189,9 @@ namespace ft
 		key_compare _comp;
 		allocator_type _alloc;
 	};
-	template <typename Key, typename T, typename Compare, typename Alloc>
-	void swap(map<Key, T, Compare, Alloc>& x, map<Key, T, Compare, Alloc>& y)
-	{
+	template <typename T, typename Comp, typename Alloc>
+	void swap(set<T,Comp, Alloc>& x, set<T, Comp, Alloc>& y)
+	{;
 		x.swap(y);
 	}
 };

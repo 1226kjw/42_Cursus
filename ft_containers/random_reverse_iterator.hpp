@@ -6,6 +6,9 @@
 namespace ft
 {
 	template <typename Iter, typename Cont>
+	class random_iterator;
+
+	template <typename Iter, typename Cont>
 	class random_reverse_iterator
 	: public iterator<
 		typename iterator_traits<Iter>::iterator_category,
@@ -32,7 +35,9 @@ namespace ft
 		// 	(is_same<Iter, typename Cont::pointer>::value), Cont>::type>& x)
 		// : _cur(x) {}
 		~random_reverse_iterator() {}
-		const Iter& base() const { return _cur; }
+		random_reverse_iterator& operator=(const random_reverse_iterator& x) { _cur = x._cur; return *this; }
+		operator random_reverse_iterator<const value_type*, Cont>() const { return (random_reverse_iterator<const value_type*, Cont>(_cur)); }
+		random_iterator<Iter, Cont> base() const { return _cur; }
 
 		reference					operator*() const { return *_cur; }
 		pointer						operator->() const { return _cur; }
