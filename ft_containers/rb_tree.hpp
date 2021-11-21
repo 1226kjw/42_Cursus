@@ -43,7 +43,7 @@ namespace ft
 			_nil->parent = _nil->left = _nil->right = _nil;
 			_nil->color = black;
 			_root = _nil;
-			for (iterator itr = x.begin(); itr != x.end(); ++itr)
+			for (const_iterator itr = x.begin(); itr != x.end(); ++itr)
 				insert(*itr);
 		}
 		~rb_tree()
@@ -54,7 +54,7 @@ namespace ft
 		rb_tree& operator=(const rb_tree& x)
 		{
 			clear();
-			for (iterator itr = x.begin(); itr != x.end(); ++itr)
+			for (const_iterator itr = x.begin(); itr != x.end(); ++itr)
 				insert(*itr);
 			return *this;
 		}
@@ -381,6 +381,14 @@ namespace ft
 			return itr.cur() != _nil;
 		}
 		void erase(iterator first, iterator last)
+		{
+			vector<node_pointer> l;
+			for (; first != last; ++first)
+				l.push_back(first.cur());
+			for (typename vector<node_pointer>::iterator itr = l.begin(); itr != l.end(); ++itr)
+				remove(*itr);
+		}
+		void erase(const_iterator first, const_iterator last)
 		{
 			vector<node_pointer> l;
 			for (; first != last; ++first)

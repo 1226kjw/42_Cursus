@@ -24,7 +24,7 @@ namespace ft
 		rb_tree_reverse_iterator(): _cur(0), _nil(0) {}
 		rb_tree_reverse_iterator(const node_pointer nil, const node_pointer root, const node_pointer x): _cur(x), _root(root), _nil(nil) {}
 		rb_tree_reverse_iterator(const iterator& x): _cur(x._cur), _root(x._root), _nil(x._nil) {}
-		rb_tree_reverse_iterator(const rb_tree_iterator<T>& x): _cur(x.cur()), _root(x.root()), _nil(x.nil()) {}
+		rb_tree_reverse_iterator(const rb_tree_const_iterator<T>& x): _cur(x.cur()), _root(x.root()), _nil(x.nil()) {}
 		~rb_tree_reverse_iterator() {}
 		rb_tree_iterator<value_type> base() const
 		{
@@ -159,9 +159,13 @@ namespace ft
 		rb_tree_const_reverse_iterator(const node_pointer nil, const node_pointer root, const node_pointer x): _cur(x), _root(root), _nil(nil) {}
 		rb_tree_const_reverse_iterator(const const_iterator& x): _cur(x._cur), _root(x._root), _nil(x._nil) {}
 		rb_tree_const_reverse_iterator(const iterator& x): _cur(x.cur()), _root(x.root()), _nil(x.nil()) {}
-		rb_tree_const_reverse_iterator(const rb_tree_iterator<T>& x): _cur(x.cur()), _root(x.root()), _nil(x.nil()) {}
+		//rb_tree_const_reverse_iterator(const rb_tree_const_iterator<T>& x): _cur(x.cur()), _root(x.root()), _nil(x.nil()) {}
 		~rb_tree_const_reverse_iterator() {}
-		operator iterator() const { return iterator(_nil, _root, _cur); }
+		//operator iterator() const { return iterator(_nil, _root, _cur); }
+		rb_tree_const_iterator<value_type> base() const
+		{
+			return rb_tree_const_iterator<value_type>(_nil, _root, _cur);
+		}
 		node_pointer rb_tree_iterator_increment(node_pointer x)
 		{
 			if (x->right != _nil)
@@ -239,22 +243,22 @@ namespace ft
 			_cur = rb_tree_iterator_increment(_cur);
 			return tmp;
 		}
-		bool operator==(const const_iterator& x) const
-		{
-			return _cur == x._cur;
-		}
-		bool operator!=(const const_iterator& x) const
-		{
-			return _cur != x._cur;
-		}
-		// friend bool operator==(const const_iterator& l, const const_iterator& r)
+		// bool operator==(const const_iterator& x) const
 		// {
-		// 	return l._cur == r._cur;
+		// 	return _cur == x._cur;
 		// }
-		// friend bool operator!=(const const_iterator& l, const const_iterator& r)
+		// bool operator!=(const const_iterator& x) const
 		// {
-		// 	return l._cur != r._cur;
+		// 	return _cur != x._cur;
 		// }
+		friend bool operator==(const const_iterator& l, const const_iterator& r)
+		{
+			return l._cur == r._cur;
+		}
+		friend bool operator!=(const const_iterator& l, const const_iterator& r)
+		{
+			return l._cur != r._cur;
+		}
 	private:
 		node_pointer _cur;
 		node_pointer _root;

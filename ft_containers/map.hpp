@@ -206,6 +206,47 @@ namespace ft
 		key_compare _comp;
 		allocator_type _alloc;
 	};
+
+	template <typename Key, typename T, typename Comp, typename Alloc>
+	bool operator==(const map<Key, T, Comp, Alloc>& l, const map<Key, T, Comp, Alloc>& r)
+	{
+		if (l.size() != r.size())
+			return false;
+		typename map<Key, T, Comp, Alloc>::const_iterator i = l.begin(), j = r.begin();
+		for (; i != l.end() && j != r.end(); ++i, ++j)
+			if (*i != *j)
+				break;
+		return *i == *j;
+	}
+	template <typename Key, typename T, typename Comp, typename Alloc>
+	bool operator!=(const map<Key, T, Comp, Alloc>& l, const map<Key, T, Comp, Alloc>& r)
+	{
+		return !(l == r);
+	}
+	template <typename Key, typename T, typename Comp, typename Alloc>
+	bool operator<(const map<Key, T, Comp, Alloc>& l, const map<Key, T, Comp, Alloc>& r)
+	{
+		typename map<Key, T, Comp, Alloc>::const_iterator i = l.begin(), j = r.begin();
+		for (; i != l.end() && j != r.end(); ++i, ++j)
+			if (*i != *j)
+				break;
+		return *i < *j;
+	}
+	template <typename Key, typename T, typename Comp, typename Alloc>
+	bool operator<=(const map<Key, T, Comp, Alloc>& l, const map<Key, T, Comp, Alloc>& r)
+	{
+		return !(r < l);
+	}
+	template <typename Key, typename T, typename Comp, typename Alloc>
+	bool operator>(const map<Key, T, Comp, Alloc>& l, const map<Key, T, Comp, Alloc>& r)
+	{
+		return r < l;
+	}
+	template <typename Key, typename T, typename Comp, typename Alloc>
+	bool operator>=(const map<Key, T, Comp, Alloc>& l, const map<Key, T, Comp, Alloc>& r)
+	{
+		return !(l < r);
+	}
 	template <typename Key, typename T, typename Compare, typename Alloc>
 	void swap(map<Key, T, Compare, Alloc>& x, map<Key, T, Compare, Alloc>& y)
 	{

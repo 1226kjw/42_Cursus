@@ -11,3 +11,4 @@ a.out
 .vscode/
 *.swp
 accuracy_tester/
+efficiency_test/
