@@ -36,7 +36,7 @@ namespace ft
 			_start = _finish = _alloc.allocate(n);
 			_end_storage = _start + n;
 			while (n--)
-				*_finish++ = val;
+				_alloc.construct(_finish++, value_type(val));
 		}
 		template <typename Iter>
 		vector(typename ft::enable_if<!ft::is_same<typename Iter::iterator_category, void>::value, Iter>::type first,
@@ -46,7 +46,7 @@ namespace ft
 			_alloc = alloc;
 			_start = _finish = _alloc.allocate(n);
 			while (n--)
-				*_finish++ = *first++;
+				_alloc.construct(_finish++, value_type(*first++));
 		}
 		vector(const vector& x)
 		{
@@ -54,7 +54,25 @@ namespace ft
 			_start = _finish = _alloc.allocate(x.capacity());
 			_end_storage = _start + x.capacity();
 			for (size_t i = 0; i < x.size(); ++i)
-				*_finish++ = x[i];
+				_alloc.construct(_finish++, x[i]);
+		}
+		~vector()
+		{
+			for (pointer itr = _start; itr != _finish; ++itr)
+				_alloc.destroy(itr);
+			_alloc.deallocate(_start, capacity());
+		}
+		vector& operator=(const vector& x)
+		{
+			for (pointer itr = _start; itr != _finish; ++itr)
+				_alloc.destroy(itr);
+			_alloc.deallocate(_start, capacity());
+			_alloc = x._alloc;
+			_start = _finish = _alloc.allocate(x.capacity());
+			_end_storage = _start + x.capacity();
+			for (size_t i = 0; i < x.size(); ++i)
+				_alloc.construct(_finish++, x[i]);
+			return *this;
 		}
 
 		//iterators
@@ -84,13 +102,16 @@ namespace ft
 		void resize(size_type n, value_type val = value_type())
 		{
 			if (n < size())
-				_finish -= size() - n;
+			{
+				for (size_type i = 0; i < size() - n; ++i)
+					_alloc.destroy(--_finish);
+			}
 			else if (n > size())
 			{
 				if (n > capacity())
 					reserve(n);
 				while (n > size())
-					*_finish++ = val;
+					_alloc.construct(_finish++, val);
 			}
 		}
 		size_type capacity() const
@@ -112,8 +133,10 @@ namespace ft
 				pointer new_start, new_end;
 				new_start = new_end = _alloc.allocate(n);
 				for (pointer i = _start; i != _finish; ++i)
-					*new_end++ = *i;
-				_alloc.destroy(_start);
+				{
+					_alloc.construct(new_end++, value_type(*i));
+					_alloc.destroy(i);
+				}
 				_alloc.deallocate(_start, capacity());
 				_start = new_start;
 				_finish = new_end;
@@ -167,35 +190,34 @@ namespace ft
 			reserve(n);
 			_finish = _start;
 			while (n--)
-				*_finish++ = *first++;
+				_alloc.construct(_finish++, value_type(*first++));
 		}
 		void assign(size_type n, const value_type& val)
 		{
 			reserve(n);
 			_finish = _start;
 			while (n--)
-				*_finish++ = val;
+				_alloc.construct(_finish++, value_type(val));
 		}
 		void push_back(const value_type& val)
 		{
 			if (_finish == _end_storage)
 				reserve(capacity() + 1);
-			*_finish++ = val;
+			_alloc.construct(_finish++, value_type(val));
 		}
 		void pop_back()
 		{
-			--_finish;
+			_alloc.destroy(--_finish);
 		}
 		iterator insert(iterator position, const value_type& val)
 		{
 			size_type tmp = position - begin();
 			reserve(size() + 1);
-			position = begin() + tmp;
 			reserve(size() + 1);
-			iterator cur;
-			for (cur = end(); cur != position; --cur)
+			pointer cur;
+			for (cur = _finish; cur != _start + tmp; --cur)
 				*cur = *(cur - 1);
-			*cur = val;
+			_alloc.construct(cur, value_type(val));
 			++_finish;
 			return cur;
 		}
@@ -203,12 +225,11 @@ namespace ft
 		{
 			size_type tmp = position - begin();
 			reserve(size() + n);
-			position = begin() + tmp;
-			iterator cur;
-			for (cur = end() + n - 1; cur != position + n - 1; --cur)
+			pointer cur;
+			for (cur = _finish + n - 1; cur != _start + tmp + n - 1; --cur)
 				*cur = *(cur - n);
-			for (; cur >= position; --cur)
-				*cur = val;
+			for (; cur >= _start + tmp; --cur)
+				_alloc.construct(cur, value_type(val));
 			_finish += n;
 			return ++cur;
 		}
@@ -219,19 +240,18 @@ namespace ft
 			size_type n = count_num(first, last);
 			size_type tmp = position - begin();
 			reserve(size() + n);
-			position = begin() + tmp;
-			iterator cur;
-			for (cur = end() + n - 1; cur != position + n - 1; --cur)
+			pointer cur;
+			for (cur = _finish + n - 1; cur != _start + tmp + n - 1; --cur)
 				*cur = *(cur - n);
-			for (; cur >= position; --cur)
-				*cur = *--last;
+			for (; cur >= _start + tmp; --cur)
+				_alloc.construct(cur, value_type(*--last));
 			_finish += n;
 			return ++cur;
 		}
 		iterator erase(iterator position)
 		{
 			iterator tmp(position);
-			tmp->~value_type();
+			_alloc.destroy(_start + (position - begin()));
 			for (; tmp != end(); ++tmp)
 				*tmp = *(tmp + 1);
 			--_finish;
@@ -242,7 +262,7 @@ namespace ft
 			iterator tmp(first);
 			size_type n = 0;
 			for (; tmp != last; ++tmp, ++n)
-				tmp->~value_type();
+				_alloc.destroy(_start + (tmp - begin()));
 			tmp = first;
 			for (; tmp + n != end(); ++tmp)
 				*tmp = *(tmp + n);
@@ -251,20 +271,15 @@ namespace ft
 		}
 		void swap(vector& x)
 		{
-			pointer tmp = _start;
-			_start = x._start;
-			x._start = tmp;
-			tmp = _finish;
-			_finish = x._finish;
-			x._finish = tmp;
-			tmp = _end_storage;
-			_end_storage = x._end_storage;
-			x._end_storage = tmp;
+			std::swap(_alloc, x._alloc);
+			std::swap(_start, x._start);
+			std::swap(_finish, x._finish);
+			std::swap(_end_storage, x._end_storage);
 		}
 		void clear()
 		{
-			for (iterator itr = begin(); itr != end(); ++itr)
-				itr->~value_type();
+			for (pointer i = _start; i != _finish; ++i)
+				_alloc.destroy(i);
 			_finish = _start;
 		}
 		

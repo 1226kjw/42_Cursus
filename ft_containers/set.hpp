@@ -22,11 +22,11 @@ namespace ft
 		typedef typename allocator_type::pointer pointer;
 		typedef typename allocator_type::const_pointer const_pointer;
 		typedef rb_tree<key_type, value_type, Itself<value_type>, key_compare, allocator_type> tree;
-		typedef rb_tree_const_iterator<value_type> iterator;
-		typedef rb_tree_const_iterator<value_type> const_iterator;
-		typedef rb_tree_const_reverse_iterator<value_type> reverse_iterator;
-		typedef rb_tree_const_reverse_iterator<value_type> const_reverse_iterator;
-		typedef typename iterator_traits<iterator>::difference_type difference_type;
+		typedef typename tree::const_iterator iterator;
+		typedef typename tree::const_iterator const_iterator;
+		typedef typename tree::const_reverse_iterator reverse_iterator;
+		typedef typename tree::const_reverse_iterator const_reverse_iterator;
+		typedef typename tree::difference_type difference_type;
 		typedef typename tree::size_type size_type;
 
 		set(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type())

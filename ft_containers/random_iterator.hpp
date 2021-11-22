@@ -38,6 +38,7 @@ namespace ft
 		operator random_reverse_iterator<value_type*, Cont>() { return random_reverse_iterator<value_type*, Cont>(_cur); }
 		//operator pointer() { return _cur; }
 		const Iter& base() const { return _cur; }
+		pointer cur() const { return _cur; }
 
 		reference			operator*() const { return *_cur; }
 		pointer				operator->() const { return _cur; }

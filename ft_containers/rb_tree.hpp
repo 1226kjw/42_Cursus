@@ -8,6 +8,7 @@
 
 namespace ft
 {
+	static int _level = 0;
 	template <typename Key, typename Val, typename KeyOfValue, typename Comp = std::less<Key>, typename Alloc = std::allocator<Val> >
 	class rb_tree
 	{
@@ -67,12 +68,9 @@ namespace ft
 		}
 		void left_rotate(node_pointer x)
 		{
-			if (x == _nil && x->right == _nil)
-				return;
 			node_pointer y = x->right;
 			x->right = y->left;
-			if (y->left != _nil)
-				y->left->parent = x;
+			y->left->parent = x;
 			y->parent = x->parent;
 			if (x->parent == _nil)
 				_root = y;
@@ -85,12 +83,9 @@ namespace ft
 		}
 		void right_rotate(node_pointer x)
 		{
-			if (x == _nil && x->left == _nil)
-				return;
 			node_pointer y = x->left;
 			x->left = y->right;
-			if (y->right != _nil)
-				y->right->parent = x;
+			y->right->parent = x;
 			y->parent = x->parent;
 			if (x->parent == _nil)
 				_root = y;
@@ -104,6 +99,8 @@ namespace ft
 		pair<iterator, bool> insert(const value_type& x, bool find = false)
 		{
 			node_pointer newnode = new node;
+			newnode->left = newnode->right = newnode->parent = _nil;
+			newnode->color = red;
 			newnode->value = _alloc.allocate(1);
 			_alloc.construct(newnode->value, value_type(x));
 			return insert(newnode, find);
@@ -139,55 +136,64 @@ namespace ft
 				y->left = z;
 			else
 				y->right = z;
-			z->right = z->left = _nil;
-			z->color = red;
-			insert_fixup(z);
 			++_size;
+			if (z->parent == _nil)
+				z->color = black;
+			else if (z->parent->parent != _nil)
+				insert_fixup(z);
 			return ft::make_pair(iterator(_nil, _root, z), true);
 		}
 		void insert_fixup(node_pointer z)
 		{
+			node_pointer u;
 			while (z->parent->color == red)
 			{
-				if (z->parent == z->parent->parent->left)
+				if (z->parent == z->parent->parent->right)
 				{
-					node_pointer y = z->parent->parent->right;
-					if (y->color == red)
+					u = z->parent->parent->left;
+					if (u->color == red)
 					{
+						u->color = black;
 						z->parent->color = black;
-						y->color = black;
 						z->parent->parent->color = red;
 						z = z->parent->parent;
 					}
-					else if (z == z->parent->right)
+					else
 					{
-						z = z->parent;
-						left_rotate(z);
+						if (z == z->parent->left)
+						{
+							z = z->parent;
+							right_rotate(z);
+						}
+						z->parent->color = black;
+						z->parent->parent->color = red;
+						left_rotate(z->parent->parent);
 					}
-					z->parent->color = black;
-					z->parent->parent->color = red;
-					right_rotate(z->parent->parent);
 				}
 				else
 				{
-					node_pointer y = z->parent->parent->left;
-					if (y->color == red)
+					u = z->parent->parent->right;
+					if (u->color == red)
 					{
+						u->color = black;
 						z->parent->color = black;
-						y->color = black;
 						z->parent->parent->color = red;
 						z = z->parent->parent;
 					}
-					else if (z == z->parent->left)
+					else
 					{
-						z = z->parent;
-						right_rotate(z);
+						if (z == z->parent->right)
+						{
+							z = z->parent;
+							left_rotate(z);
+						}
+						z->parent->color = black;
+						z->parent->parent->color = red;
+						right_rotate(z->parent->parent);
 					}
-					z->parent->color = black;
-					z->parent->parent->color = red;
-					left_rotate(z->parent->parent);
 				}
-				_nil->color = black;
+				if (z == _root)
+					break;
 			}
 			_root->color = black;
 		}
@@ -203,6 +209,8 @@ namespace ft
 		}
 		void remove(node_pointer z)
 		{
+			if (z == _nil)
+				return ;
 			node_pointer y = z, x;
 			rb_color org = y->color;
 			if (z->left == _nil)
@@ -233,16 +241,21 @@ namespace ft
 				y->left->parent = y;
 				y->color = z->color;
 			}
-			if (org == black)
-				remove_fixup(x);
+			if (z->value)
+			{
+				_alloc.destroy(z->value);
+				_alloc.deallocate(z->value, 1);
+			}
 			delete z;
 			--_size;
+			if (org == black)
+				remove_fixup(x);
 		}
 		void remove_fixup(node_pointer x)
 		{
+			node_pointer w;
 			while (x != _root && x->color == black)
 			{
-				node_pointer w;
 				if (x == x->parent->left)
 				{
 					w = x->parent->right;
@@ -258,18 +271,21 @@ namespace ft
 						w->color = red;
 						x = x->parent;
 					}
-					else if (w->right->color == black)
+					else
 					{
-						w->left->color = black;
-						w->color = red;
-						right_rotate(w);
-						w = x->parent->right;
+						if (w->right->color == black)
+						{
+							w->left->color = black;
+							w->color = red;
+							right_rotate(w);
+							w = x->parent->right;
+						}
+						w->color = x->parent->color;
+						x->parent->color = black;
+						w->right->color = black;
+						left_rotate(x->parent);
+						x = _root;
 					}
-					w->color = x->parent->color;
-					x->parent->color = black;
-					w->right->color = black;
-					left_rotate(x->parent);
-					x = _root;
 				}
 				else
 				{
@@ -286,20 +302,24 @@ namespace ft
 						w->color = red;
 						x = x->parent;
 					}
-					else if (w->left->color == black)
+					else
 					{
-						w->right->color = black;
-						w->color = red;
-						left_rotate(w);
-						w = x->parent->left;
+						if (w->left->color == black)
+						{
+							w->right->color = black;
+							w->color = red;
+							left_rotate(w);
+							w = x->parent->left;
+						}
+						w->color = x->parent->color;
+						x->parent->color = black;
+						w->left->color = black;
+						right_rotate(x->parent);
+						x = _root;
 					}
-					w->color = x->parent->color;
-					x->parent->color = black;
-					w->left->color = black;
-					right_rotate(x->parent);
-					x = _root;
 				}
 			}
+			x->color = black;
 		}
 
 		iterator begin()
@@ -518,7 +538,23 @@ namespace ft
 		{
 			return ft::make_pair(lower_bound(k), upper_bound(k));
 		}
-	private:
+		void print(node_pointer cur) const
+		{
+			++_level;
+			if (cur->right != _nil)
+			{
+				print(cur->right);
+				--_level;
+			}
+			for (int ix = 0; ix < _level; ++ix) std::cout << "    ";
+			std::cout << (cur->color == red ?"|":"") << cur->value->first << (cur->color == red ?"|":"") << std::endl;
+			if (cur->left != _nil)
+			{
+				print(cur->left);
+				--_level;
+			}
+		}
+	public:
 		void _clear(node_pointer cur)
 		{
 			if (cur == _nil)
