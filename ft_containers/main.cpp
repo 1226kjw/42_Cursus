@@ -164,9 +164,11 @@ int main()
 	s.erase(38);
 	s.erase(35);
 	s.print();
+	cout << s.size() << endl;
 	cout << "---------------" << endl;
 	s.erase(33);
 	s.print();
+	cout << s.size() << endl;
 
 	cout << s << endl;
 

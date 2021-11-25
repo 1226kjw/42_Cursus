@@ -70,7 +70,8 @@ namespace ft
 		{
 			node_pointer y = x->right;
 			x->right = y->left;
-			y->left->parent = x;
+			if (y->left != _nil)
+				y->left->parent = x;
 			y->parent = x->parent;
 			if (x->parent == _nil)
 				_root = y;
@@ -85,7 +86,8 @@ namespace ft
 		{
 			node_pointer y = x->left;
 			x->left = y->right;
-			y->right->parent = x;
+			if (y->right != _nil)
+				y->right->parent = x;
 			y->parent = x->parent;
 			if (x->parent == _nil)
 				_root = y;
@@ -250,6 +252,8 @@ namespace ft
 			--_size;
 			if (org == black)
 				remove_fixup(x);
+			_nil->left = _nil->right = _nil->parent = _nil;
+			_nil->color = black;
 		}
 		void remove_fixup(node_pointer x)
 		{
@@ -320,8 +324,6 @@ namespace ft
 					}
 				}
 			}
-			_nil->left = _nil->right = _nil->parent = _nil;
-			_nil->color = black;
 			x->color = black;
 		}
 
