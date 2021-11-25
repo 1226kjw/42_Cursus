@@ -104,7 +104,7 @@ namespace ft
 		{
 			if (n < size())
 			{
-				for (size_type i = 0; i < size() - n; ++i)
+				while (size() != n)
 					_alloc.destroy(--_finish);
 			}
 			else if (n > size())
