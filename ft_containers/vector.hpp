@@ -91,7 +91,7 @@ namespace ft
 		{
 			return _finish - _start;
 		}
-		size_type max_size()
+		size_type max_size() const
 		{
 			ptrdiff_t m = 1;
 			m <<= sizeof(ptrdiff_t) * 8 - 1;

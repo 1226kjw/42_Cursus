@@ -180,6 +180,10 @@ namespace ft
 		{
 			return _alloc;
 		}
+		void print()
+		{
+			_container.print(_container._root);
+		}
 	private:
 		tree _container;
 		key_compare _comp;

@@ -37,7 +37,7 @@ namespace ft
 			_nil->color = black;
 			_root = _nil;
 		}
-		rb_tree(const rb_tree& x): _comp(x._comp), _alloc(x._alloc), _size(x._size)
+		rb_tree(const rb_tree& x): _comp(x._comp), _alloc(x._alloc), _size(0)
 		{
 			_nil = new node;
 			_nil->value = 0;
@@ -254,6 +254,7 @@ namespace ft
 		void remove_fixup(node_pointer x)
 		{
 			node_pointer w;
+			std::cout << "issame" << (x == _nil) << std::endl;
 			while (x != _root && x->color == black)
 			{
 				if (x == x->parent->left)
@@ -319,6 +320,8 @@ namespace ft
 					}
 				}
 			}
+			_nil->left = _nil->right = _nil->parent = _nil;
+			_nil->color = black;
 			x->color = black;
 		}
 
@@ -505,7 +508,7 @@ namespace ft
 			node_pointer x = _root, y = _nil;
 			while (x != _nil)
 			{
-				if (_comp(KeyOfValue()(*x->value), k))
+				if (_comp(k, KeyOfValue()(*x->value)))
 				{
 					y = x;
 					x = x->left;
@@ -520,7 +523,7 @@ namespace ft
 			node_pointer x = _root, y = _nil;
 			while (x != _nil)
 			{
-				if (_comp(KeyOfValue()(*x->value), k))
+				if (_comp(k, KeyOfValue()(*x->value)))
 				{
 					y = x;
 					x = x->left;
@@ -547,7 +550,7 @@ namespace ft
 				--_level;
 			}
 			for (int ix = 0; ix < _level; ++ix) std::cout << "    ";
-			std::cout << (cur->color == red ?"|":"") << cur->value->first << (cur->color == red ?"|":"") << std::endl;
+			std::cout << (cur->color == red ?"|":"") << *cur->value << (cur->color == red ?"|":"") << std::endl;
 			if (cur->left != _nil)
 			{
 				print(cur->left);
