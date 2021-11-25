@@ -18,9 +18,6 @@ namespace ft
 		typename iterator_traits<Iter>::reference
 	>
 	{
-	protected:
-		Iter _cur;
-	
 	public:
 		typedef typename iterator_traits<Iter>::iterator_category iterator_category;
 		typedef typename iterator_traits<Iter>::value_type value_type;
@@ -30,14 +27,10 @@ namespace ft
 
 		random_reverse_iterator() : _cur(Iter()) {}
 		random_reverse_iterator(const Iter& x) : _cur(x) {}
-		// template<typename CIter>
-		// random_reverse_iterator(const random_reverse_iterator<Iter, typename enable_if<
-		// 	(is_same<Iter, typename Cont::pointer>::value), Cont>::type>& x)
-		// : _cur(x) {}
 		~random_reverse_iterator() {}
-		random_reverse_iterator& operator=(const random_reverse_iterator& x) { _cur = x._cur; return *this; }
 		operator random_reverse_iterator<const value_type*, Cont>() const { return (random_reverse_iterator<const value_type*, Cont>(_cur)); }
 		random_iterator<Iter, Cont> base() const { return _cur; }
+		random_reverse_iterator&	operator=(const random_reverse_iterator& x) { _cur = x._cur; return *this; }
 
 		reference					operator*() const { return *_cur; }
 		pointer						operator->() const { return _cur; }
@@ -50,6 +43,9 @@ namespace ft
 		random_reverse_iterator		operator+(difference_type n) { return random_reverse_iterator(_cur - n); }
 		random_reverse_iterator&	operator-=(difference_type n) { _cur += n; return *this; }
 		random_reverse_iterator		operator-(difference_type n) { return random_reverse_iterator(_cur + n); }
+
+	protected:
+		Iter _cur;
 	};
 
 	template <typename LIter, typename RIter, typename Cont>

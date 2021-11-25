@@ -39,21 +39,21 @@ namespace ft
 	class iterator_traits<T*>
 	{
 	public:
-		typedef ptrdiff_t difference_type;
 		typedef T value_type;
 		typedef T* pointer;
 		typedef T& reference;
 		typedef random_access_iterator_tag iterator_category;
+		typedef ptrdiff_t difference_type;
 	};
 	template <typename T>
 	class iterator_traits<const T*>
 	{
 	public:
-		typedef ptrdiff_t difference_type;
 		typedef T value_type;
 		typedef const T* pointer;
 		typedef const T& reference;
 		typedef random_access_iterator_tag iterator_category;
+		typedef ptrdiff_t difference_type;
 	};
 
 	template <
@@ -71,32 +71,6 @@ namespace ft
 		typedef Distance difference_type;
 		typedef Pointer pointer;
 		typedef Reference reference;
-
-		iterator() {}
-		~iterator() {}
-
-		virtual iterator& operator++()
-		{
-			return *this;
-		}
-		virtual iterator& operator--()
-		{
-			return *this;
-		}
-	};
-
-	template <typename Iter>
-	class reverse_iterator
-	: public iterator<
-		typename iterator_traits<Iter>::iterator_category,
-		typename iterator_traits<Iter>::value_type,
-		typename iterator_traits<Iter>::difference_type,
-		typename iterator_traits<Iter>::pointer,
-		typename iterator_traits<Iter>::reference
-	>
-	{
-	public:
-		Iter cur;
 	};
 };
 

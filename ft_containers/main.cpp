@@ -3,15 +3,15 @@
 #include "stack.hpp"
 #include "map.hpp"
 #include "set.hpp"
+
 using std::cout;
 using std::endl;
 
 int main()
 {
 	ft::map<int, int> a;
-	for (int i = 0; i < 3000; ++i)
+	for (int i = 0; i < 30; ++i)
 		a.insert(ft::make_pair(i,i*i));
-		//a[i] = i*i;
 	for (ft::map<int, int>::iterator itr = a.begin(); itr != a.end(); ++itr)
 		cout << itr->first << ' ' << itr->second << endl;
 	a.erase(1);

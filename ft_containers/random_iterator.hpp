@@ -28,17 +28,11 @@ namespace ft
 
 		random_iterator() : _cur(Iter()) {}
 		random_iterator(const Iter& x) : _cur(x) {}
-		// template<typename CIter>
-		// random_iterator(const random_iterator<Iter, typename enable_if<
-		// 	(is_same<Iter, typename Cont::pointer>::value), Cont>::type>& x)
-		// : _cur(x) {}
 		~random_iterator() {}
-		random_iterator& operator=(const random_iterator& x) { _cur = x._cur; return *this; }
 		operator random_iterator<const value_type*, Cont>() const { return random_iterator<const value_type*, Cont>(_cur); }
 		operator random_reverse_iterator<value_type*, Cont>() { return random_reverse_iterator<value_type*, Cont>(_cur); }
-		//operator pointer() { return _cur; }
 		const Iter& base() const { return _cur; }
-		pointer cur() const { return _cur; }
+		random_iterator&	operator=(const random_iterator& x) { _cur = x._cur; return *this; }
 
 		reference			operator*() const { return *_cur; }
 		pointer				operator->() const { return _cur; }

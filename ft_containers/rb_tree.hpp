@@ -8,7 +8,7 @@
 
 namespace ft
 {
-	static int _level = 0;
+	static int _level = -1;
 	template <typename Key, typename Val, typename KeyOfValue, typename Comp = std::less<Key>, typename Alloc = std::allocator<Val> >
 	class rb_tree
 	{

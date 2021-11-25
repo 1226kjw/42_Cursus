@@ -26,22 +26,10 @@ namespace ft
 		rb_tree_reverse_iterator(const iterator& x): _cur(x._cur), _root(x._root), _nil(x._nil) {}
 		rb_tree_reverse_iterator(const rb_tree_const_iterator<T>& x): _cur(x.cur()), _root(x.root()), _nil(x.nil()) {}
 		~rb_tree_reverse_iterator() {}
-		rb_tree_iterator<value_type> base() const
-		{
-			return rb_tree_iterator<value_type>(_nil, _root, _cur);
-		}
-		node_pointer cur() const
-		{
-			return _cur;
-		}
-		node_pointer root() const
-		{
-			return _root;
-		}
-		node_pointer nil() const
-		{
-			return _nil;
-		}
+		rb_tree_iterator<value_type> base() const { return rb_tree_iterator<value_type>(_nil, _root, _cur); }
+		node_pointer cur() const { return _cur; }
+		node_pointer root() const { return _root; }
+		node_pointer nil() const { return _nil; }
 		node_pointer rb_tree_iterator_increment(node_pointer x)
 		{
 			if (x->right != _nil)
@@ -89,44 +77,28 @@ namespace ft
 			}
 			return x;
 		}
-		pointer operator->()
-		{
-			return _cur->value;
-		}
-		reference operator*()
-		{
-			return *_cur->value;
-		}
-		iterator& operator++()
-		{
-			_cur = rb_tree_iterator_decrement(_cur);
-			return *this;
-		}
-		iterator operator++(int)
+		pointer		operator->() { return _cur->value; }
+		reference	operator*() { return *_cur->value; }
+		iterator&	operator++() { _cur = rb_tree_iterator_decrement(_cur); return *this; }
+		iterator	operator++(int)
 		{
 			iterator tmp = *this;
 			_cur = rb_tree_iterator_decrement(_cur);
 			return tmp;
 		}
-		iterator& operator--()
+		iterator&	operator--()
 		{
 			_cur = rb_tree_iterator_increment(_cur);
 			return *this;
 		}
-		iterator operator--(int)
+		iterator	operator--(int)
 		{
 			iterator tmp = *this;
 			_cur = rb_tree_iterator_increment(_cur);
 			return tmp;
 		}
-		bool operator==(const iterator& r)
-		{
-			return _cur == r._cur;
-		}
-		bool operator!=(const iterator& r)
-		{
-			return _cur != r._cur;
-		}
+		bool		operator==(const iterator& r) { return _cur == r._cur; }
+		bool		operator!=(const iterator& r) { return _cur != r._cur; }
 		// friend bool operator==(const iterator& l, const iterator& r)
 		// {
 		// 	return l._cur == r._cur;
