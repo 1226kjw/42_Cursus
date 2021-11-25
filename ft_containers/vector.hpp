@@ -45,6 +45,7 @@ namespace ft
 			size_type n = count_num(first, last);
 			_alloc = alloc;
 			_start = _finish = _alloc.allocate(n);
+			_end_storage = _start + n;
 			while (n--)
 				_alloc.construct(_finish++, value_type(*first++));
 		}
@@ -287,6 +288,23 @@ namespace ft
 		allocator_type get_allocator() const
 		{
 			return _alloc;
+		}
+
+		//bool
+		void flip(void)
+		{
+			if (!ft::is_same<value_type, bool>::value)
+				throw std::domain_error("there is no member named 'flip'");
+			for (pointer i = _start; i != _finish; ++i)
+				*i = !*i;
+		}
+		static void swap(reference ref1, reference ref2)
+		{
+			if (!ft::is_same<value_type, bool>::value)
+				throw std::domain_error("there is no member named 'swap'");
+			bool tmp = ref1;
+			ref1 = ref2;
+			ref2 = tmp;
 		}
 
 	private:

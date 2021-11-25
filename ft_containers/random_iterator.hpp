@@ -8,13 +8,6 @@ namespace ft
 {
 	template <typename Iter, typename Cont>
 	class random_iterator
-	: public iterator<
-		typename iterator_traits<Iter>::iterator_category,
-		typename iterator_traits<Iter>::value_type,
-		typename iterator_traits<Iter>::difference_type,
-		typename iterator_traits<Iter>::pointer,
-		typename iterator_traits<Iter>::reference
-	>
 	{
 	protected:
 		Iter _cur;
