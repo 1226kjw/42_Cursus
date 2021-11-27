@@ -16,14 +16,6 @@ namespace ft
 		struct node* right;
 		rb_color color;
 		node(): value(0), parent(0), left(0), right(0) {}
-		node(const Val* x): value(x), parent(0), left(0), right(0) {}
-		node& operator=(const node& x)
-		{
-			if (value)
-				delete value;
-			value = new Val(*x.value);
-			return *this;
-		}
 	};
 
 	template <typename T>
@@ -60,6 +52,13 @@ namespace ft
 		}
 		node_pointer rb_tree_iterator_increment(node_pointer x)
 		{
+			if (x == _nil)
+			{
+				node_pointer t = _root;
+				while (t->left != _nil)
+					t = t->left;
+				return t;
+			}
 			if (x->right != _nil)
 			{
 				x = x->right;
@@ -105,11 +104,11 @@ namespace ft
 			}
 			return x;
 		}
-		pointer operator->()
+		pointer operator->() const
 		{
 			return _cur->value;
 		}
-		reference operator*()
+		reference operator*() const
 		{
 			return *_cur->value;
 		}

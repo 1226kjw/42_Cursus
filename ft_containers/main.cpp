@@ -110,67 +110,14 @@ int main()
 	// cout << ss.size() << endl;
 
 	ft::set<int> s;
-	s.insert(42);
-
-	s.insert(50);
-	s.insert(25);
-
-	s.insert(46);
-	s.insert(21);
-	s.insert(30);
-	s.insert(55);
-
-	s.insert(18);
-	s.insert(23);
-	s.insert(28);
-	s.insert(35);
-	s.insert(44);
-	s.insert(48);
-	s.insert(53);
-	s.insert(80);
-	
-	s.insert(12);
-	s.insert(20);
-	s.insert(22);
-	s.insert(24);
-	s.insert(27);
-	s.insert(29);
-	s.insert(33);
-	s.insert(38);
-
-	s.insert(43);
-	s.insert(45);
-	s.insert(47);
-	s.insert(49);
-	s.insert(51);
-	s.insert(54);
-	s.insert(60);
-	s.insert(90);
-
-	s.erase(25);
-	s.erase(55);
-	s.erase(24);
-	s.erase(54);
-
-	s.erase(22);
-	s.erase(51);
-	s.erase(21);
-	s.erase(23);
-
-	s.erase(20);
-	s.erase(23);
-	s.erase(42);
-
-	s.erase(38);
-	s.erase(35);
-	s.print();
-	cout << s.size() << endl;
-	cout << "---------------" << endl;
-	s.erase(33);
-	s.print();
-	cout << s.size() << endl;
-
-	cout << s << endl;
-
+	s.insert(1);
+	s.insert(2);
+	s.insert(3);
+	s.insert(1);
+	s.insert(4);
+	s.insert(5);
+	s.insert(6);
+	for (ft::set<int>::reverse_iterator r = s.rbegin(); r != s.rend(); ++r)
+		cout << *r;
 	return 0;
 }

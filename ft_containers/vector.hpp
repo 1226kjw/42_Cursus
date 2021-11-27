@@ -1,6 +1,7 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
+# include <iostream>
 # include <memory>
 # include <stdexcept>
 # include "random_iterator.hpp"
@@ -253,9 +254,9 @@ namespace ft
 		{
 			iterator tmp(position);
 			_alloc.destroy(_start + (position - begin()));
+			--_finish;
 			for (; tmp != end(); ++tmp)
 				*tmp = *(tmp + 1);
-			--_finish;
 			return position;
 		}
 		iterator erase(iterator first, iterator last)

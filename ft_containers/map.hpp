@@ -1,6 +1,7 @@
 #ifndef MAP_HPP
 # define MAP_HPP
 
+# include <iostream>
 # include <memory>
 # include "pair.hpp"
 # include "rb_tree.hpp"
@@ -102,13 +103,13 @@ namespace ft
 		//element access
 		mapped_type& operator[](const key_type& k)
 		{
-			return ((_container.insert(ft::make_pair(k, mapped_type()), true)).first)->second;
+			return ((_container.insert(ft::make_pair(k, mapped_type()))).first)->second;
 		}
 
 		//modifiers
 		pair<iterator, bool> insert(const value_type& val)
 		{
-			return _container.insert(val, false);
+			return _container.insert(val);
 		}
 		iterator insert(iterator position, const value_type& val)
 		{

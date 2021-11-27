@@ -32,7 +32,8 @@ namespace ft
 		rb_tree(const Comp& comp = Comp(), const allocator_type& alloc = allocator_type()): _comp(comp), _alloc(alloc), _size(0)
 		{
 			_nil = new node;
-			_nil->value = 0;
+			_nil->value = _alloc.allocate(1);
+			_alloc.construct(_nil->value, value_type());
 			_nil->parent = _nil->left = _nil->right = _nil;
 			_nil->color = black;
 			_root = _nil;
@@ -40,7 +41,8 @@ namespace ft
 		rb_tree(const rb_tree& x): _comp(x._comp), _alloc(x._alloc), _size(0)
 		{
 			_nil = new node;
-			_nil->value = 0;
+			_nil->value = _alloc.allocate(1);
+			_alloc.construct(_nil->value, value_type());
 			_nil->parent = _nil->left = _nil->right = _nil;
 			_nil->color = black;
 			_root = _nil;
@@ -50,6 +52,8 @@ namespace ft
 		~rb_tree()
 		{
 			clear();
+			_alloc.destroy(_nil->value);
+			_alloc.deallocate(_nil->value, 1);
 			delete _nil;
 		}
 		rb_tree& operator=(const rb_tree& x)
@@ -98,16 +102,16 @@ namespace ft
 			y->right = x;
 			x->parent = y;
 		}
-		pair<iterator, bool> insert(const value_type& x, bool find = false)
+		pair<iterator, bool> insert(const value_type& x)
 		{
 			node_pointer newnode = new node;
 			newnode->left = newnode->right = newnode->parent = _nil;
 			newnode->color = red;
 			newnode->value = _alloc.allocate(1);
 			_alloc.construct(newnode->value, value_type(x));
-			return insert(newnode, find);
+			return insert(newnode);
 		}
-		pair<iterator, bool> insert(node_pointer z, bool find = false)
+		pair<iterator, bool> insert(node_pointer z)
 		{
 			node_pointer y = _nil;
 			node_pointer x = _root;
@@ -116,11 +120,6 @@ namespace ft
 				y = x;
 				if (KeyOfValue()(*z->value) == KeyOfValue()(*x->value))
 				{
-					if (!find)
-					{
-						_alloc.destroy(x->value);
-						_alloc.construct(x->value, value_type(*z->value));
-					}
 					_alloc.destroy(z->value);
 					_alloc.deallocate(z->value, 1);
 					delete z;
@@ -258,7 +257,6 @@ namespace ft
 		void remove_fixup(node_pointer x)
 		{
 			node_pointer w;
-			std::cout << "issame" << (x == _nil) << std::endl;
 			while (x != _root && x->color == black)
 			{
 				if (x == x->parent->left)
@@ -382,12 +380,7 @@ namespace ft
 		}
 		size_type max_size() const
 		{
-			ptrdiff_t m = 1;
-			m <<= sizeof(ptrdiff_t) * 8 - 1;
-			m = ~m;
-			size_type diffmax = m;
-			size_type allocmax = _alloc.max_size();
-			return std::min(diffmax, allocmax);
+			return _alloc.max_size() * sizeof(value_type) / (sizeof(node));
 		}
 
 		void erase(iterator position)
@@ -559,7 +552,7 @@ namespace ft
 				--_level;
 			}
 		}
-	public:
+	private:
 		void _clear(node_pointer cur)
 		{
 			if (cur == _nil)
@@ -572,9 +565,11 @@ namespace ft
 		}
 		Comp _comp;
 		allocator_type _alloc;
+		std::allocator<node> _nalloc;
 		node_pointer _root;
 		node_pointer _nil;
 		size_type _size;
 	};
 };
+
 #endif

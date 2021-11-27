@@ -23,7 +23,8 @@ namespace ft
 		random_iterator(const Iter& x) : _cur(x) {}
 		~random_iterator() {}
 		operator random_iterator<const value_type*, Cont>() const { return random_iterator<const value_type*, Cont>(_cur); }
-		operator random_reverse_iterator<value_type*, Cont>() { return random_reverse_iterator<value_type*, Cont>(_cur); }
+		operator random_reverse_iterator<value_type*, Cont>() { return random_reverse_iterator<value_type*, Cont>(_cur-1); }
+		operator random_reverse_iterator<const value_type*, Cont>() { return random_reverse_iterator<const value_type*, Cont>(_cur-1); }
 		const Iter& base() const { return _cur; }
 		random_iterator&	operator=(const random_iterator& x) { _cur = x._cur; return *this; }
 

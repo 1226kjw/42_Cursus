@@ -1,6 +1,7 @@
 #ifndef SET_HPP
 # define SET_HPP
 
+# include <iostream>
 # include <memory>
 # include "pair.hpp"
 # include "rb_tree.hpp"
@@ -91,7 +92,7 @@ namespace ft
 		//modifiers
 		pair<iterator, bool> insert(const value_type& val)
 		{
-			return _container.insert(val, false);
+			return _container.insert(val);
 		}
 		iterator insert(iterator position, const value_type& val)
 		{
