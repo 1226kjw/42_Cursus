@@ -12,3 +12,4 @@ a.out
 *.swp
 accuracy_tester/
 efficiency_test/
+containers_test/
