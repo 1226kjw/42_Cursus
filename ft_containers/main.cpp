@@ -60,64 +60,64 @@ std::ostream& operator<<(std::ostream& out, const ft::set<K>& s)
 
 int main()
 {
-	// cout << "---------vector---------" << endl;
-	// ft::vector<int> vbase;
-	// for (int i = 3; i < 9; ++i)
-	// 	vbase.push_back(i);
-	// ft::vector<int> v(vbase.begin(), vbase.end());
-	// cout << v << endl;;
-	// v.insert(v.begin() + 1, 11);
-	// cout << v << endl;
-	// v.pop_back();
-	// cout << v << endl;
-	// v.erase(v.begin() + 3);
-	// cout << v << endl;
+	cout << "---------vector---------" << endl;
+	ft::vector<int> vbase;
+	for (int i = 3; i < 9; ++i)
+		vbase.push_back(i);
+	ft::vector<int> v(vbase.begin(), vbase.end());
+	cout << v << endl;;
+	v.insert(v.begin() + 1, 11);
+	cout << v << endl;
+	v.pop_back();
+	cout << v << endl;
+	v.erase(v.begin() + 3);
+	cout << v << endl;
 
-	// ft::vector<bool> bv(3, false);
-	// bv[1] = true;
-	// bv.flip();
-	// bv.swap(bv[1], bv[2]);
-	// cout << bv << endl;
+	ft::vector<bool> bv(3, false);
+	bv[1] = true;
+	bv.flip();
+	bv.swap(bv[1], bv[2]);
+	cout << bv << endl;
 
 
-	// cout << "---------stack---------" << endl;
-	// ft::stack<int> s;
-	// for (int i = 5; i < 10; ++i)
-	// 	s.push(i*i);
-	// while (!s.empty())
-	// {
-	// 	cout << s.top() << ' ';
-	// 	s.pop();
-	// }
-	// cout << endl;
+	cout << "---------stack---------" << endl;
+	ft::stack<int> s;
+	for (int i = 5; i < 10; ++i)
+		s.push(i*i);
+	while (!s.empty())
+	{
+		cout << s.top() << ' ';
+		s.pop();
+	}
+	cout << endl;
 
-	// cout << "---------map---------" << endl;
-	// ft::map<std::string, double> m;
-	// m["2nd_string"] = 212.11;
-	// m["1st_string"] = 111.11;
-	// m["3rd_string"] = 333.11;
-	// for (size_t i = 0; i < v.size(); ++i)
-	// 	m.insert(ft::make_pair(std::string("strnum") + static_cast<char>('0' + i%10), static_cast<double>(i*i*i)));
-	// cout << m << endl;
-	// cout << m.size() << endl;
-	// cout << m["strnum3"] << endl;
+	cout << "---------map---------" << endl;
+	ft::map<std::string, double> m;
+	m["2nd_string"] = 212.11;
+	m["1st_string"] = 111.11;
+	m["3rd_string"] = 333.11;
+	for (size_t i = 0; i < v.size(); ++i)
+		m.insert(ft::make_pair(std::string("strnum") + static_cast<char>('0' + i%10), static_cast<double>(i*i*i)));
+	cout << m << endl;
+	cout << m.size() << endl;
+	cout << m["strnum3"] << endl;
 
-	// cout << "---------set---------" << endl;
-	// ft::set<std::string> ss;
-	// for (ft::map<std::string, double>::iterator itr = m.begin(); itr != m.end(); ++itr)
-	// 	ss.insert(itr->first);
-	// cout << ss << endl;
-	// cout << ss.size() << endl;
+	cout << "---------set---------" << endl;
+	ft::set<std::string> ss;
+	for (ft::map<std::string, double>::iterator itr = m.begin(); itr != m.end(); ++itr)
+		ss.insert(itr->first);
+	cout << ss << endl;
+	cout << ss.size() << endl;
 
-	ft::set<int> s;
-	s.insert(1);
-	s.insert(2);
-	s.insert(3);
-	s.insert(1);
-	s.insert(4);
-	s.insert(5);
-	s.insert(6);
-	for (ft::set<int>::reverse_iterator r = s.rbegin(); r != s.rend(); ++r)
+	ft::set<int> si;
+	si.insert(1);
+	si.insert(2);
+	si.insert(3);
+	si.insert(1);
+	si.insert(4);
+	si.insert(5);
+	si.insert(6);
+	for (ft::set<int>::reverse_iterator r = si.rbegin(); r != si.rend(); ++r)
 		cout << *r;
 	return 0;
 }
