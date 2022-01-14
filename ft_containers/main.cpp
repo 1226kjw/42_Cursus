@@ -73,13 +73,6 @@ int main()
 	v.erase(v.begin() + 3);
 	cout << v << endl;
 
-	ft::vector<bool> bv(3, false);
-	bv[1] = true;
-	bv.flip();
-	bv.swap(bv[1], bv[2]);
-	cout << bv << endl;
-
-
 	cout << "---------stack---------" << endl;
 	ft::stack<int> s;
 	for (int i = 5; i < 10; ++i)
