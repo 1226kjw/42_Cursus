@@ -2,6 +2,7 @@
 # define PAIR_HPP
 
 # include <memory>
+# include <functional>
 
 namespace ft
 {

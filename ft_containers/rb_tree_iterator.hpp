@@ -52,6 +52,8 @@ namespace ft
 		}
 		node_pointer rb_tree_iterator_increment(node_pointer x)
 		{
+			if (_root == 0)
+				return 0;
 			if (x == _nil)
 			{
 				node_pointer t = _root;
@@ -79,6 +81,8 @@ namespace ft
 		}
 		node_pointer rb_tree_iterator_decrement(node_pointer x)
 		{
+			if (_root == 0)
+				return 0;
 			if (x == _nil)
 			{
 				node_pointer t = _root;

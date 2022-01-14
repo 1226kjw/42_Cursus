@@ -1,7 +1,6 @@
 #ifndef VECTOR_HPP
 # define VECTOR_HPP
 
-# include <iostream>
 # include <memory>
 # include <stdexcept>
 # include "random_iterator.hpp"
@@ -223,7 +222,7 @@ namespace ft
 			++_finish;
 			return cur;
 		}
-		iterator insert(iterator position, size_type n, const value_type& val)
+		void insert(iterator position, size_type n, const value_type& val)
 		{
 			size_type tmp = position - begin();
 			reserve(size() + n);
@@ -233,10 +232,9 @@ namespace ft
 			for (; cur >= _start + tmp; --cur)
 				_alloc.construct(cur, value_type(val));
 			_finish += n;
-			return ++cur;
 		}
 		template <typename Iter>
-		iterator insert(iterator position, Iter first,
+		void insert(iterator position, Iter first,
 				typename ft::enable_if<!ft::is_same<typename Iter::iterator_category, void>::value, Iter>::type last)
 		{
 			size_type n = count_num(first, last);
@@ -248,7 +246,6 @@ namespace ft
 			for (; cur >= _start + tmp; --cur)
 				_alloc.construct(cur, value_type(*--last));
 			_finish += n;
-			return ++cur;
 		}
 		iterator erase(iterator position)
 		{

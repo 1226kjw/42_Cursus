@@ -1,6 +1,7 @@
 #ifndef RB_TREE_HPP
 # define RB_TREE_HPP
 
+# include <iostream>
 # include <memory>
 # include "vector.hpp"
 # include "rb_tree_iterator.hpp"
@@ -12,6 +13,7 @@ namespace ft
 	template <typename Key, typename Val, typename KeyOfValue, typename Comp = std::less<Key>, typename Alloc = std::allocator<Val> >
 	class rb_tree
 	{
+		typedef typename Alloc::template rebind<node<Val> >::other _node_allocator;
 	public:
 		typedef Key key_type;
 		typedef Val value_type;
@@ -26,21 +28,23 @@ namespace ft
 		typedef node* node_pointer;
 		typedef rb_tree_iterator<value_type> iterator;
 		typedef rb_tree_const_iterator<value_type> const_iterator;
-		typedef rb_tree_reverse_iterator<value_type> reverse_iterator;
-		typedef rb_tree_const_reverse_iterator<value_type> const_reverse_iterator;
+		typedef rb_tree_reverse_iterator<iterator> reverse_iterator;
+		typedef rb_tree_const_reverse_iterator<const_iterator> const_reverse_iterator;
 
-		rb_tree(const Comp& comp = Comp(), const allocator_type& alloc = allocator_type()): _comp(comp), _alloc(alloc), _size(0)
+		rb_tree(const Comp& comp = Comp(), const allocator_type& alloc = allocator_type()): _comp(comp), _alloc(alloc), _size(0), _nalloc(_node_allocator())
 		{
-			_nil = new node;
+			_nil = _nalloc.allocate(1);
+			_nalloc.construct(_nil, node());
 			_nil->value = _alloc.allocate(1);
 			_alloc.construct(_nil->value, value_type());
 			_nil->parent = _nil->left = _nil->right = _nil;
 			_nil->color = black;
 			_root = _nil;
 		}
-		rb_tree(const rb_tree& x): _comp(x._comp), _alloc(x._alloc), _size(0)
+		rb_tree(const rb_tree& x): _comp(x._comp), _alloc(x._alloc), _size(0), _nalloc(_node_allocator())
 		{
-			_nil = new node;
+			_nil = _nalloc.allocate(1);
+			_nalloc.construct(_nil, node());
 			_nil->value = _alloc.allocate(1);
 			_alloc.construct(_nil->value, value_type());
 			_nil->parent = _nil->left = _nil->right = _nil;
@@ -54,7 +58,8 @@ namespace ft
 			clear();
 			_alloc.destroy(_nil->value);
 			_alloc.deallocate(_nil->value, 1);
-			delete _nil;
+			_nalloc.destroy(_nil);
+			_nalloc.deallocate(_nil, 1);
 		}
 		rb_tree& operator=(const rb_tree& x)
 		{
@@ -104,7 +109,8 @@ namespace ft
 		}
 		pair<iterator, bool> insert(const value_type& x)
 		{
-			node_pointer newnode = new node;
+			node_pointer newnode = _nalloc.allocate(1);
+			_nalloc.construct(newnode, node());
 			newnode->left = newnode->right = newnode->parent = _nil;
 			newnode->color = red;
 			newnode->value = _alloc.allocate(1);
@@ -122,7 +128,8 @@ namespace ft
 				{
 					_alloc.destroy(z->value);
 					_alloc.deallocate(z->value, 1);
-					delete z;
+					_nalloc.destroy(z);
+					_nalloc.deallocate(z, 1);
 					return ft::make_pair(iterator(_nil, _root, x), false);
 				}
 				else if (_comp(KeyOfValue()(*z->value), KeyOfValue()(*x->value)))
@@ -247,7 +254,8 @@ namespace ft
 				_alloc.destroy(z->value);
 				_alloc.deallocate(z->value, 1);
 			}
-			delete z;
+			_nalloc.destroy(z);
+			_nalloc.deallocate(z, 1);
 			--_size;
 			if (org == black)
 				remove_fixup(x);
@@ -561,14 +569,15 @@ namespace ft
 			_clear(cur->right);
 			_alloc.destroy(cur->value);
 			_alloc.deallocate(cur->value, 1);
-			delete cur;
+			_nalloc.destroy(cur);
+			_nalloc.deallocate(cur, 1);
 		}
 		Comp _comp;
 		allocator_type _alloc;
-		std::allocator<node> _nalloc;
 		node_pointer _root;
 		node_pointer _nil;
 		size_type _size;
+		_node_allocator _nalloc;
 	};
 };
 

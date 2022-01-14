@@ -1,7 +1,6 @@
 #ifndef SET_HPP
 # define SET_HPP
 
-# include <iostream>
 # include <memory>
 # include "pair.hpp"
 # include "rb_tree.hpp"

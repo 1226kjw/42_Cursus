@@ -43,10 +43,6 @@ namespace ft
 		{
 			c.pop_back();
 		}
-		void swap(stack& x)
-		{
-			c.swap(x);
-		}
 	protected:
 		container_type c;
 	};

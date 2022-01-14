@@ -1,7 +1,6 @@
 #ifndef MAP_HPP
 # define MAP_HPP
 
-# include <iostream>
 # include <memory>
 # include "pair.hpp"
 # include "rb_tree.hpp"
@@ -201,11 +200,6 @@ namespace ft
 		allocator_type get_allocator() const
 		{
 			return _alloc;
-		}
-
-		void print() const
-		{
-			_container.print(_container._root);
 		}
 	private:
 		tree _container;
